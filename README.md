@@ -4,11 +4,11 @@
 
 Quantum-Assisted Energy Resilience Optimization for Pakistan | Energy & Smart Infrastructure
 
-ANAVO helps a household choose which appliances to run during a power outage. It maximizes user-stated utility under usable battery-energy and simultaneous inverter-power limits, with explicit mandatory-load requirements. **Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit or the classical solver.** React development awaits a separate design reference. Streamlit is optional archived demo code only and is not installed or tested by the backend release workflow.
+ANAVO helps a household choose which appliances to run during a power outage. It maximizes user-stated utility under usable battery-energy and simultaneous inverter-power limits, with explicit mandatory-load requirements. **Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit or the classical solver.** The separate React frontend in frontend/ implements the supplied pixel/cyberpunk design reference. Streamlit is optional archived demo code only and is not installed or tested by the backend release workflow.
 
 ## Backend-first architecture update
 
-The primary application is a FastAPI/Pydantic backend that reuses the existing independent optimization engine. React + TypeScript + Vite + Tailwind CSS + Motion is deferred until a separate design brief; no React frontend is implemented. The Streamlit app is preserved without feature development. Public **[SabihaAbidd/anavo](https://github.com/SabihaAbidd/anavo)** is connected as origin/main. The initial project was successfully published by the user; the latest published local/remote baseline was verified as `1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6`. Newer changes remain local while agent Git metadata writes are denied and the integration denies content writes. Do not confuse the successful initial push with permission to publish from this managed agent session.
+The primary application is a FastAPI/Pydantic backend that reuses the existing independent optimization engine. React + TypeScript + Vite now lives in frontend/, with GSAP animation, a procedural pixel planet, neon lime/purple styling and live optimization controls. The Streamlit app is preserved without feature development. Public **[SabihaAbidd/anavo](https://github.com/SabihaAbidd/anavo)** is connected as origin/main. The initial project was successfully published by the user; the latest published local/remote baseline was verified as `6f471887303118e3206c8e648de2bfbcce48f58b`. Newer changes remain local while agent Git metadata writes are denied and the integration denies content writes. Do not confuse the successful initial push with permission to publish from this managed agent session.
 
 Backend implementation and executed validation are tracked in TASKS.md and results/. Use the project .venv interpreter, which now has the verified API and quantum dependencies.
 
@@ -18,7 +18,7 @@ The installed project .venv has passed **72 required backend tests with zero ski
 
 Actual QAOA benchmarks used p=2, 2,048 shots and seed 42. The best feasible samples matched exact utilities 30 and 15 with zero best-sample gaps; the mandatory-infeasible case produced no feasible sample. Repeated executions with identical source fingerprints reproduced counts and optimized parameters. The strict local release gate passed. See results/validation.json, api_startup_check.json, benchmark_results.json, benchmark_reproducibility.json and release_check.json.
 
-These are ideal simulator results, not quantum speedup or hardware evidence. COBYLA reached its evaluation budgets, and the limited scenario had only about 24.3% physically feasible shots. Publication and CI status are separate from local readiness; React remains deferred pending the design reference.
+These are ideal simulator results, not quantum speedup or hardware evidence. COBYLA reached its evaluation budgets, and the limited scenario had only about 24.3% physically feasible shots. Publication and CI status are separate from local readiness; The React frontend is now implemented separately; see frontend/README.md.
 
 ## Start the FastAPI backend
 
@@ -108,3 +108,15 @@ For a Windows terminal with ordinary network and Git write access, run `.\script
 ## Limitations and future work
 
 This is decision support, not an electrical controller. Appliance power ratings are illustrative, not measured Pakistan household data. Battery input is usable AC-side energy. Selected appliances run for fixed durations; power is conservatively reserved simultaneously. Essential is an explanatory label; utility expresses priority; mandatory is a hard constraint. No surge/duty-cycle, stochastic outage, solar forecast, or battery-degradation model exists. Exact enumeration is capped at 20 appliances, and simulator encodings at 14 qubits. Decimal precision can expand the encoding. The simulator is noiseless and uses exact statevector expectations for tuning; the final distribution is shot-sampled. No quantum advantage is claimed. Expand later to MILP baselines, time-slot schedules, realistic device measurements, and hardware/noise experiments.
+
+## Start the React frontend
+
+Keep FastAPI running on port 8000. In a second PowerShell terminal:
+
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
+
+Open http://127.0.0.1:5173. The Vite proxy connects /api and /health to FastAPI. Select Classical + Quantum for actual measured comparison. The intro plays once per tab session and can be replayed from the footer. Reduced-motion settings are respected. Production verification: `npm run build`; live proxy smoke tests with both servers running: `npm run test:integration`. Deployment and frontend details are in frontend/README.md.

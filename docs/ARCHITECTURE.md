@@ -2,7 +2,7 @@
 
 ```mermaid
 flowchart TD
-    Future["Future React frontend"] --> API["FastAPI routes"]
+    Future["React frontend / Vite + GSAP"] --> API["FastAPI routes"]
     API --> Schemas["Strict Pydantic contracts"]
     Schemas --> Service["Framework-independent service"]
     Service --> Model["Validated physical scenario"]
@@ -17,9 +17,9 @@ flowchart TD
 
 `backend/main.py` defines the five HTTP endpoints, structured errors, OpenAPI, CORS and per-process job admission. `backend/schemas.py` owns schema 1.0 requests/responses; cross-field validation delegates to the existing physical model. `backend/service.py` has no HTTP-framework imports: it calls the existing solvers, independently rechecks returned allocations, maps failures without hidden fallback and preserves actual measured metadata. `backend/settings.py` validates the explicit CORS allowlist.
 
-The final frontend is React + TypeScript + Vite (implementation deferred). Streamlit is outside this architecture: app.py and .streamlit/config.toml remain optional historical code, requirements-demo.txt is opt-in, and historical UI tests/startup code reside in legacy_demo/. Required tests/ discovery, CI and release gates exclude them. Neither backend/ nor src/ imports Streamlit; the backend environment report also omits it. CI creates a fresh backend-only venv and verifies absence of the optional package.
+The final frontend is React + TypeScript + Vite in frontend/ (implemented with GSAP and responsive CSS). Streamlit is outside this architecture: app.py and .streamlit/config.toml remain optional historical code, requirements-demo.txt is opt-in, and historical UI tests/startup code reside in legacy_demo/. Required tests/ discovery, CI and release gates exclude them. Neither backend/ nor src/ imports Streamlit; the backend environment report also omits it. CI creates a fresh backend-only venv and verifies absence of the optional package.
 
-`models.py` owns inputs/physical constraints. `classical_solver.py` enumerates independently of quantum mapping. `optimization.py` handles rational normalization, bounded auxiliary bits, penalty expansion and basis energies. `quantum_solver.py` builds the cost/mixer circuit, optimizes angles, measures, and evaluates all sampled candidates. `evaluation.py` preserves the legacy comparison path and records installed package versions. Existing `app.py` remains unchanged as a legacy demo. `scripts/benchmark.py` persists the existing three reproducible scenarios. Future React consumes these API contracts after a separate design brief; no React code is being developed.
+`models.py` owns inputs/physical constraints. `classical_solver.py` enumerates independently of quantum mapping. `optimization.py` handles rational normalization, bounded auxiliary bits, penalty expansion and basis energies. `quantum_solver.py` builds the cost/mixer circuit, optimizes angles, measures, and evaluates all sampled candidates. `evaluation.py` preserves the legacy comparison path and records installed package versions. Existing `app.py` remains unchanged as a legacy demo. `scripts/benchmark.py` persists the existing three reproducible scenarios. The separate React client consumes these contracts through the Vite proxy, with editable scenarios, real solver results, loading states and explicit errors.
 
 ## Significant choices
 

@@ -1,8 +1,8 @@
 # FastAPI backend contract (schema 1.0)
 
-Final application: React + TypeScript + Vite -> this FastAPI backend -> Qiskit/classical solver. Streamlit is optional historical code only, excluded from requirements.txt and required backend checks. React implementation remains deferred until the design reference arrives.
+Final application: React + TypeScript + Vite -> this FastAPI backend -> Qiskit/classical solver. Streamlit is optional historical code only, excluded from requirements.txt and required backend checks. The React client in frontend/ consumes these contracts.
 
-Status: all 72 required backend tests pass, including actual FastAPI TestClient and Qiskit circuit checks. A separate Uvicorn process passed all 12 real HTTP checks, including every endpoint and measured quantum requests. Streamlit is absent and React remains deferred. See results/validation.json and api_startup_check.json for actual evidence.
+Status: all 72 required backend tests pass, including actual FastAPI TestClient and Qiskit circuit checks. A separate Uvicorn process passed all 12 real HTTP checks, including every endpoint and measured quantum requests. Streamlit is absent; the separate React client is now implemented. See results/validation.json and api_startup_check.json for actual evidence.
 
 ## Start and inspect
 

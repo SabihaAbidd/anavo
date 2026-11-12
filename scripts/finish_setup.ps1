@@ -26,7 +26,7 @@ Assert-CommandSucceeded 'FastAPI localhost startup'
 & $AnavoPython -m scripts.benchmark --require-quantum
 Assert-CommandSucceeded 'Real quantum benchmarks'
 # The first commit is created after tests and actual benchmarks succeed.
-git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend src tests scripts docs results
+git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend frontend src tests scripts docs results
 Assert-CommandSucceeded 'Git staging'
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 1) {

@@ -65,7 +65,7 @@ def main():
     if existing_origin.returncode:
         command("git", "remote", "add", "origin", target_url)
     intended = [".gitignore", ".github", ".streamlit", "AGENTS.md", "PLAN.md", "TASKS.md", "README.md", "requirements.txt", "requirements-demo.txt", "requirements-lock.txt",
-                "app.py", "legacy_demo", "backend", "src", "tests", "scripts", "docs", "results"]
+                "app.py", "legacy_demo", "backend", "frontend", "src", "tests", "scripts", "docs", "results"]
     command("git", "add", "--", *intended)
     staged = command("git", "diff", "--cached", "--quiet", check=False)
     if staged.returncode == 1:

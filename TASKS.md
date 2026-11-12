@@ -2,7 +2,7 @@
 
 ## Current backend status
 
-**Local backend validation passed.** The tested environment is the project .venv, with Streamlit absent. React remains deferred pending the design reference. Publication of the latest changes is tracked separately from local correctness.
+**Local backend validation passed.** The tested environment is the project .venv, with Streamlit absent. The supplied design reference authorizes the new separate React frontend. Publication of the latest changes is tracked separately from local correctness.
 
 | Done | Task | Evidence / status |
 |---|---|---|
@@ -20,9 +20,9 @@
 | [x] | Pass strict release gate | results/release_check.json: ready=true, exit_code=0, matching runtime-source fingerprint |
 | [x] | Prepare API/math/report/pitch/demo/deployment docs | Current measured evidence replaces prior dependency-blocked status; no quantum advantage claim |
 | [x] | Configure backend-only CI | Fresh venv, tested lock, no Streamlit, actual runtime experiments and strict gate; read-only repository token |
-| [ ] | Publish latest validated source and measured evidence | Latest git add denied .git/index.lock; dependency-lock blob API returned 403. Remote main remains verified at 1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6; these new changes are local. |
+| [ ] | Publish latest validated source and measured evidence | Latest git add denied .git/index.lock; dependency-lock blob API returned 403. Remote main remains verified at 6f471887303118e3206c8e648de2bfbcce48f58b; these new changes are local. |
 | [ ] | Verify CI on newly published commit | Workflow definition/local syntax checks are not a completed CI run |
-| [ ] | React frontend | Explicitly deferred until user provides design reference; no React implementation started |
+| [x] | Separate React frontend | React/TypeScript/Vite, original GSAP intro, animated pixel planet, lime/purple responsive UI, editable manifest and real classical/QAOA comparison |
 
 ## Evidence files
 
@@ -42,4 +42,15 @@ Both feasible benchmark best-sample gaps were zero, but COBYLA reached the 80-ev
 
 Earlier managed-session package installs failed, and the backend/quantum tests were skipped. The user's successful ordinary-PowerShell install resolved missing dependencies; subsequent agent execution verified real API requests, Qiskit circuits and all required tests. Older skipped-test totals are historical and no longer the current status.
 
-The user previously published d9c24703603b8f833b140cdd76338cd42d697b4e and later 1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6. These published commits are preserved. Runtime success does not by itself change Git metadata permissions or integration write scopes. Do not mark the latest milestone published until a new remote commit is verified.
+The user previously published d9c24703603b8f833b140cdd76338cd42d697b4e and later 6f471887303118e3206c8e648de2bfbcce48f58b. These published commits are preserved. Runtime success does not by itself change Git metadata permissions or integration write scopes. Do not mark the latest milestone published until a new remote commit is verified.
+
+## Frontend validation
+
+- npm install completed; npm run build passed TypeScript and Vite production bundling.
+- Live browser classical request returned utility 24, 180 Wh, 60 W for the evening preset.
+- Live browser quantum comparison returned measured utility 24, 12 qubits, 2,048 shots, seed 42, depth 33, 45.9% physically feasible shots and zero best-sample gap; runtime about 17 seconds. No speedup claim.
+- Frontend source remains independent of Python; no optimization logic was rewritten.
+
+- Two live frontend proxy integration tests passed: entry/health, scenarios, exact optimum, actual measured quantum optimum, mandatory infeasibility and 422 validation.
+- Phone viewport (390px) and intro replay verified in the browser. Production build rerun after final visual changes passed.
+- Publishing helper includes frontend/ and excludes node_modules, build output and unrelated untracked recordings. The agent staging attempt still failed with .git/index.lock permission denied. Latest independently verified remote baseline is 6f471887303118e3206c8e648de2bfbcce48f58b.

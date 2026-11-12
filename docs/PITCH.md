@@ -1,6 +1,6 @@
 # ANAVO three-minute pitch
 
-Use the measured local backend results below. React is deferred; demonstrate the API through Swagger at localhost:8000/docs. Publish the latest source/results before presenting a repository link as the completed milestone.
+Use the measured local backend results below. Demonstrate the React frontend at localhost:5173, with FastAPI running on port 8000. Swagger remains available at localhost:8000/docs. Publish the latest source/results before presenting a repository link as the completed milestone.
 
 ## 0:00-0:30 - The problem
 

@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-11-12T15:11:04.416133+00:00",
+  "checked_utc": "2026-11-12T15:59:45.862234+00:00",
   "healthy": true,
-  "source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "source_fingerprint": "dc30230345b778ee472f5dd829579b082a46e43d0b78f021a00d141862289ff1",
   "checks": [
     {
       "name": "health",
@@ -231,7 +231,7 @@
           "Deferred means unselected for this request, not a future scheduled time.",
           "No quantum measurements are reported unless an actual circuit executes."
         ],
-        "frontend_status": "React/TypeScript/Vite frontend deferred pending design; Streamlit is optional legacy code outside the backend release."
+        "frontend_status": "Separate React/TypeScript/Vite frontend in frontend/ with GSAP animation and live API integration; Streamlit is optional legacy code outside the backend release."
       }
     },
     {
@@ -350,7 +350,7 @@
             "essential_total": 3,
             "violations": []
           },
-          "runtime_s": 0.0016563998069614172,
+          "runtime_s": 0.0016363998875021935,
           "enumerated": 16,
           "feasible_selections": 6,
           "quantum_metadata": null,
@@ -449,7 +449,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 3.7830017001833767,
+          "runtime_s": 6.703052700031549,
           "enumerated": null,
           "feasible_selections": null,
           "quantum_metadata": {
@@ -765,7 +765,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 0.0003432999365031719,
+          "runtime_s": 0.0003474999684840441,
           "enumerated": 4,
           "feasible_selections": 1,
           "quantum_metadata": null,
@@ -818,7 +818,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 0.5044676999095827,
+          "runtime_s": 1.1276078999508172,
           "enumerated": null,
           "feasible_selections": null,
           "quantum_metadata": {
@@ -1114,7 +1114,7 @@
           "status": "infeasible",
           "feasibility": "infeasible",
           "allocation": null,
-          "runtime_s": 0.001201100181788206,
+          "runtime_s": 0.004703700076788664,
           "enumerated": 16,
           "feasible_selections": 0,
           "quantum_metadata": null,
@@ -1355,7 +1355,7 @@
             "essential_total": 3,
             "violations": []
           },
-          "runtime_s": 0.0014768000692129135,
+          "runtime_s": 0.0030168001540005207,
           "enumerated": 16,
           "feasible_selections": 1,
           "quantum_metadata": null,
@@ -1394,5 +1394,5 @@
     }
   ],
   "command": "python -m scripts.api_startup_check",
-  "endpoint": "http://127.0.0.1:63554/health"
+  "endpoint": "http://127.0.0.1:56710/health"
 }

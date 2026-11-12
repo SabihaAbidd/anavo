@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-ANAVO is a Pakistan-focused household backup-energy decision-support prototype for Energy & Smart Infrastructure. Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit Aer or an independent exact classical solver. React is deferred until the user supplies the design. Streamlit is optional historical code only and is absent from the tested backend environment.
+ANAVO is a Pakistan-focused household backup-energy decision-support prototype for Energy & Smart Infrastructure. Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit Aer or an independent exact classical solver. The React client now implements the supplied cyberpunk/pixel design in frontend/, with a GSAP intro and real API optimization/comparison. Streamlit is optional historical code only and is absent from the tested backend environment.
 
 The local backend passed all 72 required tests with zero skips/failures/errors, 12 real Uvicorn HTTP checks, actual QAOA experiments and strict release verification. Repeated seeded benchmarks reproduced counts and optimized parameters. Publication of the latest evidence and its CI run remain separate tasks. There has been no hardware execution, quantum speedup demonstration or production electrical-control validation.
 

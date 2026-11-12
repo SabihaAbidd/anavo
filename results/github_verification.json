@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-11-12T15:23:09.094469+00:00",
+  "checked_utc": "2026-11-12T15:59:45.438052+00:00",
   "repository_url": "https://github.com/SabihaAbidd/anavo",
   "authenticated_account": "SabihaAbidd",
   "repository_id": 1455287545,
@@ -11,12 +11,12 @@
   ],
   "local_branch": "main",
   "origin_configured": true,
-  "local_commit": "1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6",
-  "remote_commit": "1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6",
+  "local_commit": "6f471887303118e3206c8e648de2bfbcce48f58b",
+  "remote_commit": "6f471887303118e3206c8e648de2bfbcce48f58b",
   "push_verified": true,
   "files_verified": true,
   "content_write_status": "Latest tested dependency-lock blob publication denied: GitHub API 403",
-  "local_git_status": "Latest agent staging denied creating .git/index.lock",
+  "local_git_status": "Frontend milestone staging denied creating .git/index.lock; unrelated recording excluded from publish list",
   "publication_actor": "user-run ordinary PowerShell; remote commit independently verified",
   "remote_comparison_status": "identical",
   "new_changes_published": false

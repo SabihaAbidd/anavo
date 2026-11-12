@@ -36,12 +36,12 @@ if ($AnavoRemoteHeads.Count -gt 0) {
     Assert-AnavoGit 'History compatibility check'
 }
 
-git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend src tests scripts docs results
+git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend frontend src tests scripts docs results
 Assert-AnavoGit 'Staging project files'
 $AnavoStagedPaths = @(git diff --cached --name-only)
 Assert-AnavoGit 'Staged-file inspection'
 foreach ($AnavoStagedPath in $AnavoStagedPaths) {
-    if ($AnavoStagedPath -notmatch '^(\.gitignore|AGENTS\.md|PLAN\.md|TASKS\.md|README\.md|requirements(?:-demo|-lock)?\.txt|app\.py)$|^(\.github|\.streamlit|legacy_demo|backend|src|tests|scripts|docs|results)/') {
+    if ($AnavoStagedPath -notmatch '^(\.gitignore|AGENTS\.md|PLAN\.md|TASKS\.md|README\.md|requirements(?:-demo|-lock)?\.txt|app\.py)$|^(\.github|\.streamlit|legacy_demo|backend|frontend|src|tests|scripts|docs|results)/') {
         throw "Unexpected staged path: $AnavoStagedPath. Review it manually before committing."
     }
     git check-ignore --no-index --quiet -- $AnavoStagedPath
@@ -51,7 +51,7 @@ foreach ($AnavoStagedPath in $AnavoStagedPaths) {
 
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 1) {
-    git commit -m 'feat: add Anavo optimization engine and FastAPI backend with validated contracts'
+    git commit -m 'feat: add neon pixel React frontend with live solver comparison'
     Assert-AnavoGit 'Project commit'
 } elseif ($LASTEXITCODE -ne 0) { throw 'Could not inspect staged changes.' }
 
@@ -72,7 +72,7 @@ Assert-AnavoGit 'Published file verification fetch'
 $AnavoFetchedCommit = git rev-parse FETCH_HEAD
 Assert-AnavoGit 'Fetched commit verification'
 if ($AnavoFetchedCommit.Trim() -ne $AnavoCommit.Trim()) { throw 'Fetched commit differs from the published commit.' }
-$AnavoExpectedPaths = @('README.md', 'backend/main.py', 'src/quantum_solver.py')
+$AnavoExpectedPaths = @('README.md', 'backend/main.py', 'src/quantum_solver.py', 'frontend/src/App.tsx')
 $AnavoPublishedPaths = @(git ls-tree --name-only FETCH_HEAD -- @AnavoExpectedPaths)
 Assert-AnavoGit 'Published file verification'
 foreach ($AnavoExpectedPath in $AnavoExpectedPaths) {
@@ -84,4 +84,4 @@ Write-Output 'VERIFIED: https://github.com/SabihaAbidd/anavo'
 Write-Output 'Branch: main'
 Write-Output "Commit: $($AnavoCommit.Trim())"
 Write-Output 'Remote hash matches; README, backend and quantum implementation files are present.'
-Write-Output 'Publishing does not mark the documented API/quantum dependency blockers as resolved.'
+Write-Output 'Publishing and local validation are independent; inspect current TASKS.md for measured evidence.'

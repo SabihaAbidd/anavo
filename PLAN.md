@@ -2,7 +2,7 @@
 
 ## 1. Problem and objectives
 
-Active architecture: **React + TypeScript + Vite -> FastAPI/Python -> Qiskit or exact classical solver**. React implementation awaits the user's design reference. Streamlit is archived optional demo code, excluded from backend dependencies, default test discovery, CI and release checks. Its source, configuration and historical tests are preserved for opt-in reference.
+Active architecture: **React + TypeScript + Vite -> FastAPI/Python -> Qiskit or exact classical solver**. React frontend implementation was authorized with pixel/cyberpunk design references on 2026-11-12. Streamlit is archived optional demo code, excluded from backend dependencies, default test discovery, CI and release checks. Its source, configuration and historical tests are preserved for opt-in reference.
 During a Pakistan household outage, choose a subset of requested appliance operations that maximizes stated utility within usable battery energy (Wh) and inverter power (W). Deliver an explainable decision-support prototype, a real simulated QAOA experiment, and an independent exact baseline. Theme: Energy & Smart Infrastructure. Users: households, students, and resilience researchers. This is not an appliance controller.
 
 ## 2. Solution and formulation
@@ -14,7 +14,7 @@ Binary x_i selects appliance i for its fixed requested duration t_i hours, with 
 Penalty A=1+sum utilities exceeds the entire objective range when normalized residuals are integers. Exact decimal-to-rational conversion and GCD normalization avoid silent rounding. Omit redundant constraints; cap slack and simulator size explicitly. A mandatory-infeasible scenario is reported as infeasible; do not relax it silently.
 
 ## 4. Stack, architecture, and data flow
-Primary backend: Python, FastAPI, Pydantic v2, NumPy, SciPy, Qiskit and Qiskit Aer. Uvicorn serves HTTP; HTTPX/TestClient and standard-library unittest validate endpoints. The existing Streamlit app is preserved as a legacy demonstration and receives no feature development. Future frontend: React, TypeScript, Vite, Tailwind CSS and Motion, deferred until the user supplies design references. No React implementation is authorized yet.
+Primary backend: Python, FastAPI, Pydantic v2, NumPy, SciPy, Qiskit and Qiskit Aer. Uvicorn serves HTTP; HTTPX/TestClient and standard-library unittest validate endpoints. The existing Streamlit app is preserved as a legacy demonstration and receives no feature development. Active frontend: separate frontend/ React + TypeScript + Vite application, GSAP opening sequence, responsive CSS, procedural pixel globe, live FastAPI optimization and measured quantum comparison.
 
 Request -> strict Pydantic contract -> framework-independent application service -> existing Scenario and optimization engine -> structured response model. Optimize selects classical or quantum explicitly; compare returns both with no hidden fallback. Synchronous FastAPI handlers run CPU work outside the event loop; bounded job admission rejects concurrent heavy requests. Restrict request sizes, quantum evaluations/shots/qubits, and CORS to explicitly configured local Vite origins. Do not expose this unauthenticated research service publicly without a separate deployment design.
 
@@ -68,3 +68,6 @@ Execute unblocked correctness work next: (1) reject numerically unsafe QUBO enco
 The project .venv now imports FastAPI/Qiskit/Aer/NumPy/SciPy successfully, pip check passes, and Streamlit is absent. All 72 required backend tests pass with no skips. Actual Uvicorn completed all 12 HTTP cases, and three actual QAOA benchmarks were measured and repeated reproducibly. The strict local release gate passes. requirements-lock.txt pins the 27 tested dependencies and is included in runtime provenance; CI uses that lock. Earlier dependency and HTTP blockers are historical, resolved by the user's successful installation and subsequent real execution.
 
 Complete the remaining publication/remote CI verification without changing permissions or history. Preserve the backend's stable API contracts and wait for the user's React design reference before frontend work.
+
+## Frontend milestone — 2026-11-12
+Implement the supplied black/lime/purple cyberpunk direction in a separate React/TypeScript/Vite client. Use an original GSAP pixel-grid intro (reference source unavailable), reduced-motion support, editable scenario/load controls, real API results and explicit error states. Verify TypeScript/production build, actual proxy requests, browser classical/quantum results and responsive layouts. Keep all optimization mathematics in Python. Publish without changing history; report permission blockers accurately.

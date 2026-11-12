@@ -14,3 +14,6 @@ dist/
 .runtime-tmp/
 .coverage
 htmlcov/
+node_modules/
+*.tsbuildinfo
+frontend/.vite/

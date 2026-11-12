@@ -1,0 +1,18 @@
+{
+  "checked_utc": "2026-11-12T15:59:45.439264+00:00",
+  "production_build": "passed: TypeScript and Vite",
+  "live_proxy_integration_tests": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_verified": [
+    "GSAP intro rendered then revealed app",
+    "API connected",
+    "classical evening: utility 24 / 180 Wh / 60 W",
+    "measured quantum evening: utility 24 / 12 qubits / 2048 shots / seed 42 / circuit depth 33 / zero best-sample gap",
+    "390px responsive hero and form layout"
+  ],
+  "reference_animation": "Original GSAP interpretation; reference website unavailable to fetch",
+  "publication": "blocked: managed session cannot create .git/index.lock"
+}

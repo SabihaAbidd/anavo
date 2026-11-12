@@ -98,7 +98,7 @@ def create_app():
                 "Essential is a label; utility is a preference; mandatory is a hard constraint.",
                 "Deferred means unselected for this request, not a future scheduled time.",
                 "No quantum measurements are reported unless an actual circuit executes."],
-            frontend_status="React/TypeScript/Vite frontend deferred pending design; Streamlit is optional legacy code outside the backend release.")
+            frontend_status="Separate React/TypeScript/Vite frontend in frontend/ with GSAP animation and live API integration; Streamlit is optional legacy code outside the backend release.")
 
     return app
 
