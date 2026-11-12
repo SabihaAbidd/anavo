@@ -1,0 +1,12 @@
+# Render Blueprint for the ANAVO backend (FastAPI + Qiskit Aer).
+services:
+  - type: web
+    name: anavo-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ANAVO_CORS_ORIGINS
+        sync: false

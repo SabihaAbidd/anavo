@@ -1,0 +1,7 @@
+*
+!requirements-lock.txt
+!backend/
+!src/
+!data/
+**/__pycache__
+**/*.py[cod]
