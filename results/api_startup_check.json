@@ -1,0 +1,7 @@
+{
+  "checked_utc": "2026-11-12T12:46:28.342802+00:00",
+  "healthy": false,
+  "command": "python -m scripts.api_startup_check",
+  "endpoint": "http://127.0.0.1:8017/health",
+  "reason": "FastAPI is not installed; HTTP startup cannot execute"
+}

@@ -1,0 +1,50 @@
+{
+  "scenario": {
+    "name": "Evening backup",
+    "appliances": [
+      {
+        "name": "Fan",
+        "power_w": 40.0,
+        "duration_h": 3.0,
+        "utility": 9.0,
+        "essential": true,
+        "mandatory": false
+      },
+      {
+        "name": "LED lights",
+        "power_w": 10.0,
+        "duration_h": 3.0,
+        "utility": 7.0,
+        "essential": true,
+        "mandatory": false
+      },
+      {
+        "name": "Wi-Fi router",
+        "power_w": 10.0,
+        "duration_h": 3.0,
+        "utility": 8.0,
+        "essential": true,
+        "mandatory": true
+      },
+      {
+        "name": "Laptop",
+        "power_w": 60.0,
+        "duration_h": 2.0,
+        "utility": 6.0,
+        "essential": false,
+        "mandatory": false
+      }
+    ],
+    "battery_wh": 240.0,
+    "inverter_w": 100.0,
+    "outage_h": 3.0
+  },
+  "quantum_options": {
+    "depth": 2,
+    "shots": 2048,
+    "maxiter": 80,
+    "restarts": 2,
+    "seed": 42,
+    "max_qubits": 14
+  }
+}

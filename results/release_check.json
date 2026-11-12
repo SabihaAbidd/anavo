@@ -1,0 +1,14 @@
+{
+  "exit_code": 1,
+  "ready": false,
+  "reasons": [
+    " - All tests must pass with zero skips, including real Qiskit/Aer tests",
+    " - A successful FastAPI localhost startup check is required: python -m scripts.api_startup_check",
+    " - Benchmark quantum execution is incomplete",
+    " - Missing/invalid measured shots for Ample backup",
+    " - Missing/invalid measured shots for Limited battery",
+    " - Missing/invalid measured shots for Mandatory infeasible",
+    " - No measured feasible quantum/classical comparison exists",
+    " - No Git commit exists"
+  ]
+}

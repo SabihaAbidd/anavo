@@ -1,0 +1,134 @@
+{
+  "execution": "Direct service invocation; not an HTTP endpoint result",
+  "response": {
+    "schema_version": "1.0",
+    "scenario": {
+      "name": "Evening backup",
+      "appliances": [
+        {
+          "name": "Fan",
+          "power_w": 40.0,
+          "duration_h": 3.0,
+          "utility": 9.0,
+          "essential": true,
+          "mandatory": false
+        },
+        {
+          "name": "LED lights",
+          "power_w": 10.0,
+          "duration_h": 3.0,
+          "utility": 7.0,
+          "essential": true,
+          "mandatory": false
+        },
+        {
+          "name": "Wi-Fi router",
+          "power_w": 10.0,
+          "duration_h": 3.0,
+          "utility": 8.0,
+          "essential": true,
+          "mandatory": true
+        },
+        {
+          "name": "Laptop",
+          "power_w": 60.0,
+          "duration_h": 2.0,
+          "utility": 6.0,
+          "essential": false,
+          "mandatory": false
+        }
+      ],
+      "battery_wh": 240.0,
+      "inverter_w": 100.0,
+      "outage_h": 3.0
+    },
+    "result": {
+      "algorithm": "classical",
+      "method": "exact enumeration",
+      "status": "optimal",
+      "feasibility": "feasible",
+      "allocation": {
+        "feasible": true,
+        "objective_value": 24.0,
+        "bitstring": "1110",
+        "selection": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "selected_appliances": [
+          {
+            "name": "Fan",
+            "power_w": 40.0,
+            "duration_h": 3.0,
+            "utility": 9.0,
+            "essential": true,
+            "mandatory": false,
+            "selected": true,
+            "energy_wh": 120.0
+          },
+          {
+            "name": "LED lights",
+            "power_w": 10.0,
+            "duration_h": 3.0,
+            "utility": 7.0,
+            "essential": true,
+            "mandatory": false,
+            "selected": true,
+            "energy_wh": 30.0
+          },
+          {
+            "name": "Wi-Fi router",
+            "power_w": 10.0,
+            "duration_h": 3.0,
+            "utility": 8.0,
+            "essential": true,
+            "mandatory": true,
+            "selected": true,
+            "energy_wh": 30.0
+          }
+        ],
+        "deferred_appliances": [
+          {
+            "name": "Laptop",
+            "power_w": 60.0,
+            "duration_h": 2.0,
+            "utility": 6.0,
+            "essential": false,
+            "mandatory": false,
+            "selected": false,
+            "energy_wh": 120.0
+          }
+        ],
+        "energy_used_wh": 180.0,
+        "energy_remaining_wh": 60.0,
+        "power_used_w": 60.0,
+        "inverter_remaining_w": 40.0,
+        "energy_utilization": 0.75,
+        "essential_served": 3,
+        "essential_total": 3,
+        "violations": []
+      },
+      "runtime_s": 0.005237499950453639,
+      "enumerated": 16,
+      "feasible_selections": 6,
+      "quantum_metadata": null,
+      "error_code": null,
+      "message": null
+    },
+    "fallback_used": false,
+    "environment": {
+      "python": "3.13.5",
+      "qiskit": null,
+      "qiskit-aer": null,
+      "numpy": "2.4.4",
+      "scipy": "1.17.1",
+      "streamlit": "1.58.0",
+      "fastapi": null,
+      "pydantic": "2.12.5",
+      "uvicorn": "0.49.0",
+      "httpx": "0.28.1"
+    }
+  }
+}

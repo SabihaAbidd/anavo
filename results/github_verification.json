@@ -1,0 +1,18 @@
+{
+  "checked_utc": "2026-11-12T12:54:36.723521+00:00",
+  "repository_url": "https://github.com/SabihaAbidd/anavo",
+  "authenticated_account": "SabihaAbidd",
+  "repository_id": 1455287545,
+  "repository_exists_verified": true,
+  "visibility": "public",
+  "default_branch": "main",
+  "branches": [],
+  "local_branch": "main",
+  "origin_configured": false,
+  "local_commit": null,
+  "remote_commit": null,
+  "push_verified": false,
+  "files_verified": false,
+  "content_write_status": "403 Resource not accessible by integration",
+  "local_git_status": "index.lock and config writes denied by session permissions"
+}

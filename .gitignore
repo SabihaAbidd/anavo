@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.log
+*.egg-info/
+build/
+dist/
+.dependencies/
+.runtime-tmp/
+.coverage
+htmlcov/

@@ -1,0 +1,1671 @@
+{
+  "OptimizeRequest": {
+    "$defs": {
+      "ApplianceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility"
+        ],
+        "title": "ApplianceInput",
+        "type": "object"
+      },
+      "QuantumOptions": {
+        "additionalProperties": false,
+        "properties": {
+          "depth": {
+            "default": 2,
+            "maximum": 4,
+            "minimum": 1,
+            "title": "Depth",
+            "type": "integer"
+          },
+          "shots": {
+            "default": 2048,
+            "maximum": 8192,
+            "minimum": 1,
+            "title": "Shots",
+            "type": "integer"
+          },
+          "maxiter": {
+            "default": 80,
+            "maximum": 200,
+            "minimum": 10,
+            "title": "Maxiter",
+            "type": "integer"
+          },
+          "restarts": {
+            "default": 2,
+            "maximum": 3,
+            "minimum": 1,
+            "title": "Restarts",
+            "type": "integer"
+          },
+          "seed": {
+            "default": 42,
+            "maximum": 2147483647,
+            "minimum": 0,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "max_qubits": {
+            "default": 14,
+            "maximum": 14,
+            "minimum": 1,
+            "title": "Max Qubits",
+            "type": "integer"
+          }
+        },
+        "title": "QuantumOptions",
+        "type": "object"
+      },
+      "ScenarioInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "default": "Custom outage",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceInput"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Appliances",
+            "type": "array"
+          },
+          "battery_wh": {
+            "maximum": 1000000000,
+            "minimum": 0,
+            "title": "Battery Wh",
+            "type": "number"
+          },
+          "inverter_w": {
+            "maximum": 10000000,
+            "minimum": 0,
+            "title": "Inverter W",
+            "type": "number"
+          },
+          "outage_h": {
+            "exclusiveMinimum": 0,
+            "maximum": 168,
+            "title": "Outage H",
+            "type": "number"
+          }
+        },
+        "required": [
+          "appliances",
+          "battery_wh",
+          "inverter_w",
+          "outage_h"
+        ],
+        "title": "ScenarioInput",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "scenario": {
+        "$ref": "#/$defs/ScenarioInput"
+      },
+      "algorithm": {
+        "default": "classical",
+        "enum": [
+          "classical",
+          "quantum"
+        ],
+        "title": "Algorithm",
+        "type": "string"
+      },
+      "quantum_options": {
+        "$ref": "#/$defs/QuantumOptions"
+      }
+    },
+    "required": [
+      "scenario"
+    ],
+    "title": "OptimizeRequest",
+    "type": "object"
+  },
+  "CompareRequest": {
+    "$defs": {
+      "ApplianceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility"
+        ],
+        "title": "ApplianceInput",
+        "type": "object"
+      },
+      "QuantumOptions": {
+        "additionalProperties": false,
+        "properties": {
+          "depth": {
+            "default": 2,
+            "maximum": 4,
+            "minimum": 1,
+            "title": "Depth",
+            "type": "integer"
+          },
+          "shots": {
+            "default": 2048,
+            "maximum": 8192,
+            "minimum": 1,
+            "title": "Shots",
+            "type": "integer"
+          },
+          "maxiter": {
+            "default": 80,
+            "maximum": 200,
+            "minimum": 10,
+            "title": "Maxiter",
+            "type": "integer"
+          },
+          "restarts": {
+            "default": 2,
+            "maximum": 3,
+            "minimum": 1,
+            "title": "Restarts",
+            "type": "integer"
+          },
+          "seed": {
+            "default": 42,
+            "maximum": 2147483647,
+            "minimum": 0,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "max_qubits": {
+            "default": 14,
+            "maximum": 14,
+            "minimum": 1,
+            "title": "Max Qubits",
+            "type": "integer"
+          }
+        },
+        "title": "QuantumOptions",
+        "type": "object"
+      },
+      "ScenarioInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "default": "Custom outage",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceInput"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Appliances",
+            "type": "array"
+          },
+          "battery_wh": {
+            "maximum": 1000000000,
+            "minimum": 0,
+            "title": "Battery Wh",
+            "type": "number"
+          },
+          "inverter_w": {
+            "maximum": 10000000,
+            "minimum": 0,
+            "title": "Inverter W",
+            "type": "number"
+          },
+          "outage_h": {
+            "exclusiveMinimum": 0,
+            "maximum": 168,
+            "title": "Outage H",
+            "type": "number"
+          }
+        },
+        "required": [
+          "appliances",
+          "battery_wh",
+          "inverter_w",
+          "outage_h"
+        ],
+        "title": "ScenarioInput",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "scenario": {
+        "$ref": "#/$defs/ScenarioInput"
+      },
+      "quantum_options": {
+        "$ref": "#/$defs/QuantumOptions"
+      }
+    },
+    "required": [
+      "scenario"
+    ],
+    "title": "CompareRequest",
+    "type": "object"
+  },
+  "OptimizeResponse": {
+    "$defs": {
+      "Allocation": {
+        "additionalProperties": false,
+        "properties": {
+          "feasible": {
+            "title": "Feasible",
+            "type": "boolean"
+          },
+          "objective_value": {
+            "minimum": 0,
+            "title": "Objective Value",
+            "type": "number"
+          },
+          "bitstring": {
+            "title": "Bitstring",
+            "type": "string"
+          },
+          "selection": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Selection",
+            "type": "array"
+          },
+          "selected_appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceDecision"
+            },
+            "title": "Selected Appliances",
+            "type": "array"
+          },
+          "deferred_appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceDecision"
+            },
+            "title": "Deferred Appliances",
+            "type": "array"
+          },
+          "energy_used_wh": {
+            "minimum": 0,
+            "title": "Energy Used Wh",
+            "type": "number"
+          },
+          "energy_remaining_wh": {
+            "title": "Energy Remaining Wh",
+            "type": "number"
+          },
+          "power_used_w": {
+            "minimum": 0,
+            "title": "Power Used W",
+            "type": "number"
+          },
+          "inverter_remaining_w": {
+            "title": "Inverter Remaining W",
+            "type": "number"
+          },
+          "energy_utilization": {
+            "minimum": 0,
+            "title": "Energy Utilization",
+            "type": "number"
+          },
+          "essential_served": {
+            "title": "Essential Served",
+            "type": "integer"
+          },
+          "essential_total": {
+            "title": "Essential Total",
+            "type": "integer"
+          },
+          "violations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Violations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "feasible",
+          "objective_value",
+          "bitstring",
+          "selection",
+          "selected_appliances",
+          "deferred_appliances",
+          "energy_used_wh",
+          "energy_remaining_wh",
+          "power_used_w",
+          "inverter_remaining_w",
+          "energy_utilization",
+          "essential_served",
+          "essential_total",
+          "violations"
+        ],
+        "title": "Allocation",
+        "type": "object"
+      },
+      "ApplianceDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          },
+          "selected": {
+            "title": "Selected",
+            "type": "boolean"
+          },
+          "energy_wh": {
+            "minimum": 0,
+            "title": "Energy Wh",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility",
+          "selected",
+          "energy_wh"
+        ],
+        "title": "ApplianceDecision",
+        "type": "object"
+      },
+      "ApplianceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility"
+        ],
+        "title": "ApplianceInput",
+        "type": "object"
+      },
+      "Measurement": {
+        "additionalProperties": false,
+        "properties": {
+          "measured_bitstring": {
+            "title": "Measured Bitstring",
+            "type": "string"
+          },
+          "appliance_bitstring": {
+            "title": "Appliance Bitstring",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "feasible": {
+            "title": "Feasible",
+            "type": "boolean"
+          },
+          "encoding_feasible": {
+            "title": "Encoding Feasible",
+            "type": "boolean"
+          },
+          "utility": {
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "qubo_energy": {
+            "title": "Qubo Energy",
+            "type": "number"
+          }
+        },
+        "required": [
+          "measured_bitstring",
+          "appliance_bitstring",
+          "count",
+          "feasible",
+          "encoding_feasible",
+          "utility",
+          "qubo_energy"
+        ],
+        "title": "Measurement",
+        "type": "object"
+      },
+      "OptimizerRun": {
+        "additionalProperties": false,
+        "properties": {
+          "nfev": {
+            "title": "Nfev",
+            "type": "integer"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "objective": {
+            "title": "Objective",
+            "type": "number"
+          }
+        },
+        "required": [
+          "nfev",
+          "success",
+          "message",
+          "objective"
+        ],
+        "title": "OptimizerRun",
+        "type": "object"
+      },
+      "QuantumMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "qubits": {
+            "title": "Qubits",
+            "type": "integer"
+          },
+          "appliance_qubits": {
+            "title": "Appliance Qubits",
+            "type": "integer"
+          },
+          "slack_qubits": {
+            "title": "Slack Qubits",
+            "type": "integer"
+          },
+          "qaoa_depth": {
+            "title": "Qaoa Depth",
+            "type": "integer"
+          },
+          "circuit_depth": {
+            "title": "Circuit Depth",
+            "type": "integer"
+          },
+          "shots": {
+            "title": "Shots",
+            "type": "integer"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "optimizer": {
+            "title": "Optimizer",
+            "type": "string"
+          },
+          "max_evaluations_per_restart": {
+            "title": "Max Evaluations Per Restart",
+            "type": "integer"
+          },
+          "restarts": {
+            "title": "Restarts",
+            "type": "integer"
+          },
+          "optimizer_evaluations": {
+            "title": "Optimizer Evaluations",
+            "type": "integer"
+          },
+          "optimizer_runs": {
+            "items": {
+              "$ref": "#/$defs/OptimizerRun"
+            },
+            "title": "Optimizer Runs",
+            "type": "array"
+          },
+          "optimizer_iterations": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Optimizer Iterations"
+          },
+          "iteration_note": {
+            "title": "Iteration Note",
+            "type": "string"
+          },
+          "parameters": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "penalty": {
+            "title": "Penalty",
+            "type": "number"
+          },
+          "hamiltonian_scale": {
+            "title": "Hamiltonian Scale",
+            "type": "number"
+          },
+          "expected_qubo_energy": {
+            "title": "Expected Qubo Energy",
+            "type": "number"
+          },
+          "objective_history": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Objective History",
+            "type": "array"
+          },
+          "feasible_selection_probability": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Feasible Selection Probability",
+            "type": "number"
+          },
+          "feasible_encoding_probability": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Feasible Encoding Probability",
+            "type": "number"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Counts",
+            "type": "object"
+          },
+          "distribution": {
+            "items": {
+              "$ref": "#/$defs/Measurement"
+            },
+            "title": "Distribution",
+            "type": "array"
+          }
+        },
+        "required": [
+          "qubits",
+          "appliance_qubits",
+          "slack_qubits",
+          "qaoa_depth",
+          "circuit_depth",
+          "shots",
+          "seed",
+          "optimizer",
+          "max_evaluations_per_restart",
+          "restarts",
+          "optimizer_evaluations",
+          "optimizer_runs",
+          "optimizer_iterations",
+          "iteration_note",
+          "parameters",
+          "penalty",
+          "hamiltonian_scale",
+          "expected_qubo_energy",
+          "objective_history",
+          "feasible_selection_probability",
+          "feasible_encoding_probability",
+          "counts",
+          "distribution"
+        ],
+        "title": "QuantumMetadata",
+        "type": "object"
+      },
+      "ScenarioInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "default": "Custom outage",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceInput"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Appliances",
+            "type": "array"
+          },
+          "battery_wh": {
+            "maximum": 1000000000,
+            "minimum": 0,
+            "title": "Battery Wh",
+            "type": "number"
+          },
+          "inverter_w": {
+            "maximum": 10000000,
+            "minimum": 0,
+            "title": "Inverter W",
+            "type": "number"
+          },
+          "outage_h": {
+            "exclusiveMinimum": 0,
+            "maximum": 168,
+            "title": "Outage H",
+            "type": "number"
+          }
+        },
+        "required": [
+          "appliances",
+          "battery_wh",
+          "inverter_w",
+          "outage_h"
+        ],
+        "title": "ScenarioInput",
+        "type": "object"
+      },
+      "SolverResult": {
+        "additionalProperties": false,
+        "properties": {
+          "algorithm": {
+            "enum": [
+              "classical",
+              "quantum"
+            ],
+            "title": "Algorithm",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "optimal",
+              "infeasible",
+              "sampled",
+              "no_feasible_sample",
+              "unavailable",
+              "oversized",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "feasibility": {
+            "default": "unknown",
+            "enum": [
+              "feasible",
+              "infeasible",
+              "unknown"
+            ],
+            "title": "Feasibility",
+            "type": "string"
+          },
+          "allocation": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Allocation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "runtime_s": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Runtime S"
+          },
+          "enumerated": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Enumerated"
+          },
+          "feasible_selections": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Feasible Selections"
+          },
+          "quantum_metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/QuantumMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error Code"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Message"
+          }
+        },
+        "required": [
+          "algorithm",
+          "method",
+          "status"
+        ],
+        "title": "SolverResult",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "schema_version": {
+        "const": "1.0",
+        "default": "1.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "scenario": {
+        "$ref": "#/$defs/ScenarioInput"
+      },
+      "result": {
+        "$ref": "#/$defs/SolverResult"
+      },
+      "fallback_used": {
+        "const": false,
+        "default": false,
+        "title": "Fallback Used",
+        "type": "boolean"
+      },
+      "environment": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": "Environment",
+        "type": "object"
+      }
+    },
+    "required": [
+      "scenario",
+      "result",
+      "environment"
+    ],
+    "title": "OptimizeResponse",
+    "type": "object"
+  },
+  "CompareResponse": {
+    "$defs": {
+      "Allocation": {
+        "additionalProperties": false,
+        "properties": {
+          "feasible": {
+            "title": "Feasible",
+            "type": "boolean"
+          },
+          "objective_value": {
+            "minimum": 0,
+            "title": "Objective Value",
+            "type": "number"
+          },
+          "bitstring": {
+            "title": "Bitstring",
+            "type": "string"
+          },
+          "selection": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Selection",
+            "type": "array"
+          },
+          "selected_appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceDecision"
+            },
+            "title": "Selected Appliances",
+            "type": "array"
+          },
+          "deferred_appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceDecision"
+            },
+            "title": "Deferred Appliances",
+            "type": "array"
+          },
+          "energy_used_wh": {
+            "minimum": 0,
+            "title": "Energy Used Wh",
+            "type": "number"
+          },
+          "energy_remaining_wh": {
+            "title": "Energy Remaining Wh",
+            "type": "number"
+          },
+          "power_used_w": {
+            "minimum": 0,
+            "title": "Power Used W",
+            "type": "number"
+          },
+          "inverter_remaining_w": {
+            "title": "Inverter Remaining W",
+            "type": "number"
+          },
+          "energy_utilization": {
+            "minimum": 0,
+            "title": "Energy Utilization",
+            "type": "number"
+          },
+          "essential_served": {
+            "title": "Essential Served",
+            "type": "integer"
+          },
+          "essential_total": {
+            "title": "Essential Total",
+            "type": "integer"
+          },
+          "violations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Violations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "feasible",
+          "objective_value",
+          "bitstring",
+          "selection",
+          "selected_appliances",
+          "deferred_appliances",
+          "energy_used_wh",
+          "energy_remaining_wh",
+          "power_used_w",
+          "inverter_remaining_w",
+          "energy_utilization",
+          "essential_served",
+          "essential_total",
+          "violations"
+        ],
+        "title": "Allocation",
+        "type": "object"
+      },
+      "ApplianceDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          },
+          "selected": {
+            "title": "Selected",
+            "type": "boolean"
+          },
+          "energy_wh": {
+            "minimum": 0,
+            "title": "Energy Wh",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility",
+          "selected",
+          "energy_wh"
+        ],
+        "title": "ApplianceDecision",
+        "type": "object"
+      },
+      "ApplianceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "power_w": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Power W",
+            "type": "number"
+          },
+          "duration_h": {
+            "maximum": 168,
+            "minimum": 0,
+            "title": "Duration H",
+            "type": "number"
+          },
+          "utility": {
+            "maximum": 1000000,
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "essential": {
+            "default": false,
+            "title": "Essential",
+            "type": "boolean"
+          },
+          "mandatory": {
+            "default": false,
+            "title": "Mandatory",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "power_w",
+          "duration_h",
+          "utility"
+        ],
+        "title": "ApplianceInput",
+        "type": "object"
+      },
+      "Measurement": {
+        "additionalProperties": false,
+        "properties": {
+          "measured_bitstring": {
+            "title": "Measured Bitstring",
+            "type": "string"
+          },
+          "appliance_bitstring": {
+            "title": "Appliance Bitstring",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "feasible": {
+            "title": "Feasible",
+            "type": "boolean"
+          },
+          "encoding_feasible": {
+            "title": "Encoding Feasible",
+            "type": "boolean"
+          },
+          "utility": {
+            "minimum": 0,
+            "title": "Utility",
+            "type": "number"
+          },
+          "qubo_energy": {
+            "title": "Qubo Energy",
+            "type": "number"
+          }
+        },
+        "required": [
+          "measured_bitstring",
+          "appliance_bitstring",
+          "count",
+          "feasible",
+          "encoding_feasible",
+          "utility",
+          "qubo_energy"
+        ],
+        "title": "Measurement",
+        "type": "object"
+      },
+      "OptimizerRun": {
+        "additionalProperties": false,
+        "properties": {
+          "nfev": {
+            "title": "Nfev",
+            "type": "integer"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "objective": {
+            "title": "Objective",
+            "type": "number"
+          }
+        },
+        "required": [
+          "nfev",
+          "success",
+          "message",
+          "objective"
+        ],
+        "title": "OptimizerRun",
+        "type": "object"
+      },
+      "QuantumMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "qubits": {
+            "title": "Qubits",
+            "type": "integer"
+          },
+          "appliance_qubits": {
+            "title": "Appliance Qubits",
+            "type": "integer"
+          },
+          "slack_qubits": {
+            "title": "Slack Qubits",
+            "type": "integer"
+          },
+          "qaoa_depth": {
+            "title": "Qaoa Depth",
+            "type": "integer"
+          },
+          "circuit_depth": {
+            "title": "Circuit Depth",
+            "type": "integer"
+          },
+          "shots": {
+            "title": "Shots",
+            "type": "integer"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "optimizer": {
+            "title": "Optimizer",
+            "type": "string"
+          },
+          "max_evaluations_per_restart": {
+            "title": "Max Evaluations Per Restart",
+            "type": "integer"
+          },
+          "restarts": {
+            "title": "Restarts",
+            "type": "integer"
+          },
+          "optimizer_evaluations": {
+            "title": "Optimizer Evaluations",
+            "type": "integer"
+          },
+          "optimizer_runs": {
+            "items": {
+              "$ref": "#/$defs/OptimizerRun"
+            },
+            "title": "Optimizer Runs",
+            "type": "array"
+          },
+          "optimizer_iterations": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Optimizer Iterations"
+          },
+          "iteration_note": {
+            "title": "Iteration Note",
+            "type": "string"
+          },
+          "parameters": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Parameters",
+            "type": "array"
+          },
+          "penalty": {
+            "title": "Penalty",
+            "type": "number"
+          },
+          "hamiltonian_scale": {
+            "title": "Hamiltonian Scale",
+            "type": "number"
+          },
+          "expected_qubo_energy": {
+            "title": "Expected Qubo Energy",
+            "type": "number"
+          },
+          "objective_history": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Objective History",
+            "type": "array"
+          },
+          "feasible_selection_probability": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Feasible Selection Probability",
+            "type": "number"
+          },
+          "feasible_encoding_probability": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Feasible Encoding Probability",
+            "type": "number"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Counts",
+            "type": "object"
+          },
+          "distribution": {
+            "items": {
+              "$ref": "#/$defs/Measurement"
+            },
+            "title": "Distribution",
+            "type": "array"
+          }
+        },
+        "required": [
+          "qubits",
+          "appliance_qubits",
+          "slack_qubits",
+          "qaoa_depth",
+          "circuit_depth",
+          "shots",
+          "seed",
+          "optimizer",
+          "max_evaluations_per_restart",
+          "restarts",
+          "optimizer_evaluations",
+          "optimizer_runs",
+          "optimizer_iterations",
+          "iteration_note",
+          "parameters",
+          "penalty",
+          "hamiltonian_scale",
+          "expected_qubo_energy",
+          "objective_history",
+          "feasible_selection_probability",
+          "feasible_encoding_probability",
+          "counts",
+          "distribution"
+        ],
+        "title": "QuantumMetadata",
+        "type": "object"
+      },
+      "ScenarioInput": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "default": "Custom outage",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "appliances": {
+            "items": {
+              "$ref": "#/$defs/ApplianceInput"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Appliances",
+            "type": "array"
+          },
+          "battery_wh": {
+            "maximum": 1000000000,
+            "minimum": 0,
+            "title": "Battery Wh",
+            "type": "number"
+          },
+          "inverter_w": {
+            "maximum": 10000000,
+            "minimum": 0,
+            "title": "Inverter W",
+            "type": "number"
+          },
+          "outage_h": {
+            "exclusiveMinimum": 0,
+            "maximum": 168,
+            "title": "Outage H",
+            "type": "number"
+          }
+        },
+        "required": [
+          "appliances",
+          "battery_wh",
+          "inverter_w",
+          "outage_h"
+        ],
+        "title": "ScenarioInput",
+        "type": "object"
+      },
+      "SolverResult": {
+        "additionalProperties": false,
+        "properties": {
+          "algorithm": {
+            "enum": [
+              "classical",
+              "quantum"
+            ],
+            "title": "Algorithm",
+            "type": "string"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "optimal",
+              "infeasible",
+              "sampled",
+              "no_feasible_sample",
+              "unavailable",
+              "oversized",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "feasibility": {
+            "default": "unknown",
+            "enum": [
+              "feasible",
+              "infeasible",
+              "unknown"
+            ],
+            "title": "Feasibility",
+            "type": "string"
+          },
+          "allocation": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Allocation"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "runtime_s": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Runtime S"
+          },
+          "enumerated": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Enumerated"
+          },
+          "feasible_selections": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Feasible Selections"
+          },
+          "quantum_metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/QuantumMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Error Code"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Message"
+          }
+        },
+        "required": [
+          "algorithm",
+          "method",
+          "status"
+        ],
+        "title": "SolverResult",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "schema_version": {
+        "const": "1.0",
+        "default": "1.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "scenario": {
+        "$ref": "#/$defs/ScenarioInput"
+      },
+      "classical": {
+        "$ref": "#/$defs/SolverResult"
+      },
+      "quantum": {
+        "$ref": "#/$defs/SolverResult"
+      },
+      "comparison_status": {
+        "enum": [
+          "complete",
+          "quantum_unavailable",
+          "quantum_oversized",
+          "quantum_failed",
+          "no_feasible_pair"
+        ],
+        "title": "Comparison Status",
+        "type": "string"
+      },
+      "objective_gap": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Objective Gap"
+      },
+      "relative_gap": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Relative Gap"
+      },
+      "environment": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": "Environment",
+        "type": "object"
+      },
+      "bit_order": {
+        "title": "Bit Order",
+        "type": "string"
+      },
+      "interpretation": {
+        "title": "Interpretation",
+        "type": "string"
+      }
+    },
+    "required": [
+      "scenario",
+      "classical",
+      "quantum",
+      "comparison_status",
+      "objective_gap",
+      "relative_gap",
+      "environment",
+      "bit_order",
+      "interpretation"
+    ],
+    "title": "CompareResponse",
+    "type": "object"
+  }
+}
