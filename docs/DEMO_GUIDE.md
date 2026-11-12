@@ -1,6 +1,6 @@
 # Demonstration guide
 
-The final application architecture is React + TypeScript + Vite -> FastAPI -> Qiskit/classical solver. React is not built yet; use the backend API documentation to demonstrate implemented features. Streamlit is not required. The optional historical UI commands below require requirements-demo.txt and are outside the backend release.
+The final application architecture is React + TypeScript + Vite -> FastAPI -> Qiskit/classical solver. The React frontend in frontend/ is built and is the main demo: start the backend (`uvicorn backend.main:app --host 127.0.0.1 --port 8000`), then `npm run dev` in frontend/, and open http://127.0.0.1:5173/. Swagger at /docs is a secondary view. Streamlit is not required. The optional historical UI commands below require requirements-demo.txt and are outside the backend release.
 
 ## Launch from the project root
 

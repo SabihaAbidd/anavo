@@ -4,6 +4,8 @@ Required destination: public repository **anavo**, description **Quantum-Assiste
 
 ## Current observed state
 
+**Update 2026-11-12:** remote main was verified at 3940efd61cdc3eaa7cba19abafe923709ff7a9b1, matching local HEAD. The blocker notes below are kept as history.
+
 The GitHub integration is installed and authenticated as **SabihaAbidd**. Public **https://github.com/SabihaAbidd/anavo**, repository ID 1455287545, now contains the user-published project. Local origin/main and the remote were verified at d9c24703603b8f833b140cdd76338cd42d697b4e. This replaces earlier empty-repository observations. The project must not be recreated.
 
 The first attempted `.gitignore` commit returned **403 Resource not accessible by integration**. User-level admin/push flags in repository metadata do not establish that the integration token can write contents. No remote commit/file write succeeded. Listing manageable GitHub App installations returned no entries, so no configurable installation was available through the integration. No account permissions were changed.

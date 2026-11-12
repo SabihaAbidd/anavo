@@ -20,7 +20,7 @@
 | [x] | Pass strict release gate | results/release_check.json: ready=true, exit_code=0, matching runtime-source fingerprint |
 | [x] | Prepare API/math/report/pitch/demo/deployment docs | Current measured evidence replaces prior dependency-blocked status; no quantum advantage claim |
 | [x] | Configure backend-only CI | Fresh venv, tested lock, no Streamlit, actual runtime experiments and strict gate; read-only repository token |
-| [ ] | Publish latest validated source and measured evidence | Latest git add denied .git/index.lock; dependency-lock blob API returned 403. Remote main remains verified at 6f471887303118e3206c8e648de2bfbcce48f58b; these new changes are local. |
+| [x] | Publish latest validated source and measured evidence | 2026-11-12: remote main verified at 3940efd61cdc3eaa7cba19abafe923709ff7a9b1, equal to local HEAD (frontend, opening, logo fix). Earlier index.lock/403 blockers are historical. |
 | [ ] | Verify CI on newly published commit | Workflow definition/local syntax checks are not a completed CI run |
 | [x] | Separate React frontend | React/TypeScript/Vite, original GSAP intro, animated pixel planet, lime/purple responsive UI, editable manifest and real classical/QAOA comparison |
 
@@ -73,3 +73,12 @@ Removed the sessionStorage gate: the recorded-style intro now mounts on every pa
 
 ## Header logo placement correction
 Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26px mobile), separated the wordmark, and aligned the registration mark. Production TypeScript/Vite build passed; desktop preview visually verified without logo overlap. Fresh page load also visibly showed the opening before revealing the app. Backend checks were not rerun for this presentation-only change.
+
+## Pre-recording verification (2026-11-12, rerun this session)
+- Remote: `git ls-remote origin main` = 3940efd61cdc3eaa7cba19abafe923709ff7a9b1 = local HEAD.
+- Both servers started; /health ok with quantum dependencies available.
+- Live classical /api/optimize: Evening 24 (fan/lights/router, 180 Wh, 60 W); Ample 30 (all four); Limited 15 (lights/router); Mandatory infeasible returned infeasible, 16 enumerated, 0 feasible.
+- Live /api/compare (Evening, p=2, 2,048 shots, seed 42): measured best utility 24, gap 0; 12 qubits (4 appliance + 8 slack), circuit depth 33, 45.9% physically feasible shots, COBYLA hit its 80-evaluation budget per restart, ~20 s runtime. Simulator only; no speedup claimed.
+- scripts.validate: 72 passed, 0 skipped/failures/errors.
+- npm run build passed; npm run test:integration: 2 passed, 0 failed.
+- Browser: opening mounted on load, Enter skip worked, header logo measured 30x30 px on desktop. Phone-layout check was not finished in this session because the hidden preview pane stopped responding; check it visually before recording.
