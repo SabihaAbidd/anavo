@@ -92,3 +92,7 @@ Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26
 - Frontend: quantum insights panel, timeline (Gantt + load/battery chart), society grid with single-home QAOA verification, Pakistan data library, architecture section.
 - Checks run this milestone: scripts.validate 91 passed / 0 skipped / 0 failed; npm run build passed; npm run test:integration 3 passed; scripts.benchmark --require-quantum regenerated (30, 15, no feasible sample); scripts.api_startup_check passed; scripts.verify_release passed.
 - Browser (desktop, hidden preview pane): all sections render; society job, single-home QAOA verify, compare insights and schedule flows completed with expected values. Phone layout of new sections not visually verified.
+
+## Architecture figure (2026-11-12)
+- Added paper-style SVG figure `frontend/src/assets/anavo-architecture.svg` (lanes: client, orchestration, solver plane, verification; QUBO/Ising/QAOA circuit drawing; COBYLA loop; feasibility oracle; measured Evening numbers). Embedded in the Architecture section (scrollable on phones, full-size and download links), README, docs/ARCHITECTURE.md and docs/REPORT.md. SVG styles scoped to `#anavo-fig`.
+- Checks: SVG parses as XML; npm run build passed; browser render verified at 1600 px and no page-level horizontal overflow at phone width.

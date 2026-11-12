@@ -1,0 +1,437 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="anavo-fig" viewBox="0 0 1600 1060" role="img" aria-labelledby="fig-title fig-desc" font-family="'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace">
+<title id="fig-title">ANAVO system architecture</title>
+<desc id="fig-desc">Hybrid classical and quantum resource allocation. Clients (household and housing society) call a FastAPI orchestration layer with admission control and an async job queue. The solver plane formulates a binary allocation problem, solves it exactly with enumeration and MILP, and in parallel encodes it as a QUBO, maps it to an Ising Hamiltonian and runs a QAOA circuit on the Qiskit Aer simulator with COBYLA feedback. Every candidate passes an independent feasibility oracle and is compared with the exact optimum.</desc>
+<defs>
+ <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#1d2219"/></pattern>
+ <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#1b1730" stroke-width="3"/></pattern>
+ <marker id="aL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b7ff39"/></marker>
+ <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9a79ff"/></marker>
+ <marker id="aW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#eaece4"/></marker>
+ <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <linearGradient id="qbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16122a"/><stop offset="1" stop-color="#100e1c"/></linearGradient>
+</defs>
+<style>
+ #anavo-fig .bg{fill:#0c0e0b}
+ #anavo-fig .lane{fill:#0f120d;stroke:#262b20;stroke-width:1}
+ #anavo-fig .box{fill:#12150f;stroke:#454d38;stroke-width:1}
+ #anavo-fig .qbox{fill:#15112a;stroke:#5d4a9a;stroke-width:1}
+ #anavo-fig .key{fill:#141a0d;stroke:#b7ff39;stroke-width:1.5}
+ #anavo-fig .t{fill:#eaece4;font-size:11px}
+ #anavo-fig .m{fill:#8b9283;font-size:10px}
+ #anavo-fig .s{fill:#8b9283;font-size:9px;letter-spacing:.6px}
+ #anavo-fig .h{fill:#b7ff39;font-size:10.5px;letter-spacing:1.2px;font-weight:600}
+ #anavo-fig .hp{fill:#b9a3ff;font-size:10.5px;letter-spacing:1.2px;font-weight:600}
+ #anavo-fig .lane-t{fill:#9a79ff;font-size:10px;letter-spacing:2px}
+ #anavo-fig .eq{fill:#eaece4;font-size:15px}
+ #anavo-fig .eqs{fill:#c9d0bc;font-size:12px}
+ #anavo-fig .title{fill:#eaece4;font-size:22px;font-weight:600;letter-spacing:-.2px}
+ #anavo-fig .lime{fill:#b7ff39}.pur{fill:#9a79ff}.wht{fill:#eaece4}
+ #anavo-fig .e{fill:none;stroke-width:1.6}
+ #anavo-fig .eL{stroke:#b7ff39}.eP{stroke:#9a79ff}.eW{stroke:#eaece4}
+ #anavo-fig .flow{stroke-dasharray:7 5;animation:anavo-dash 1.4s linear infinite}
+ #anavo-fig .fb{stroke-dasharray:3 5;animation:anavo-dash 1s linear infinite reverse}
+ #anavo-fig .wire{stroke:#b7ff39;stroke-width:1.2}
+ #anavo-fig .wireS{stroke:#9a79ff;stroke-width:3.2;stroke-opacity:.55}
+ #anavo-fig .gate{fill:#0c0e0b;stroke:#b7ff39;stroke-width:1.2}
+ #anavo-fig .gateP{fill:#0c0e0b;stroke:#9a79ff;stroke-width:1.2}
+ #anavo-fig .gt{fill:#eaece4;font-size:9.5px;text-anchor:middle}
+ #anavo-fig .blk{fill:none;stroke:#5d4a9a;stroke-dasharray:4 3}
+ #anavo-fig .pulse{animation:anavo-pulse 2.4s ease-in-out infinite}
+ @keyframes anavo-dash{to{stroke-dashoffset:-24}}
+ @keyframes anavo-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+ @media (prefers-reduced-motion:reduce){#anavo-fig .flow,#anavo-fig .fb,#anavo-fig .pulse{animation:none}}
+</style>
+
+<rect class="bg" width="1600" height="1060"/>
+<rect width="1600" height="1060" fill="url(#dots)"/>
+
+<!-- Header -->
+<text class="title" x="40" y="46">ANAVO · hybrid classical–quantum allocation under hard physical constraints</text>
+<text class="m" x="40" y="70">Fig. 1 — system architecture, data flow and verification path. Every arrow is an implemented code path; every number is measured.</text>
+<text class="s" x="1560" y="44" text-anchor="end">p = 2 · shots = 2,048 · seed = 42 · n_q ≤ 14</text>
+<text class="s" x="1560" y="62" text-anchor="end">schema 1.0 · github.com/SabihaAbidd/anavo</text>
+
+<!-- Lanes -->
+<rect class="lane" x="30" y="96" width="310" height="890"/>
+<rect class="lane" x="360" y="96" width="290" height="890"/>
+<rect class="lane" x="670" y="96" width="590" height="890"/>
+<rect class="lane" x="1280" y="96" width="290" height="890"/>
+<text class="lane-t" x="46" y="118">I · CLIENT  (B2C · B2B)</text>
+<text class="lane-t" x="376" y="118">II · ORCHESTRATION</text>
+<text class="lane-t" x="686" y="118">III · SOLVER PLANE</text>
+<text class="lane-t" x="1296" y="118">IV · VERIFICATION</text>
+
+<!-- ===== Lane I ===== -->
+<rect class="box" x="46" y="130" width="278" height="108"/>
+<text class="h" x="58" y="150">B2C · HOUSEHOLD CONSOLE</text>
+<text class="t" x="58" y="172">Energy Lab · Timeline · Insights</text>
+<text class="t" x="58" y="192">in: {(Pᵢ, tᵢ, uᵢ, mᵢ)}ᵢ, B, I, T</text>
+<text class="m" x="58" y="212">≤ 16 appliances per request</text>
+<text class="m" x="58" y="228">outage window T ≤ 168 h</text>
+
+<rect class="box" x="46" y="254" width="278" height="108"/>
+<text class="h" x="58" y="274">B2B · SOCIETY CONSOLE</text>
+<text class="t" x="58" y="296">1 – 500 homes from archetypes</text>
+<text class="t" x="58" y="316">shared B, I · fairness floor φ</text>
+<text class="m" x="58" y="336">priority weight wₕ (medical ×2)</text>
+<text class="m" x="58" y="352">per-home QAOA verification</text>
+
+<rect class="box" x="46" y="378" width="278" height="100"/>
+<text class="h" x="58" y="398">INSIGHT RENDERER</text>
+<text class="t" x="58" y="420">histogram · P(x*) · landscape</text>
+<text class="t" x="58" y="440">COBYLA trace · qubit map</text>
+<text class="m" x="58" y="460">SVG, no chart library</text>
+<g transform="translate(250,404)"><rect x="0" y="40" width="8" height="18" class="pur"/><rect x="11" y="18" width="8" height="40" class="lime"/><rect x="22" y="30" width="8" height="28" class="pur"/><rect x="33" y="44" width="8" height="14" class="lime"/><rect x="44" y="50" width="8" height="8" class="pur"/></g>
+
+<text class="s" x="46" y="502">REACT 19 · TYPESCRIPT · VITE · GSAP · CANVAS</text>
+
+<rect class="box" x="46" y="520" width="278" height="220"/>
+<text class="h" x="58" y="540">REQUEST CONTRACT · JSON</text>
+<text class="m" x="58" y="564">{</text>
+<text class="m" x="58" y="580">  "scenario": {</text>
+<text class="t" x="58" y="596">    "battery_wh": 240,</text>
+<text class="t" x="58" y="612">    "inverter_w": 100,</text>
+<text class="t" x="58" y="628">    "outage_h": 3,</text>
+<text class="m" x="58" y="644">    "appliances": [ … ]</text>
+<text class="m" x="58" y="660">  },</text>
+<text class="m" x="58" y="676">  "quantum_options": {</text>
+<text class="t" x="58" y="692">    "depth": 2, "shots": 2048,</text>
+<text class="t" x="58" y="708">    "seed": 42, "max_qubits": 14</text>
+<text class="m" x="58" y="724">  } }</text>
+
+<rect class="box" x="46" y="776" width="278" height="194"/>
+<text class="h" x="58" y="796">PAKISTAN CONTEXT DATASET</text>
+<text class="t" x="58" y="820">NEPRA feeder bands   0 → 16 h/d</text>
+<text class="t" x="58" y="840">KE high-loss avg     10.65 h/d</text>
+<text class="t" x="58" y="860">ESMAP GHI            5.67 kWh/m²</text>
+<text class="t" x="58" y="880">NEECA 3★ ceiling fan 50–65 W</text>
+<text class="m" x="58" y="904">basis ∈ {cited source, estimate}</text>
+<text class="m" x="58" y="922">GET /api/data/pakistan</text>
+<text class="s" x="58" y="952">data/pakistan_energy.json</text>
+<path class="e eL" d="M185,776 V744" marker-end="url(#aL)"/>
+<text class="s" x="192" y="764">library → manifest</text>
+
+<!-- ===== Lane II ===== -->
+<rect class="box" x="376" y="130" width="258" height="200"/>
+<text class="h" x="388" y="150">FASTAPI · PYDANTIC (STRICT)</text>
+<text class="t" x="388" y="172"><tspan class="m">GET </tspan> /health</text>
+<text class="t" x="388" y="188"><tspan class="m">GET </tspan> /api/scenarios</text>
+<text class="t" x="388" y="204"><tspan class="m">POST</tspan> /api/optimize</text>
+<text class="t" x="388" y="220"><tspan class="m">POST</tspan> /api/compare</text>
+<text class="t" x="388" y="236"><tspan class="m">POST</tspan> /api/schedule</text>
+<text class="t" x="388" y="252"><tspan class="m">POST</tspan> /api/fleet/optimize</text>
+<text class="t" x="388" y="268"><tspan class="m">POST</tspan> /api/jobs  → 202</text>
+<text class="t" x="388" y="284"><tspan class="m">GET </tspan> /api/jobs/{id}</text>
+<text class="m" x="388" y="306">extra="forbid" · no NaN/∞</text>
+<text class="m" x="388" y="320">cross-field physics validation</text>
+
+<rect class="box" x="376" y="346" width="258" height="82"/>
+<text class="h" x="388" y="366">ADMISSION CONTROL</text>
+<text class="t" x="388" y="388">BoundedSemaphore(1)</text>
+<text class="m" x="388" y="406">busy → 429 · Retry-After: 1</text>
+<text class="m" x="388" y="420">bounds CPU per process</text>
+<path class="e eW" d="M505,330 V344" marker-end="url(#aW)"/>
+
+<rect class="box" x="376" y="444" width="258" height="172"/>
+<text class="h" x="388" y="464">ASYNC JOB QUEUE</text>
+<g font-size="9.5">
+ <circle cx="410" cy="500" r="15" fill="none" stroke="#8b9283"/><text class="gt" x="410" y="503">queued</text>
+ <circle cx="478" cy="500" r="15" fill="none" stroke="#b7ff39" class="pulse"/><text class="gt" x="478" y="503">run</text>
+ <circle cx="560" cy="486" r="13" fill="none" stroke="#b7ff39"/><text class="gt" x="560" y="489">ok</text>
+ <circle cx="560" cy="522" r="13" fill="none" stroke="#9a79ff"/><text class="gt" x="560" y="525">fail</text>
+ <path class="e eW" d="M425,500 H461" marker-end="url(#aW)"/>
+ <path class="e eL" d="M493,496 L545,488" marker-end="url(#aL)"/>
+ <path class="e eP" d="M493,504 L545,518" marker-end="url(#aP)"/>
+</g>
+<text class="t" x="388" y="560">submit → 202 {job_id} → poll</text>
+<text class="m" x="388" y="578">1 worker shares the solver slot</text>
+<text class="m" x="388" y="594">prod: Redis/RQ · same contract</text>
+<text class="s" x="388" y="608">QAOA · large fleets off-request</text>
+<path class="e eW" d="M505,428 V442" marker-end="url(#aW)"/>
+
+<rect class="box" x="376" y="632" width="258" height="98"/>
+<text class="h" x="388" y="652">STRUCTURED ERRORS</text>
+<text class="t" x="388" y="674">413  qubit budget exceeded</text>
+<text class="t" x="388" y="692">422  contract / physics</text>
+<text class="t" x="388" y="710">503  quantum unavailable</text>
+<text class="m" x="388" y="724">partial compare keeps exact result</text>
+
+<rect class="box" x="376" y="746" width="258" height="108"/>
+<text class="h" x="388" y="766">SERVICE LAYER</text>
+<text class="t" x="388" y="788">framework-free use cases</text>
+<text class="t" x="388" y="806">optimize · compare · schedule</text>
+<text class="t" x="388" y="824">fleet · dataset</text>
+<text class="m" x="388" y="844">results never fabricated</text>
+
+<rect class="box" x="376" y="870" width="258" height="100"/>
+<text class="h" x="388" y="890">PINNED RUNTIME</text>
+<text class="t" x="388" y="912">Python 3.13 · Qiskit 2.6</text>
+<text class="t" x="388" y="930">Aer 0.18 · SciPy 1.18 (HiGHS)</text>
+<text class="t" x="388" y="948">NumPy 2.5 · FastAPI 0.16x</text>
+<text class="m" x="388" y="964">requirements-lock.txt</text>
+
+<!-- ===== Lane III: formulation ===== -->
+<rect class="key" x="686" y="130" width="558" height="94" filter="url(#glow)"/>
+<text class="h" x="700" y="150">(P) BINARY RESOURCE ALLOCATION</text>
+<text class="eq" x="700" y="180">max Σᵢuᵢxᵢ  s.t.  ΣᵢPᵢtᵢxᵢ ≤ B,  ΣᵢPᵢxᵢ ≤ I,  xₘ = 1 ∀m∈M</text>
+<text class="m" x="700" y="204">x ∈ {0,1}ⁿ · B usable battery (Wh) · I inverter (W) · M mandatory loads, never relaxed</text>
+<text class="s" x="700" y="218">utility uᵢ = user priority · Eᵢ = Pᵢ·tᵢ</text>
+
+<!-- classical row -->
+<text class="s" x="1244" y="238" text-anchor="end">CLASSICAL BRANCH · EXACT</text>
+<rect class="box" x="686" y="244" width="178" height="166"/>
+<text class="h" x="698" y="264">EXACT ENUMERATION</text>
+<text class="t" x="698" y="286">reference optimum x*</text>
+<text class="t" x="698" y="306">|𝒳| = 2ⁿ, n ≤ 20</text>
+<text class="t" x="698" y="326">lexicographic ties</text>
+<text class="m" x="698" y="346">O(2ⁿ · n)</text>
+<text class="m" x="698" y="362">/api/optimize</text>
+<text class="s" x="698" y="396">Evening: 16 enumerated</text>
+
+<rect class="box" x="876" y="244" width="178" height="166"/>
+<text class="h" x="888" y="264">MILP SCHEDULER</text>
+<text class="t" x="888" y="286">xᵢ,ₛ start · Lₜ SoC</text>
+<text class="t" x="888" y="306">Σ Pᵢ·runᵢ,ₜ ≤ I  ∀t</text>
+<text class="t" x="888" y="326">Lₜ = Lₜ₋₁ + Sₜ − loadₜΔ</text>
+<text class="m" x="888" y="346">Sₜ = GHI · kWp · 0.75</text>
+<text class="m" x="888" y="362">HiGHS · ≤ 96 slots</text>
+<text class="s" x="888" y="396">house: 47 vs 42 at once</text>
+
+<rect class="box" x="1066" y="244" width="178" height="166"/>
+<text class="h" x="1078" y="264">SOCIETY MILP</text>
+<text class="t" x="1078" y="286">yₕ,ᵢ ∈ {0,1}</text>
+<text class="t" x="1078" y="306">ΣE ≤ B ,  ΣP ≤ I</text>
+<text class="t" x="1078" y="326">Uₕ ≥ φ·Uₕᵐᵃˣ</text>
+<text class="m" x="1078" y="346">baseline: equal split B/N</text>
+<text class="m" x="1078" y="362">500 homes · ≈3 s</text>
+<text class="s" x="1078" y="396">6 kW: 871 vs 740 pts</text>
+
+<path class="e eL flow" d="M775,224 V242" marker-end="url(#aL)"/>
+<path class="e eL flow" d="M965,224 V242" marker-end="url(#aL)"/>
+<path class="e eL flow" d="M1155,224 V242" marker-end="url(#aL)"/>
+
+<!-- quantum region -->
+<rect x="686" y="440" width="558" height="530" fill="url(#qbg)" stroke="#3a2f63"/>
+<rect x="686" y="440" width="558" height="530" fill="url(#hatch)" opacity=".35"/>
+<text class="s" x="1236" y="456" text-anchor="end" style="fill:#b9a3ff">QUANTUM BRANCH · QAOA ON QISKIT AER</text>
+
+<rect class="qbox" x="698" y="466" width="125" height="104"/>
+<text class="hp" x="708" y="484">① NORMALISE</text>
+<text class="t" x="708" y="504">Fraction → ℤ</text>
+<text class="t" x="708" y="522">÷ gcd · × lcm</text>
+<text class="m" x="708" y="542">exact, no float</text>
+<text class="m" x="708" y="558">loss of priority</text>
+
+<rect class="qbox" x="835" y="466" width="125" height="104"/>
+<text class="hp" x="845" y="484">② SLACK</text>
+<text class="t" x="845" y="504">Σwᵢxᵢ + Σcₖbₖ = C</text>
+<text class="t" x="845" y="522">bounded binary</text>
+<text class="m" x="845" y="542">cₖ = 1,2,4,…,rest</text>
+<text class="m" x="845" y="558">+8 qubits (Evening)</text>
+
+<rect class="qbox" x="972" y="466" width="125" height="104"/>
+<text class="hp" x="982" y="484">③ QUBO</text>
+<text class="t" x="982" y="504">min xᵀQx</text>
+<text class="t" x="982" y="522">A = 1 + Σuᵢ</text>
+<g transform="translate(1050,530)">
+ <rect width="7" height="7" x="0" y="0" class="lime"/><rect width="7" height="7" x="8" y="0" fill="#5d4a9a"/><rect width="7" height="7" x="16" y="0" fill="#2c3a1a"/><rect width="7" height="7" x="24" y="0" fill="#5d4a9a"/><rect width="7" height="7" x="32" y="0" fill="#2c3a1a"/>
+ <rect width="7" height="7" x="8" y="8" class="lime"/><rect width="7" height="7" x="16" y="8" fill="#5d4a9a"/><rect width="7" height="7" x="24" y="8" fill="#2c3a1a"/><rect width="7" height="7" x="32" y="8" fill="#5d4a9a"/>
+ <rect width="7" height="7" x="16" y="16" class="lime"/><rect width="7" height="7" x="24" y="16" fill="#5d4a9a"/><rect width="7" height="7" x="32" y="16" fill="#5d4a9a"/>
+ <rect width="7" height="7" x="24" y="24" class="lime"/><rect width="7" height="7" x="32" y="24" fill="#2c3a1a"/>
+ <rect width="7" height="7" x="32" y="32" class="lime"/>
+</g>
+<text class="m" x="982" y="542">upper-tri Q</text>
+<text class="m" x="982" y="558">penalties</text>
+
+<rect class="qbox" x="1109" y="466" width="125" height="104"/>
+<text class="hp" x="1119" y="484">④ ISING</text>
+<text class="t" x="1119" y="504">x = (1 − Z)/2</text>
+<text class="t" x="1119" y="522">H_C = Σhᵢ Zᵢ</text>
+<text class="t" x="1119" y="540">   + Σ Jᵢⱼ ZᵢZⱼ</text>
+<text class="m" x="1119" y="558">scaled by max|h,J|</text>
+
+<path class="e eP flow" d="M823,518 H833" marker-end="url(#aP)"/>
+<path class="e eP flow" d="M960,518 H970" marker-end="url(#aP)"/>
+<path class="e eP flow" d="M1097,518 H1107" marker-end="url(#aP)"/>
+
+<!-- circuit -->
+<text class="hp" x="698" y="598">⑤ QAOA ANSATZ</text>
+<text class="eqs" x="806" y="598">|ψ(γ,β)⟩ = Πₖ e^(−iβₖH_M) e^(−iγₖH_C) |+⟩^⊗n</text>
+<path class="e eP flow" d="M1171,570 V584 H1236 V600" marker-end="url(#aP)" opacity=".6"/>
+
+<g>
+ <text class="m" x="700" y="626">|0⟩ q₀</text>
+ <text class="m" x="700" y="654">|0⟩ q₁</text>
+ <text class="m" x="700" y="682">|0⟩ q₂</text>
+ <text class="m" x="700" y="710">|0⟩ q₃</text>
+ <text class="m" x="700" y="740" style="fill:#b9a3ff">q₄…q₁₁</text>
+ <line class="wire" x1="748" y1="622" x2="1176" y2="622"/>
+ <line class="wire" x1="748" y1="650" x2="1176" y2="650"/>
+ <line class="wire" x1="748" y1="678" x2="1176" y2="678"/>
+ <line class="wire" x1="748" y1="706" x2="1176" y2="706"/>
+ <line class="wireS" x1="748" y1="736" x2="1176" y2="736"/>
+
+ <!-- Hadamards -->
+ <rect class="gate" x="756" y="612" width="20" height="20"/><text class="gt" x="766" y="626">H</text>
+ <rect class="gate" x="756" y="640" width="20" height="20"/><text class="gt" x="766" y="654">H</text>
+ <rect class="gate" x="756" y="668" width="20" height="20"/><text class="gt" x="766" y="682">H</text>
+ <rect class="gate" x="756" y="696" width="20" height="20"/><text class="gt" x="766" y="710">H</text>
+ <rect class="gateP" x="756" y="726" width="20" height="20"/><text class="gt" x="766" y="740">H</text>
+
+ <!-- cost layer -->
+ <rect class="blk" x="788" y="604" width="192" height="152"/>
+ <text class="s" x="884" y="768" text-anchor="middle" style="fill:#b9a3ff">U_C(γₖ): RZ ← hᵢ · RZZ ← Jᵢⱼ</text>
+ <rect class="gate" x="796" y="612" width="26" height="20"/><text class="gt" x="809" y="626">RZ</text>
+ <rect class="gate" x="796" y="640" width="26" height="20"/><text class="gt" x="809" y="654">RZ</text>
+ <rect class="gate" x="796" y="668" width="26" height="20"/><text class="gt" x="809" y="682">RZ</text>
+ <rect class="gate" x="796" y="696" width="26" height="20"/><text class="gt" x="809" y="710">RZ</text>
+ <rect class="gateP" x="796" y="726" width="26" height="20"/><text class="gt" x="809" y="740">RZ</text>
+ <g stroke="#b7ff39" stroke-width="1.4">
+  <line x1="840" y1="622" x2="840" y2="650"/><line x1="862" y1="650" x2="862" y2="678"/><line x1="884" y1="622" x2="884" y2="706"/>
+  <line x1="906" y1="678" x2="906" y2="706"/>
+ </g>
+ <g stroke="#9a79ff" stroke-width="1.4"><line x1="928" y1="622" x2="928" y2="736"/><line x1="950" y1="678" x2="950" y2="736"/><line x1="968" y1="706" x2="968" y2="736"/></g>
+ <g class="lime"><circle cx="840" cy="622" r="3.5"/><circle cx="840" cy="650" r="3.5"/><circle cx="862" cy="650" r="3.5"/><circle cx="862" cy="678" r="3.5"/><circle cx="884" cy="622" r="3.5"/><circle cx="884" cy="706" r="3.5"/><circle cx="906" cy="678" r="3.5"/><circle cx="906" cy="706" r="3.5"/></g>
+ <g class="pur"><circle cx="928" cy="622" r="3.5"/><circle cx="928" cy="736" r="3.5"/><circle cx="950" cy="678" r="3.5"/><circle cx="950" cy="736" r="3.5"/><circle cx="968" cy="706" r="3.5"/><circle cx="968" cy="736" r="3.5"/></g>
+ 
+ <!-- mixer -->
+ <rect class="blk" x="990" y="604" width="52" height="152"/>
+ <text class="s" x="1016" y="768" text-anchor="middle" style="fill:#b9a3ff">U_M(βₖ)</text>
+ <rect class="gate" x="1003" y="612" width="26" height="20"/><text class="gt" x="1016" y="626">RX</text>
+ <rect class="gate" x="1003" y="640" width="26" height="20"/><text class="gt" x="1016" y="654">RX</text>
+ <rect class="gate" x="1003" y="668" width="26" height="20"/><text class="gt" x="1016" y="682">RX</text>
+ <rect class="gate" x="1003" y="696" width="26" height="20"/><text class="gt" x="1016" y="710">RX</text>
+ <rect class="gateP" x="1003" y="726" width="26" height="20"/><text class="gt" x="1016" y="740">RX</text>
+
+ <path d="M788,600 V596 H1042 V600" fill="none" stroke="#b9a3ff"/>
+ <text class="t" x="1062" y="684" style="fill:#b9a3ff">× p</text>
+ <text class="t" x="1062" y="700" style="fill:#b9a3ff">= 2</text>
+
+ <!-- measurement -->
+ <g>
+  <rect class="gate" x="1104" y="612" width="22" height="20"/><path d="M1108,628 a7,7 0 0 1 14,0" fill="none" stroke="#eaece4"/><line x1="1115" y1="628" x2="1121" y2="616" stroke="#eaece4"/>
+  <rect class="gate" x="1104" y="640" width="22" height="20"/><path d="M1108,656 a7,7 0 0 1 14,0" fill="none" stroke="#eaece4"/><line x1="1115" y1="656" x2="1121" y2="644" stroke="#eaece4"/>
+  <rect class="gate" x="1104" y="668" width="22" height="20"/><path d="M1108,684 a7,7 0 0 1 14,0" fill="none" stroke="#eaece4"/><line x1="1115" y1="684" x2="1121" y2="672" stroke="#eaece4"/>
+  <rect class="gate" x="1104" y="696" width="22" height="20"/><path d="M1108,712 a7,7 0 0 1 14,0" fill="none" stroke="#eaece4"/><line x1="1115" y1="712" x2="1121" y2="700" stroke="#eaece4"/>
+  <rect class="gateP" x="1104" y="726" width="22" height="20"/><path d="M1108,742 a7,7 0 0 1 14,0" fill="none" stroke="#eaece4"/><line x1="1115" y1="742" x2="1121" y2="730" stroke="#eaece4"/>
+ </g>
+ <text class="s" x="1180" y="626">c₀</text><text class="s" x="1180" y="654">c₁</text><text class="s" x="1180" y="682">c₂</text><text class="s" x="1180" y="710">c₃</text><text class="s" x="1180" y="740">c…</text>
+ <text class="s" x="1198" y="690">12 q</text><text class="s" x="1198" y="704">d=33</text>
+</g>
+
+<!-- sampler + optimiser -->
+<rect class="qbox" x="974" y="798" width="260" height="160"/>
+<text class="hp" x="986" y="818">⑥ AER SAMPLER</text>
+<text class="t" x="986" y="840">AerSimulator(statevector)</text>
+<text class="t" x="986" y="860">train: exact ⟨ψ|H_C|ψ⟩</text>
+<text class="t" x="986" y="880">final: 2,048 shots · seed 42</text>
+<text class="m" x="986" y="902">counts → {bitstring: k}</text>
+<text class="m" x="986" y="920">noiseless · not hardware</text>
+<g transform="translate(1166,904)"><rect x="0" y="22" width="7" height="22" class="pur"/><rect x="9" y="4" width="7" height="40" class="lime"/><rect x="18" y="16" width="7" height="28" class="pur"/><rect x="27" y="30" width="7" height="14" class="pur"/><rect x="36" y="34" width="7" height="10" class="lime"/></g>
+
+<rect class="qbox" x="698" y="798" width="260" height="160"/>
+<text class="hp" x="710" y="818">⑦ COBYLA (SCIPY)</text>
+<text class="t" x="710" y="840">θ = (γ₁, β₁, γ₂, β₂)</text>
+<text class="t" x="710" y="860">θ* = argmin ⟨ψ(θ)|H_C|ψ(θ)⟩</text>
+<text class="t" x="710" y="880">80 evals × 2 restarts</text>
+<text class="m" x="710" y="902">budget-bound → we report the</text>
+<text class="m" x="710" y="918">best feasible sample, not</text>
+<text class="m" x="710" y="934">a convergence claim</text>
+
+<path class="e eP flow" d="M1115,756 V778 H1104 V796" marker-end="url(#aP)"/>
+<text class="s" x="1124" y="788">measure</text>
+<path class="e eP fb" d="M974,878 H960" marker-end="url(#aP)"/>
+<path class="e eP fb" d="M800,798 V776 H809 V758" marker-end="url(#aP)"/>
+<text class="s" x="818" y="786" style="fill:#b9a3ff">θₖ₊₁ (variational loop)</text>
+<text class="s" x="966" y="892" text-anchor="middle" style="fill:#b9a3ff" transform="rotate(-90 966 892)">⟨H_C⟩</text>
+
+<!-- formulation & jobs into quantum branch -->
+<path class="e eP flow" d="M686,204 H676 V506 H696" marker-end="url(#aP)"/>
+<path class="e eL flow" d="M634,530 H676" />
+<circle cx="676" cy="530" r="3" class="lime"/>
+<text class="s" x="640" y="546">async</text>
+
+<!-- hybrid decomposition -->
+<path class="e eL fb" d="M1155,410 V430 H760 V464" marker-end="url(#aL)"/>
+<text class="s" x="772" y="424" style="fill:#b7ff39">hybrid decomposition: per-home share (Bₕ, Iₕ) → sub-QUBO ≤ 14 q</text>
+
+<!-- client to API to formulation -->
+<path class="e eL flow" d="M324,184 H374" marker-end="url(#aL)"/>
+<path class="e eL flow" d="M324,300 H350 V250 H374" marker-end="url(#aL)"/>
+<path class="e eL flow" d="M634,168 H684" marker-end="url(#aL)"/>
+<text class="s" x="338" y="176">HTTPS·JSON</text>
+
+<!-- ===== Lane IV ===== -->
+<rect class="qbox" x="1296" y="130" width="258" height="104"/>
+<text class="hp" x="1308" y="150">DECODER</text>
+<text class="t" x="1308" y="172">q[n−1]…q[0] → x₀…xₙ₋₁</text>
+<text class="t" x="1308" y="192">marginalise slack qubits</text>
+<text class="m" x="1308" y="212">2,048 shots → ≤ 2ⁿ decisions</text>
+<text class="m" x="1308" y="226">+ landscape of all 2ⁿ points</text>
+
+<rect class="key" x="1296" y="250" width="258" height="140" filter="url(#glow)"/>
+<text class="h" x="1308" y="270">FEASIBILITY ORACLE ✓</text>
+<text class="t" x="1308" y="292">exact Fraction arithmetic</text>
+<text class="t" x="1308" y="312">E(x) ≤ B ∧ P(x) ≤ I ∧ x_M = 1</text>
+<text class="m" x="1308" y="334">applied to every quantum sample</text>
+<text class="m" x="1308" y="350">and every MILP plan</text>
+<text class="t" x="1308" y="374" style="fill:#b7ff39">infeasible ⇒ never returned</text>
+
+<rect class="box" x="1296" y="406" width="258" height="104"/>
+<text class="h" x="1308" y="426">COMPARATOR</text>
+<text class="t" x="1308" y="448">gap = U(x*) − U(x̂)</text>
+<text class="t" x="1308" y="468">P(x*) = shots(x*) / shots</text>
+<text class="m" x="1308" y="488">feasible-shot ratio</text>
+<text class="m" x="1308" y="502">objective_gap · relative_gap</text>
+
+<rect class="box" x="1296" y="526" width="258" height="136"/>
+<text class="h" x="1308" y="546">MEASURED · EVENING (n = 4)</text>
+<text class="t" x="1308" y="570">qubits         12 = 4 + 8</text>
+<text class="t" x="1308" y="588">depth · RZZ    33 · 100</text>
+<text class="t" x="1308" y="606">P(x*)          9.0 %</text>
+<text class="t" x="1308" y="624">feasible shots 45.9 %</text>
+<text class="t" x="1308" y="642" style="fill:#b7ff39">gap 0 · U(x̂) = U(x*) = 24</text>
+<text class="s" x="1308" y="656">seed 42 · reproducible counts</text>
+
+<rect class="box" x="1296" y="678" width="258" height="130"/>
+<text class="h" x="1308" y="698">EVIDENCE</text>
+<text class="t" x="1308" y="720">91 unit · API · circuit tests</text>
+<text class="t" x="1308" y="738">3 live proxy integration tests</text>
+<text class="t" x="1308" y="756">Aer benchmarks re-executed</text>
+<text class="t" x="1308" y="774">source fingerprint · lock file</text>
+<text class="t" x="1308" y="796" style="fill:#b7ff39">strict release gate ✓</text>
+
+<rect class="qbox" x="1296" y="824" width="258" height="146"/>
+<text class="hp" x="1308" y="844">STATED LIMITS</text>
+<text class="t" x="1308" y="866">noiseless simulator ≠ hardware</text>
+<text class="t" x="1308" y="884">classical faster at n ≤ 16</text>
+<text class="t" x="1308" y="902">COBYLA hits eval budget</text>
+<text class="t" x="1308" y="920">ratings: cited or estimate</text>
+<text class="t" x="1308" y="944" style="fill:#b9a3ff">no quantum-speedup claim</text>
+
+<!-- quantum results to decoder; exact to comparator -->
+<path class="e eP flow" d="M1234,878 H1264 V182 H1294" marker-end="url(#aP)"/>
+<text class="s" x="1270" y="560" transform="rotate(-90 1270 560)" style="fill:#b9a3ff">counts</text>
+<path class="e eL flow" d="M1244,330 H1256 V458 H1294" marker-end="url(#aL)"/>
+<text class="s" x="1262" y="440" transform="rotate(-90 1262 440)">x* exact</text>
+<path class="e eW" d="M1425,234 V248" marker-end="url(#aW)"/>
+<path class="e eW" d="M1425,390 V404" marker-end="url(#aW)"/>
+<path class="e eW" d="M1425,510 V524" marker-end="url(#aW)"/>
+
+<!-- response bus back to client -->
+<path class="e eW flow" d="M1554,458 H1580 V88 H18 V428 H44" marker-end="url(#aW)" opacity=".75"/>
+<text class="s" x="800" y="84" style="fill:#eaece4">response · JSON schema 1.0 · allocation + quantum_metadata → insight renderer</text>
+
+<!-- Legend -->
+<g transform="translate(40,1010)">
+ <line class="e eL flow" x1="0" y1="0" x2="40" y2="0"/><text class="s" x="48" y="3">classical data flow</text>
+ <line class="e eP flow" x1="200" y1="0" x2="240" y2="0"/><text class="s" x="248" y="3">quantum data flow</text>
+ <line class="e eP fb" x1="390" y1="0" x2="430" y2="0"/><text class="s" x="438" y="3">variational feedback</text>
+ <line class="e eL fb" x1="600" y1="0" x2="640" y2="0"/><text class="s" x="648" y="3">hybrid decomposition</text>
+ <line class="e eW" x1="820" y1="0" x2="860" y2="0"/><text class="s" x="868" y="3">verification · response</text>
+ <rect x="1040" y="-7" width="14" height="14" class="key"/><text class="s" x="1062" y="3">trust boundary (exact)</text>
+ <rect x="1230" y="-7" width="14" height="14" class="qbox"/><text class="s" x="1252" y="3">quantum / probabilistic</text>
+</g>
+<text class="s" x="40" y="1044">Bit order: allocation strings use x₀…xₙ₋₁; Qiskit counts are q[n−1]…q[0]. Slack qubits encode residual capacity; they carry no physical meaning.</text>
+<text class="s" x="1560" y="1044" text-anchor="end">© ANAVO 2026</text>
+</svg>

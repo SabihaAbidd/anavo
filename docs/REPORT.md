@@ -8,6 +8,10 @@ The local backend passed all 72 required tests with zero skips/failures/errors, 
 
 ## Methodology and implementation
 
+![ANAVO architecture](../frontend/src/assets/anavo-architecture.svg)
+
+*Fig. 1 — hybrid classical–quantum architecture: client (B2C/B2B) → FastAPI orchestration and job queue → exact classical branch and QUBO → Ising → QAOA branch with COBYLA feedback → exact feasibility oracle and comparator. Numbers are measured on the Evening scenario.*
+
 Each appliance request has power W, duration h, energy Wh, utility and explicit essential/mandatory flags. Binary decisions maximize stated utility subject to usable AC-side battery energy and simultaneous inverter power. Mandatory requirements are never automatically relaxed. Essential is a label, not a hidden utility bonus. The presets are illustrative, not measured household data.
 
 An independent exact enumerator checks every small-instance selection and resolves ties deterministically. Rational decimal normalization and bounded binary slack convert resource inequalities into QUBO equalities. A penalty exceeding the objective range enforces constraints in exact arithmetic, with numerical guards rejecting unsafe floating-point representations. The substitution x=(1-Z)/2 gives the Ising Hamiltonian. Tests exhaustively check energies/minima, bit order, tiny-priority loss and integer auxiliary residuals. See MATHEMATICAL_MODEL.md for the full derivation and worked example.

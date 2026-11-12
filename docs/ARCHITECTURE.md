@@ -1,5 +1,9 @@
 # Architecture and decisions
 
+![ANAVO architecture](../frontend/src/assets/anavo-architecture.svg)
+
+*Fig. 1 — hybrid classical–quantum architecture: client (B2C/B2B) → FastAPI orchestration and job queue → exact classical branch and QUBO → Ising → QAOA branch with COBYLA feedback → exact feasibility oracle and comparator. Numbers are measured on the Evening scenario.*
+
 ```mermaid
 flowchart TD
     Frontend["React frontend / Vite + GSAP"] --> API["FastAPI routes"]
