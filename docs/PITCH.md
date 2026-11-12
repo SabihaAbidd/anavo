@@ -1,27 +1,23 @@
-# Three-minute pitch
+# ANAVO three-minute pitch
 
-Backend update: ANAVO now exposes FastAPI/Pydantic JSON endpoints around the existing solver. The Streamlit demo below is preserved; the future React frontend awaits a separate design brief. Until FastAPI installs and actual endpoint tests run, describe the backend as implemented with tested schemas/services, not a verified live API.
+Use the measured local backend results below. React is deferred; demonstrate the API through Swagger at localhost:8000/docs. Publish the latest source/results before presenting a repository link as the completed milestone.
 
-**Use this script with an honest live dependency check. Quantum execution is currently blocked in the development environment. Do not announce a measured quantum result until the app actually displays one.**
+## 0:00-0:30 - The problem
 
-## 0:00–0:30 — Problem
+Imagine a three-hour power outage. Your household has a battery, a fan, lights, a router and a laptop. There is enough electricity for some services, but running everything could exceed the energy budget or inverter rating. Which appliances should get that limited backup? ANAVO makes that decision explicit and explainable, motivated by household energy resilience in Pakistan.
 
-Imagine the power goes out for three hours. Your household has a battery, a fan, some lights, a router and a laptop. The question is not just how much electricity is left. It is which services that electricity should protect. Choosing everything can exceed the battery budget or the inverter rating. ANAVO turns that household decision into an explicit, explainable optimization problem, motivated by resilience needs in Pakistan.
+## 0:30-1:00 - Introducing ANAVO
 
-## 0:30–1:00 — Product
+Our tagline is: when power is limited, intelligence shouldn't be. ANAVO takes usable battery energy, inverter power and appliance requests. Users assign utility scores and can mark mandatory loads. Mandatory really means mandatory: if the available energy cannot support those requirements, the system reports infeasibility. The application architecture is React, FastAPI and a reusable optimization engine. The verified backend is ready; the custom React design is the next separately authorized phase.
 
-ANAVO means to light up. Our tagline is: when power is limited, intelligence shouldn't be. Enter usable battery energy, inverter power and outage duration. Then edit the appliance requests and their priorities. You can label essential services and require mandatory loads. Those requirements are honest hard constraints: if the battery cannot serve them, the system tells you instead of quietly changing your priorities.
+## 1:00-1:45 - The quantum method
 
-## 1:00–1:45 — Technical method
+Each appliance is a binary on-or-off decision. We maximize total stated utility within energy and power limits. An independent exact solver checks every subset on these small examples. The quantum path encodes the same constraints using binary slack and squared penalties, producing a QUBO and then an Ising Hamiltonian. QAOA alternates cost and mixing gates while a classical optimizer tunes the angles. We execute actual Qiskit circuits on the Aer simulator and check the measured bitstrings against the original physical constraints. We do not inject the exact answer into the quantum result.
 
-Each appliance becomes one binary decision. We maximize total stated utility while enforcing energy in watt-hours and power in watts. An independent exact solver checks every possible subset on these small instances. For the quantum path, integer slack variables and squared penalties turn the same constraints into a QUBO. We transform that into an Ising cost Hamiltonian. QAOA alternates cost and mixing operations while a classical optimizer adjusts the circuit angles. The implementation uses real Qiskit circuits and Aer simulation, with separate measurement and feasibility checks. We also exhaustively verify that the QUBO ground states match the constrained optimum.
+## 1:45-2:30 - Live demonstration and measured results
 
-## 1:45–2:30 — Demonstration
+In the API documentation, submit the evening example: 240 watt-hours and a 100-watt inverter. The exact allocation selects the fan, lights and router, using 180 watt-hours and 60 watts for utility 24. Then show the recorded quantum benchmark comparison. With ample backup, the best quantum sample serves all appliances for utility 30. With limited battery, it serves lights and the mandatory router for utility 15. Both match the exact optima. Each run uses two QAOA layers, 2,048 shots and seed 42. The impossible mandatory case returns no feasible allocation; it never quietly drops the requirement.
 
-Here is our evening example: 240 watt-hours and a 100-watt inverter. The exact optimizer chooses the fan, lights and router: utility 24, using 180 watt-hours and 60 watts. Reducing energy to 90 watt-hours leaves the lights and mandatory router. Reducing it to 15 makes the request infeasible, because the router alone needs 30. The comparison section separates the exact recommendation from quantum samples. When quantum execution succeeds, it displays measured counts, qubits, feasible probability, runtime and objective gap. If dependencies are unavailable, it explicitly says so; we never relabel the classical answer as quantum.
+## 2:30-3:00 - Evidence, limitations and impact
 
-## 2:30–3:00 — Evidence and impact
-
-Our executed checks cover the physical constraints, exact solution, QUBO and Ising agreement, and dashboard behavior. Circuit execution and quantum comparison still require completion in the current restricted environment. We claim no quantum speedup. The contribution is a transparent Pakistan-focused prototype for exploring resilient energy allocation with both classical verification and a quantum formulation. Next come realistic battery data, time-slot scheduling and hardware experiments. ANAVO helps make every available watt-hour a deliberate choice.
-
-After successful quantum execution, replace only the pending-status sentence with the actual benchmark's qubits, shots, feasible probability and gap. Keep the speedup limitation. Rehearse to three minutes; trim the technical paragraph if the demo takes longer.
+All 72 backend tests pass, and an actual Uvicorn server passed 12 HTTP checks. Repeating the seeded benchmarks reproduced counts and optimized parameters. These are noiseless simulator results, not a quantum speedup claim: classical enumeration is much faster here. Only about a quarter of limited-battery shots were physically feasible, and parameter optimization reached its evaluation budget. ANAVO's value is transparent decision support and a verifiable quantum formulation. Next come the custom React interface, measured household profiles and more realistic scheduling, while keeping every result auditable.

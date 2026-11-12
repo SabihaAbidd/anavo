@@ -1,8 +1,1398 @@
 {
-  "checked_utc": "2026-11-12T14:22:48.586374+00:00",
-  "healthy": false,
-  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
-  "checks": [],
+  "checked_utc": "2026-11-12T15:11:04.416133+00:00",
+  "healthy": true,
+  "source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "checks": [
+    {
+      "name": "health",
+      "method": "GET",
+      "path": "/health",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "status": "ok",
+        "service": "ANAVO API",
+        "version": "0.2.0",
+        "classical_available": true,
+        "quantum_dependencies_available": true,
+        "quantum_note": "Dependency presence does not establish actual circuit validation."
+      }
+    },
+    {
+      "name": "scenarios",
+      "method": "GET",
+      "path": "/api/scenarios",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "scenarios": [
+          {
+            "name": "Evening backup",
+            "appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": true
+              },
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false
+              }
+            ],
+            "battery_wh": 240.0,
+            "inverter_w": 100.0,
+            "outage_h": 3.0
+          },
+          {
+            "name": "Ample backup",
+            "appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": true
+              },
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false
+              }
+            ],
+            "battery_wh": 400.0,
+            "inverter_w": 150.0,
+            "outage_h": 3.0
+          },
+          {
+            "name": "Limited battery",
+            "appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": true
+              },
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false
+              }
+            ],
+            "battery_wh": 90.0,
+            "inverter_w": 60.0,
+            "outage_h": 3.0
+          },
+          {
+            "name": "Mandatory infeasible",
+            "appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": true
+              },
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false
+              }
+            ],
+            "battery_wh": 15.0,
+            "inverter_w": 100.0,
+            "outage_h": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "algorithm_info",
+      "method": "GET",
+      "path": "/api/algorithm-info",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "objective": "Maximize sum of selected appliance utilities under hard energy, power and mandatory constraints.",
+        "units": {
+          "power": "W",
+          "energy": "Wh",
+          "duration": "h",
+          "utility": "user-stated score"
+        },
+        "classical": "Independent exhaustive enumeration with lexicographic tie handling.",
+        "quantum": {
+          "algorithm": "QAOA",
+          "backend": "Qiskit Aer ideal statevector simulator",
+          "optimizer": "SciPy COBYLA",
+          "encoding": "Bounded slack QUBO -> Ising x=(1-Z)/2",
+          "penalty": "1 + total utility",
+          "training": "Exact simulator expectations; final circuit shot measurement",
+          "hardware": false,
+          "speedup_claim": false
+        },
+        "limits": {
+          "appliances": 16,
+          "qubits": 14,
+          "depth": 4,
+          "shots": 8192,
+          "evaluations_per_restart": 200,
+          "restarts": 3,
+          "concurrent_jobs_per_process": 1
+        },
+        "assumptions": [
+          "Usable AC-side battery energy; fixed requested durations within outage.",
+          "Conservative simultaneous inverter power; no time-slot scheduling or surge model.",
+          "Essential is a label; utility is a preference; mandatory is a hard constraint.",
+          "Deferred means unselected for this request, not a future scheduled time.",
+          "No quantum measurements are reported unless an actual circuit executes."
+        ],
+        "frontend_status": "React/TypeScript/Vite frontend deferred pending design; Streamlit is optional legacy code outside the backend release."
+      }
+    },
+    {
+      "name": "classical_optimize",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "scenario": {
+          "name": "Evening backup",
+          "appliances": [
+            {
+              "name": "Fan",
+              "power_w": 40.0,
+              "duration_h": 3.0,
+              "utility": 9.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "LED lights",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 7.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "Wi-Fi router",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 8.0,
+              "essential": true,
+              "mandatory": true
+            },
+            {
+              "name": "Laptop",
+              "power_w": 60.0,
+              "duration_h": 2.0,
+              "utility": 6.0,
+              "essential": false,
+              "mandatory": false
+            }
+          ],
+          "battery_wh": 240.0,
+          "inverter_w": 100.0,
+          "outage_h": 3.0
+        },
+        "result": {
+          "algorithm": "classical",
+          "method": "exact enumeration",
+          "status": "optimal",
+          "feasibility": "feasible",
+          "allocation": {
+            "feasible": true,
+            "objective_value": 24.0,
+            "bitstring": "1110",
+            "selection": [
+              1,
+              1,
+              1,
+              0
+            ],
+            "selected_appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false,
+                "selected": true,
+                "energy_wh": 120.0
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false,
+                "selected": true,
+                "energy_wh": 30.0
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": true,
+                "selected": true,
+                "energy_wh": 30.0
+              }
+            ],
+            "deferred_appliances": [
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 120.0
+              }
+            ],
+            "energy_used_wh": 180.0,
+            "energy_remaining_wh": 60.0,
+            "power_used_w": 60.0,
+            "inverter_remaining_w": 40.0,
+            "energy_utilization": 0.75,
+            "essential_served": 3,
+            "essential_total": 3,
+            "violations": []
+          },
+          "runtime_s": 0.0016563998069614172,
+          "enumerated": 16,
+          "feasible_selections": 6,
+          "quantum_metadata": null,
+          "error_code": null,
+          "message": null
+        },
+        "fallback_used": false,
+        "environment": {
+          "python": "3.13.5",
+          "qiskit": "2.6.2",
+          "qiskit-aer": "0.18.2",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "fastapi": "0.162.5",
+          "pydantic": "2.14.3",
+          "uvicorn": "0.54.0",
+          "httpx": "0.28.1"
+        }
+      }
+    },
+    {
+      "name": "quantum_optimize",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "scenario": {
+          "name": "HTTP circuit probe",
+          "appliances": [
+            {
+              "name": "Light",
+              "power_w": 1.0,
+              "duration_h": 1.0,
+              "utility": 3.0,
+              "essential": true,
+              "mandatory": true
+            },
+            {
+              "name": "Optional",
+              "power_w": 1.0,
+              "duration_h": 1.0,
+              "utility": 2.0,
+              "essential": false,
+              "mandatory": false
+            }
+          ],
+          "battery_wh": 1.0,
+          "inverter_w": 1.0,
+          "outage_h": 1.0
+        },
+        "result": {
+          "algorithm": "quantum",
+          "method": "QAOA / Qiskit Aer noiseless simulator",
+          "status": "sampled",
+          "feasibility": "feasible",
+          "allocation": {
+            "feasible": true,
+            "objective_value": 3.0,
+            "bitstring": "10",
+            "selection": [
+              1,
+              0
+            ],
+            "selected_appliances": [
+              {
+                "name": "Light",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 3.0,
+                "essential": true,
+                "mandatory": true,
+                "selected": true,
+                "energy_wh": 1.0
+              }
+            ],
+            "deferred_appliances": [
+              {
+                "name": "Optional",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 2.0,
+                "essential": false,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 1.0
+              }
+            ],
+            "energy_used_wh": 1.0,
+            "energy_remaining_wh": 0.0,
+            "power_used_w": 1.0,
+            "inverter_remaining_w": 0.0,
+            "energy_utilization": 1.0,
+            "essential_served": 1,
+            "essential_total": 1,
+            "violations": []
+          },
+          "runtime_s": 3.7830017001833767,
+          "enumerated": null,
+          "feasible_selections": null,
+          "quantum_metadata": {
+            "qubits": 4,
+            "appliance_qubits": 2,
+            "slack_qubits": 2,
+            "qaoa_depth": 1,
+            "circuit_depth": 7,
+            "shots": 256,
+            "seed": 42,
+            "optimizer": "COBYLA",
+            "max_evaluations_per_restart": 20,
+            "restarts": 1,
+            "optimizer_evaluations": 20,
+            "optimizer_runs": [
+              {
+                "nfev": 20,
+                "success": false,
+                "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
+                "objective": -0.9794384234497235
+              }
+            ],
+            "optimizer_iterations": null,
+            "iteration_note": "SciPy COBYLA reports nfev, not a separate iteration count",
+            "parameters": [
+              2.4834181392120294,
+              2.607776937050167
+            ],
+            "penalty": 6.0,
+            "hamiltonian_scale": 6.0,
+            "expected_qubo_energy": 6.623369459301658,
+            "objective_history": [
+              11.025562945770561,
+              11.0294649926892,
+              7.97063244466232,
+              15.201096384291517,
+              11.080860845754453,
+              9.094681974905473,
+              6.668604330925298,
+              8.193374249426336,
+              6.802057249442806,
+              6.863343847295501,
+              6.72637135939157,
+              6.80537643427771,
+              6.6586567576412,
+              6.702983892637674,
+              6.655920639411285,
+              6.643353780247038,
+              6.633925531508972,
+              6.6304957407063,
+              6.623369459301658,
+              6.6328950519791885
+            ],
+            "feasible_selection_probability": 0.28125,
+            "feasible_encoding_probability": 0.1953125,
+            "counts": {
+              "1010": 15,
+              "1001": 14,
+              "0001": 50,
+              "0010": 70,
+              "1110": 12,
+              "0110": 18,
+              "1100": 15,
+              "0111": 8,
+              "0011": 23,
+              "0101": 5,
+              "1011": 6,
+              "1000": 5,
+              "0000": 1,
+              "1101": 3,
+              "1111": 3,
+              "0100": 8
+            },
+            "distribution": [
+              {
+                "measured_bitstring": "0000",
+                "appliance_bitstring": "00",
+                "count": 1,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 18.0
+              },
+              {
+                "measured_bitstring": "0001",
+                "appliance_bitstring": "10",
+                "count": 50,
+                "feasible": true,
+                "encoding_feasible": true,
+                "utility": 3.0,
+                "qubo_energy": -3.0
+              },
+              {
+                "measured_bitstring": "0010",
+                "appliance_bitstring": "01",
+                "count": 70,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 4.0
+              },
+              {
+                "measured_bitstring": "0011",
+                "appliance_bitstring": "11",
+                "count": 23,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 7.0
+              },
+              {
+                "measured_bitstring": "0100",
+                "appliance_bitstring": "00",
+                "count": 8,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 12.0
+              },
+              {
+                "measured_bitstring": "0101",
+                "appliance_bitstring": "10",
+                "count": 5,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 3.0
+              },
+              {
+                "measured_bitstring": "0110",
+                "appliance_bitstring": "01",
+                "count": 18,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 10.0
+              },
+              {
+                "measured_bitstring": "0111",
+                "appliance_bitstring": "11",
+                "count": 8,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 25.0
+              },
+              {
+                "measured_bitstring": "1000",
+                "appliance_bitstring": "00",
+                "count": 5,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 12.0
+              },
+              {
+                "measured_bitstring": "1001",
+                "appliance_bitstring": "10",
+                "count": 14,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 3.0
+              },
+              {
+                "measured_bitstring": "1010",
+                "appliance_bitstring": "01",
+                "count": 15,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 10.0
+              },
+              {
+                "measured_bitstring": "1011",
+                "appliance_bitstring": "11",
+                "count": 6,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 25.0
+              },
+              {
+                "measured_bitstring": "1100",
+                "appliance_bitstring": "00",
+                "count": 15,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 6.0
+              },
+              {
+                "measured_bitstring": "1101",
+                "appliance_bitstring": "10",
+                "count": 3,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 9.0
+              },
+              {
+                "measured_bitstring": "1110",
+                "appliance_bitstring": "01",
+                "count": 12,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 16.0
+              },
+              {
+                "measured_bitstring": "1111",
+                "appliance_bitstring": "11",
+                "count": 3,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 43.0
+              }
+            ]
+          },
+          "error_code": null,
+          "message": null
+        },
+        "fallback_used": false,
+        "environment": {
+          "python": "3.13.5",
+          "qiskit": "2.6.2",
+          "qiskit-aer": "0.18.2",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "fastapi": "0.162.5",
+          "pydantic": "2.14.3",
+          "uvicorn": "0.54.0",
+          "httpx": "0.28.1"
+        }
+      }
+    },
+    {
+      "name": "compare",
+      "method": "POST",
+      "path": "/api/compare",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "scenario": {
+          "name": "HTTP circuit probe",
+          "appliances": [
+            {
+              "name": "Light",
+              "power_w": 1.0,
+              "duration_h": 1.0,
+              "utility": 3.0,
+              "essential": true,
+              "mandatory": true
+            },
+            {
+              "name": "Optional",
+              "power_w": 1.0,
+              "duration_h": 1.0,
+              "utility": 2.0,
+              "essential": false,
+              "mandatory": false
+            }
+          ],
+          "battery_wh": 1.0,
+          "inverter_w": 1.0,
+          "outage_h": 1.0
+        },
+        "classical": {
+          "algorithm": "classical",
+          "method": "exact enumeration",
+          "status": "optimal",
+          "feasibility": "feasible",
+          "allocation": {
+            "feasible": true,
+            "objective_value": 3.0,
+            "bitstring": "10",
+            "selection": [
+              1,
+              0
+            ],
+            "selected_appliances": [
+              {
+                "name": "Light",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 3.0,
+                "essential": true,
+                "mandatory": true,
+                "selected": true,
+                "energy_wh": 1.0
+              }
+            ],
+            "deferred_appliances": [
+              {
+                "name": "Optional",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 2.0,
+                "essential": false,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 1.0
+              }
+            ],
+            "energy_used_wh": 1.0,
+            "energy_remaining_wh": 0.0,
+            "power_used_w": 1.0,
+            "inverter_remaining_w": 0.0,
+            "energy_utilization": 1.0,
+            "essential_served": 1,
+            "essential_total": 1,
+            "violations": []
+          },
+          "runtime_s": 0.0003432999365031719,
+          "enumerated": 4,
+          "feasible_selections": 1,
+          "quantum_metadata": null,
+          "error_code": null,
+          "message": null
+        },
+        "quantum": {
+          "algorithm": "quantum",
+          "method": "QAOA / Qiskit Aer noiseless simulator",
+          "status": "sampled",
+          "feasibility": "feasible",
+          "allocation": {
+            "feasible": true,
+            "objective_value": 3.0,
+            "bitstring": "10",
+            "selection": [
+              1,
+              0
+            ],
+            "selected_appliances": [
+              {
+                "name": "Light",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 3.0,
+                "essential": true,
+                "mandatory": true,
+                "selected": true,
+                "energy_wh": 1.0
+              }
+            ],
+            "deferred_appliances": [
+              {
+                "name": "Optional",
+                "power_w": 1.0,
+                "duration_h": 1.0,
+                "utility": 2.0,
+                "essential": false,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 1.0
+              }
+            ],
+            "energy_used_wh": 1.0,
+            "energy_remaining_wh": 0.0,
+            "power_used_w": 1.0,
+            "inverter_remaining_w": 0.0,
+            "energy_utilization": 1.0,
+            "essential_served": 1,
+            "essential_total": 1,
+            "violations": []
+          },
+          "runtime_s": 0.5044676999095827,
+          "enumerated": null,
+          "feasible_selections": null,
+          "quantum_metadata": {
+            "qubits": 4,
+            "appliance_qubits": 2,
+            "slack_qubits": 2,
+            "qaoa_depth": 1,
+            "circuit_depth": 7,
+            "shots": 256,
+            "seed": 42,
+            "optimizer": "COBYLA",
+            "max_evaluations_per_restart": 20,
+            "restarts": 1,
+            "optimizer_evaluations": 20,
+            "optimizer_runs": [
+              {
+                "nfev": 20,
+                "success": false,
+                "message": "Return from COBYLA because the objective function has been evaluated MAXFUN times.",
+                "objective": -0.9794384234497235
+              }
+            ],
+            "optimizer_iterations": null,
+            "iteration_note": "SciPy COBYLA reports nfev, not a separate iteration count",
+            "parameters": [
+              2.4834181392120294,
+              2.607776937050167
+            ],
+            "penalty": 6.0,
+            "hamiltonian_scale": 6.0,
+            "expected_qubo_energy": 6.623369459301658,
+            "objective_history": [
+              11.025562945770561,
+              11.0294649926892,
+              7.97063244466232,
+              15.201096384291517,
+              11.080860845754453,
+              9.094681974905473,
+              6.668604330925298,
+              8.193374249426336,
+              6.802057249442806,
+              6.863343847295501,
+              6.72637135939157,
+              6.80537643427771,
+              6.6586567576412,
+              6.702983892637674,
+              6.655920639411285,
+              6.643353780247038,
+              6.633925531508972,
+              6.6304957407063,
+              6.623369459301658,
+              6.6328950519791885
+            ],
+            "feasible_selection_probability": 0.28125,
+            "feasible_encoding_probability": 0.1953125,
+            "counts": {
+              "1010": 15,
+              "1001": 14,
+              "0001": 50,
+              "0010": 70,
+              "1110": 12,
+              "0110": 18,
+              "1100": 15,
+              "0111": 8,
+              "0011": 23,
+              "0101": 5,
+              "1011": 6,
+              "1000": 5,
+              "0000": 1,
+              "1101": 3,
+              "1111": 3,
+              "0100": 8
+            },
+            "distribution": [
+              {
+                "measured_bitstring": "0000",
+                "appliance_bitstring": "00",
+                "count": 1,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 18.0
+              },
+              {
+                "measured_bitstring": "0001",
+                "appliance_bitstring": "10",
+                "count": 50,
+                "feasible": true,
+                "encoding_feasible": true,
+                "utility": 3.0,
+                "qubo_energy": -3.0
+              },
+              {
+                "measured_bitstring": "0010",
+                "appliance_bitstring": "01",
+                "count": 70,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 4.0
+              },
+              {
+                "measured_bitstring": "0011",
+                "appliance_bitstring": "11",
+                "count": 23,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 7.0
+              },
+              {
+                "measured_bitstring": "0100",
+                "appliance_bitstring": "00",
+                "count": 8,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 12.0
+              },
+              {
+                "measured_bitstring": "0101",
+                "appliance_bitstring": "10",
+                "count": 5,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 3.0
+              },
+              {
+                "measured_bitstring": "0110",
+                "appliance_bitstring": "01",
+                "count": 18,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 10.0
+              },
+              {
+                "measured_bitstring": "0111",
+                "appliance_bitstring": "11",
+                "count": 8,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 25.0
+              },
+              {
+                "measured_bitstring": "1000",
+                "appliance_bitstring": "00",
+                "count": 5,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 12.0
+              },
+              {
+                "measured_bitstring": "1001",
+                "appliance_bitstring": "10",
+                "count": 14,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 3.0
+              },
+              {
+                "measured_bitstring": "1010",
+                "appliance_bitstring": "01",
+                "count": 15,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 10.0
+              },
+              {
+                "measured_bitstring": "1011",
+                "appliance_bitstring": "11",
+                "count": 6,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 25.0
+              },
+              {
+                "measured_bitstring": "1100",
+                "appliance_bitstring": "00",
+                "count": 15,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 0.0,
+                "qubo_energy": 6.0
+              },
+              {
+                "measured_bitstring": "1101",
+                "appliance_bitstring": "10",
+                "count": 3,
+                "feasible": true,
+                "encoding_feasible": false,
+                "utility": 3.0,
+                "qubo_energy": 9.0
+              },
+              {
+                "measured_bitstring": "1110",
+                "appliance_bitstring": "01",
+                "count": 12,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 2.0,
+                "qubo_energy": 16.0
+              },
+              {
+                "measured_bitstring": "1111",
+                "appliance_bitstring": "11",
+                "count": 3,
+                "feasible": false,
+                "encoding_feasible": false,
+                "utility": 5.0,
+                "qubo_energy": 43.0
+              }
+            ]
+          },
+          "error_code": null,
+          "message": null
+        },
+        "comparison_status": "complete",
+        "objective_gap": 0.0,
+        "relative_gap": 0.0,
+        "environment": {
+          "python": "3.13.5",
+          "qiskit": "2.6.2",
+          "qiskit-aer": "0.18.2",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "fastapi": "0.162.5",
+          "pydantic": "2.14.3",
+          "uvicorn": "0.54.0",
+          "httpx": "0.28.1"
+        },
+        "bit_order": "Allocation bitstrings use input order x0..xn-1; measured strings use Qiskit q[n-1]..q[0].",
+        "interpretation": "Ideal simulated quantum execution only when metadata/counts are present. No quantum advantage is claimed."
+      }
+    },
+    {
+      "name": "mandatory_infeasible",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "scenario": {
+          "name": "Mandatory infeasible",
+          "appliances": [
+            {
+              "name": "Fan",
+              "power_w": 40.0,
+              "duration_h": 3.0,
+              "utility": 9.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "LED lights",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 7.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "Wi-Fi router",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 8.0,
+              "essential": true,
+              "mandatory": true
+            },
+            {
+              "name": "Laptop",
+              "power_w": 60.0,
+              "duration_h": 2.0,
+              "utility": 6.0,
+              "essential": false,
+              "mandatory": false
+            }
+          ],
+          "battery_wh": 15.0,
+          "inverter_w": 100.0,
+          "outage_h": 3.0
+        },
+        "result": {
+          "algorithm": "classical",
+          "method": "exact enumeration",
+          "status": "infeasible",
+          "feasibility": "infeasible",
+          "allocation": null,
+          "runtime_s": 0.001201100181788206,
+          "enumerated": 16,
+          "feasible_selections": 0,
+          "quantum_metadata": null,
+          "error_code": null,
+          "message": "No allocation satisfies every hard constraint; mandatory requirements were not relaxed."
+        },
+        "fallback_used": false,
+        "environment": {
+          "python": "3.13.5",
+          "qiskit": "2.6.2",
+          "qiskit-aer": "0.18.2",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "fastapi": "0.162.5",
+          "pydantic": "2.14.3",
+          "uvicorn": "0.54.0",
+          "httpx": "0.28.1"
+        }
+      }
+    },
+    {
+      "name": "invalid_request",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 422,
+      "passed": true,
+      "response": {
+        "error": {
+          "code": "validation_error",
+          "message": "Request does not satisfy the API contract.",
+          "details": [
+            {
+              "path": [
+                "body",
+                "scenario",
+                "battery_wh"
+              ],
+              "message": "Input should be greater than or equal to 0",
+              "type": "greater_than_equal"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "quantum_limit",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 413,
+      "passed": true,
+      "response": {
+        "error": {
+          "code": "quantum_resource_limit",
+          "message": "This exact encoding needs 12 qubits; local demo limit is 1. Reduce loads or simplify capacities.",
+          "details": {
+            "schema_version": "1.0",
+            "scenario": {
+              "name": "Evening backup",
+              "appliances": [
+                {
+                  "name": "Fan",
+                  "power_w": 40.0,
+                  "duration_h": 3.0,
+                  "utility": 9.0,
+                  "essential": true,
+                  "mandatory": false
+                },
+                {
+                  "name": "LED lights",
+                  "power_w": 10.0,
+                  "duration_h": 3.0,
+                  "utility": 7.0,
+                  "essential": true,
+                  "mandatory": false
+                },
+                {
+                  "name": "Wi-Fi router",
+                  "power_w": 10.0,
+                  "duration_h": 3.0,
+                  "utility": 8.0,
+                  "essential": true,
+                  "mandatory": true
+                },
+                {
+                  "name": "Laptop",
+                  "power_w": 60.0,
+                  "duration_h": 2.0,
+                  "utility": 6.0,
+                  "essential": false,
+                  "mandatory": false
+                }
+              ],
+              "battery_wh": 240.0,
+              "inverter_w": 100.0,
+              "outage_h": 3.0
+            },
+            "result": {
+              "algorithm": "quantum",
+              "method": "QAOA / Qiskit Aer noiseless simulator",
+              "status": "oversized",
+              "feasibility": "unknown",
+              "allocation": null,
+              "runtime_s": null,
+              "enumerated": null,
+              "feasible_selections": null,
+              "quantum_metadata": null,
+              "error_code": "quantum_resource_limit",
+              "message": "This exact encoding needs 12 qubits; local demo limit is 1. Reduce loads or simplify capacities."
+            },
+            "fallback_used": false,
+            "environment": {
+              "python": "3.13.5",
+              "qiskit": "2.6.2",
+              "qiskit-aer": "0.18.2",
+              "numpy": "2.5.4",
+              "scipy": "1.18.1",
+              "fastapi": "0.162.5",
+              "pydantic": "2.14.3",
+              "uvicorn": "0.54.0",
+              "httpx": "0.28.1"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "zero_budget",
+      "method": "POST",
+      "path": "/api/optimize",
+      "status_code": 200,
+      "passed": true,
+      "response": {
+        "schema_version": "1.0",
+        "scenario": {
+          "name": "Evening backup",
+          "appliances": [
+            {
+              "name": "Fan",
+              "power_w": 40.0,
+              "duration_h": 3.0,
+              "utility": 9.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "LED lights",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 7.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "Wi-Fi router",
+              "power_w": 10.0,
+              "duration_h": 3.0,
+              "utility": 8.0,
+              "essential": true,
+              "mandatory": false
+            },
+            {
+              "name": "Laptop",
+              "power_w": 60.0,
+              "duration_h": 2.0,
+              "utility": 6.0,
+              "essential": false,
+              "mandatory": false
+            }
+          ],
+          "battery_wh": 0.0,
+          "inverter_w": 0.0,
+          "outage_h": 3.0
+        },
+        "result": {
+          "algorithm": "classical",
+          "method": "exact enumeration",
+          "status": "optimal",
+          "feasibility": "feasible",
+          "allocation": {
+            "feasible": true,
+            "objective_value": 0.0,
+            "bitstring": "0000",
+            "selection": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "selected_appliances": [],
+            "deferred_appliances": [
+              {
+                "name": "Fan",
+                "power_w": 40.0,
+                "duration_h": 3.0,
+                "utility": 9.0,
+                "essential": true,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 120.0
+              },
+              {
+                "name": "LED lights",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 7.0,
+                "essential": true,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 30.0
+              },
+              {
+                "name": "Wi-Fi router",
+                "power_w": 10.0,
+                "duration_h": 3.0,
+                "utility": 8.0,
+                "essential": true,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 30.0
+              },
+              {
+                "name": "Laptop",
+                "power_w": 60.0,
+                "duration_h": 2.0,
+                "utility": 6.0,
+                "essential": false,
+                "mandatory": false,
+                "selected": false,
+                "energy_wh": 120.0
+              }
+            ],
+            "energy_used_wh": 0.0,
+            "energy_remaining_wh": 0.0,
+            "power_used_w": 0.0,
+            "inverter_remaining_w": 0.0,
+            "energy_utilization": 0.0,
+            "essential_served": 0,
+            "essential_total": 3,
+            "violations": []
+          },
+          "runtime_s": 0.0014768000692129135,
+          "enumerated": 16,
+          "feasible_selections": 1,
+          "quantum_metadata": null,
+          "error_code": null,
+          "message": null
+        },
+        "fallback_used": false,
+        "environment": {
+          "python": "3.13.5",
+          "qiskit": "2.6.2",
+          "qiskit-aer": "0.18.2",
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "fastapi": "0.162.5",
+          "pydantic": "2.14.3",
+          "uvicorn": "0.54.0",
+          "httpx": "0.28.1"
+        }
+      }
+    },
+    {
+      "name": "cors_allowed",
+      "method": "OPTIONS",
+      "path": "/api/optimize",
+      "status_code": 200,
+      "passed": true,
+      "response": "OK"
+    },
+    {
+      "name": "cors_rejected",
+      "method": "OPTIONS",
+      "path": "/api/optimize",
+      "status_code": 400,
+      "passed": true,
+      "response": "Disallowed CORS origin"
+    }
+  ],
   "command": "python -m scripts.api_startup_check",
-  "reason": "Missing runtime dependencies: fastapi"
+  "endpoint": "http://127.0.0.1:63554/health"
 }

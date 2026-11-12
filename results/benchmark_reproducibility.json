@@ -1,0 +1,48 @@
+{
+  "checked_utc": "2026-11-12T15:21:21.212933+00:00",
+  "source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "first_source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "second_source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "environment": {
+    "python": "3.13.5",
+    "qiskit": "2.6.2",
+    "qiskit-aer": "0.18.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "fastapi": "0.162.5",
+    "pydantic": "2.14.3",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1"
+  },
+  "method": "Two actual Qiskit Aer benchmark runs with identical runtime-source fingerprints and installed versions",
+  "reproduced": true,
+  "checks": [
+    {
+      "scenario": "Ample backup",
+      "seed": 42,
+      "shots": 2048,
+      "counts_identical": true,
+      "parameters_identical": true,
+      "first_counts_sha256": "c2ae40db14b34fcc85f06f568f9eb47c74c55751851e88aa2415c3338cd60bef",
+      "second_counts_sha256": "c2ae40db14b34fcc85f06f568f9eb47c74c55751851e88aa2415c3338cd60bef"
+    },
+    {
+      "scenario": "Limited battery",
+      "seed": 42,
+      "shots": 2048,
+      "counts_identical": true,
+      "parameters_identical": true,
+      "first_counts_sha256": "6a78e4aefe7c9d2be80af19bafabefe5230f0c293a1ca434d79d4d98f027641d",
+      "second_counts_sha256": "6a78e4aefe7c9d2be80af19bafabefe5230f0c293a1ca434d79d4d98f027641d"
+    },
+    {
+      "scenario": "Mandatory infeasible",
+      "seed": 42,
+      "shots": 2048,
+      "counts_identical": true,
+      "parameters_identical": true,
+      "first_counts_sha256": "63a3a3264c37d5c32ffc3b6b82858b6eb2dd6a5b68546eee59eb0171a3a81607",
+      "second_counts_sha256": "63a3a3264c37d5c32ffc3b6b82858b6eb2dd6a5b68546eee59eb0171a3a81607"
+    }
+  ]
+}

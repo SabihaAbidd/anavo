@@ -1,6 +1,8 @@
 # FastAPI backend contract (schema 1.0)
 
-Status: route implementation written; Pydantic and service tests executed. Actual FastAPI HTTP tests remain unexecuted because FastAPI cannot be installed in this environment. No React frontend exists. Stable request/response models are in `backend/schemas.py`; service code has no FastAPI imports and invokes the existing optimizer.
+Final application: React + TypeScript + Vite -> this FastAPI backend -> Qiskit/classical solver. Streamlit is optional historical code only, excluded from requirements.txt and required backend checks. React implementation remains deferred until the design reference arrives.
+
+Status: all 72 required backend tests pass, including actual FastAPI TestClient and Qiskit circuit checks. A separate Uvicorn process passed all 12 real HTTP checks, including every endpoint and measured quantum requests. Streamlit is absent and React remains deferred. See results/validation.json and api_startup_check.json for actual evidence.
 
 ## Start and inspect
 

@@ -2,21 +2,23 @@
 
 **When power is limited, intelligence shouldn't be.**
 
-Quantum-Assisted Energy Resilience Optimization for Pakistan · Energy & Smart Infrastructure
+Quantum-Assisted Energy Resilience Optimization for Pakistan | Energy & Smart Infrastructure
 
-ANAVO helps a household choose which appliances to run during a power outage. It maximizes user-stated utility under usable battery-energy and simultaneous inverter-power limits, with explicit mandatory-load requirements. Its FastAPI backend exposes the existing exact optimizer and Qiskit QAOA implementation through strict JSON contracts. The earlier Streamlit demonstration is preserved.
+ANAVO helps a household choose which appliances to run during a power outage. It maximizes user-stated utility under usable battery-energy and simultaneous inverter-power limits, with explicit mandatory-load requirements. **Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit or the classical solver.** React development awaits a separate design reference. Streamlit is optional archived demo code only and is not installed or tested by the backend release workflow.
 
 ## Backend-first architecture update
 
-The primary application is a FastAPI/Pydantic backend that reuses the existing independent optimization engine. React + TypeScript + Vite + Tailwind CSS + Motion is deferred until a separate design brief; no React frontend is implemented. The Streamlit app is preserved without feature development. Public **[SabihaAbidd/anavo](https://github.com/SabihaAbidd/anavo)** is connected as origin/main. The initial project was successfully published by the user; local and remote HEAD were verified as `d9c24703603b8f833b140cdd76338cd42d697b4e`. Newer changes remain local while agent Git metadata writes are denied and the integration denies content writes. Do not confuse the successful initial push with permission to publish from this managed agent session.
+The primary application is a FastAPI/Pydantic backend that reuses the existing independent optimization engine. React + TypeScript + Vite + Tailwind CSS + Motion is deferred until a separate design brief; no React frontend is implemented. The Streamlit app is preserved without feature development. Public **[SabihaAbidd/anavo](https://github.com/SabihaAbidd/anavo)** is connected as origin/main. The initial project was successfully published by the user; the latest published local/remote baseline was verified as `1f2e86d076ddac27d3e1f2c08ab2dea2767aeac6`. Newer changes remain local while agent Git metadata writes are denied and the integration denies content writes. Do not confuse the successful initial push with permission to publish from this managed agent session.
 
-Backend implementation and verification are tracked in TASKS.md. FastAPI is currently absent in this restricted environment; Pydantic 2.12.5 is installed. Do not interpret schema/service validation as successful HTTP endpoint execution.
+Backend implementation and executed validation are tracked in TASKS.md and results/. Use the project .venv interpreter, which now has the verified API and quantum dependencies.
 
 ## Current verified status
 
-Latest local validation: **74 tests run, 59 passed, 15 skipped, zero failures/errors**. The skips are 12 real FastAPI endpoint checks, one quantum API test and two circuit tests; they are not counted as execution validation. The physical model, exact solver, QUBO/Ising math and preserved dashboard interactions pass. Quantum encoding now rejects floating-point priority loss, normalizes small nonzero Hamiltonians, and checks slack feasibility through integer residuals.
+The installed project .venv has passed **72 required backend tests with zero skips, failures or errors**, including actual FastAPI requests and Qiskit Aer circuits. An actual Uvicorn server passed **12 real HTTP checks**, covering all five routes, measured quantum optimize/compare requests, constraints, validation and CORS. Streamlit is absent and pip check found no broken requirements. requirements-lock.txt pins the 27 tested backend packages.
 
-**Actual API and Qiskit/Aer execution remain pending:** FastAPI/Qiskit/Aer are absent and the allowed network destinations do not include PyPI. The venv does not yet contain application dependencies. Earlier localhost socket checks were also denied. Benchmarks explicitly record quantum unavailable. The strict release gate remains blocked; this is not a completed quantum hackathon release. CI is defined to run actual tests/HTTP/quantum benchmarks after publication, but no CI execution is claimed here.
+Actual QAOA benchmarks used p=2, 2,048 shots and seed 42. The best feasible samples matched exact utilities 30 and 15 with zero best-sample gaps; the mandatory-infeasible case produced no feasible sample. Repeated executions with identical source fingerprints reproduced counts and optimized parameters. The strict local release gate passed. See results/validation.json, api_startup_check.json, benchmark_results.json, benchmark_reproducibility.json and release_check.json.
+
+These are ideal simulator results, not quantum speedup or hardware evidence. COBYLA reached its evaluation budgets, and the limited scenario had only about 24.3% physically feasible shots. Publication and CI status are separate from local readiness; React remains deferred pending the design reference.
 
 ## Start the FastAPI backend
 
@@ -28,7 +30,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
 
-Health: http://127.0.0.1:8000/health · Swagger UI: http://127.0.0.1:8000/docs · ReDoc: http://127.0.0.1:8000/redoc · OpenAPI: http://127.0.0.1:8000/openapi.json
+Health: http://127.0.0.1:8000/health Â· Swagger UI: http://127.0.0.1:8000/docs Â· ReDoc: http://127.0.0.1:8000/redoc Â· OpenAPI: http://127.0.0.1:8000/openapi.json
 
 | Method / route | Behavior |
 |---|---|
@@ -46,17 +48,17 @@ Example classical request using a shipped JSON fixture:
 Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/optimize -ContentType application/json -Body (Get-Content -Raw docs/examples/optimize-request.json)
 ```
 
-## Legacy Streamlit demonstration
+## Optional legacy prototype (not the application frontend)
 
-Python 3.13 is available in the development environment; use Python 3.11–3.13 with compatible package wheels.
+Python 3.13 is available in the development environment; use Python 3.11â€“3.13 with compatible package wheels.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements-demo.txt
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-If `venv` cannot bootstrap pip, repair the Python installation or install its bundled pip wheel before continuing. Do not substitute fake quantum outputs. The existing system Python has Streamlit/NumPy/SciPy, so the classical dashboard also runs now with `python -m streamlit run app.py`.
+These commands are optional. The original app.py and .streamlit/config.toml are preserved, with historical tests and the old startup probe in legacy_demo/. Backend setup, CI and strict release checks use requirements.txt and tests/ only. See [legacy_demo/README.md](legacy_demo/README.md) for opt-in historical test commands. Installing the optional file includes the backend requirements plus Streamlit; installing the backend file alone never requests Streamlit.
 
 ## Reproduce and verify
 
@@ -68,24 +70,23 @@ If `venv` cannot bootstrap pip, repair the Python installation or install its bu
 .\.venv\Scripts\python.exe -m scripts.verify_release
 ```
 
-Tests use the standard library unittest runner. FastAPI HTTP tests are skipped when FastAPI is absent; circuit/quantum API tests are skipped when dependencies are absent. Green tests with skips establish neither HTTP nor quantum validity. `scripts.validate` saves actual outcomes with separate completeness flags. `verify_release` rejects skips, failed API health probes, unavailable quantum benchmarks, and absent measured comparisons. Requirements declare compatibility ranges; benchmark/validation records list actual installed versions. A verified dependency lock awaits a complete install/run.
+Tests use the standard library unittest runner. FastAPI HTTP tests are skipped when FastAPI is absent; circuit/quantum API tests are skipped when dependencies are absent. Green tests with skips establish neither HTTP nor quantum validity. `scripts.validate` saves actual outcomes with separate completeness flags. `verify_release` rejects skips, failed API health probes, unavailable quantum benchmarks, and absent measured comparisons. Requirements declare compatibility ranges; benchmark/validation records list actual installed versions. requirements-lock.txt pins the now-tested backend environment.
 
 The HTTP script now exercises all five routes, actual small QAOA optimize/compare requests, infeasibility, invalid input, zero capacity, quantum limits and CORS. A health-only response is insufficient. The gate checks runtime source fingerprints, benchmark scenario coverage, positive shot counts, measured best selections, exact classical allocations, probabilities and gaps. Source fingerprints detect stale records, not cryptographic proof of quantum execution. Synthetic consistency fixtures exist only in tests and are never published as measured benchmarks.
 
 `.github/workflows/backend-ci.yml` installs real dependencies on a hosted Python 3.13 runner, performs HTTP and quantum experiments, runs the strict gate, and retains result artifacts. Its repository token is read-only; it neither pushes source nor changes permissions. The CI workflow itself has been syntax checked locally; a passing CI run requires publication and actual execution.
 
-To publish this continuation without waiting for dependency installation, run `.\scripts\publish_now.ps1` from ordinary Windows PowerShell. Then inspect https://github.com/SabihaAbidd/anavo/actions. The user's initial publish works outside this managed agent session; current agent staging and GitHub Git-tree writes remain denied. If a CI job fails, its logs/artifacts—not the existence of the workflow—determine the next defect or blocker.
+To publish this continuation without waiting for dependency installation, run `.\scripts\publish_now.ps1` from ordinary Windows PowerShell. Then inspect https://github.com/SabihaAbidd/anavo/actions. The user's initial publish works outside this managed agent session; current agent staging and GitHub Git-tree writes remain denied. If a CI job fails, its logs/artifactsâ€”not the existence of the workflowâ€”determine the next defect or blocker.
 
 For a Windows terminal with ordinary network and Git write access, run `.\scripts\finish_setup.ps1`. It first invokes the verified GitHub setup workflow, preserving implemented work and its honest blocked-status documentation in a commit, then installs dependencies, runs actual API/quantum validation and benchmarks, and publishes the next milestone. GitHub CLI must be installed and authenticated. It creates only **public `anavo`**, refuses unrelated remotes/history/private repositories, and verifies GitHub and remote commit hashes. See [docs/GITHUB_SETUP.md](docs/GITHUB_SETUP.md). No passwords or tokens are requested in chat.
 
-## Demonstration
+## Backend demonstration
 
-1. Start Streamlit and open the local URL it prints.
-2. Keep **Evening backup**: 240 Wh, 100 W inverter, three-hour outage.
-3. Click **Optimize backup allocation**. Exact recommendation: fan, LED lights, router; 180 Wh, 60 W, utility 24.
-4. Inspect actual simulated quantum measurements if dependencies are installed. If unavailable, the UI says so explicitly.
-5. Switch to **Limited battery**: exact recommendation is lights + mandatory router, utility 15, 60 Wh.
-6. Switch to **Mandatory infeasible**: router needs 30 Wh but battery has 15 Wh; report infeasibility without relaxing requirements.
+1. Start Uvicorn using the backend command above and open http://127.0.0.1:8000/docs.
+2. Call health, scenarios and algorithm-info; inspect their actual JSON responses.
+3. Submit docs/examples/optimize-request.json to POST /api/optimize. The evening exact recommendation is fan, lights and router: 180 Wh, 60 W, utility 24.
+4. Submit docs/examples/compare-request.json to POST /api/compare. Quantum measurements appear only when real Qiskit execution succeeds; unavailable results stay explicit.
+5. Try the mandatory-infeasible preset and negative values to demonstrate hard constraints and validation. No React UI has been built yet.
 
 ## Architecture
 
@@ -95,6 +96,7 @@ For a Windows terminal with ordinary network and Git write access, run `.\script
 |---|---|
 | `PLAN.md`, `TASKS.md` | Decisions, milestones, validation evidence and blockers |
 | `backend/` | FastAPI routes, strict contracts, independent service adapter, restricted CORS settings |
+| `requirements-demo.txt`, `legacy_demo/` | Optional Streamlit dependency and preserved historical checks; excluded from backend release |
 | `src/classical_solver.py` | Exact baseline with deterministic tie handling |
 | `src/optimization.py` | Exact decimal normalization, bounded slack QUBO, Ising mapping |
 | `src/quantum_solver.py` | H/RZ/RZZ/RX circuit, COBYLA, statevector expectation, measured counts |

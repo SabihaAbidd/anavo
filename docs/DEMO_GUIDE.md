@@ -1,6 +1,6 @@
 # Demonstration guide
 
-The primary application is now the FastAPI backend, documented in docs/API.md. Start it with `python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000` after installing requirements, then use http://127.0.0.1:8000/docs to send the shipped JSON examples. Actual HTTP verification is pending FastAPI installation. The original Streamlit walkthrough below is preserved as an optional legacy demonstration; React remains deferred.
+The final application architecture is React + TypeScript + Vite -> FastAPI -> Qiskit/classical solver. React is not built yet; use the backend API documentation to demonstrate implemented features. Streamlit is not required. The optional historical UI commands below require requirements-demo.txt and are outside the backend release.
 
 ## Launch from the project root
 
@@ -8,12 +8,14 @@ The primary application is now the FastAPI backend, documented in docs/API.md. S
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe -m scripts.benchmark --require-quantum
-.\.venv\Scripts\python.exe -m streamlit run app.py
+.\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
 
-Use the printed localhost URL. The system Python can launch the current classical dashboard with `python -m streamlit run app.py`; the incomplete .venv does not yet contain application dependencies. Do not claim that this fallback executes Qiskit.
+Open http://127.0.0.1:8000/docs after the actual server starts. Exercise all five routes; use docs/examples/optimize-request.json and compare-request.json for the POST bodies. API documentation and raw JSON are the current backend demonstration. Do not describe a dependency-blocked server or unexecuted quantum circuit as verified.
 
-## Click sequence
+## Optional historical Streamlit walkthrough
+
+This archived walkthrough is not the final frontend or a required demonstration. Install requirements-demo.txt and run `python -m streamlit run app.py` only if explicitly choosing the old prototype. Historical tests live in legacy_demo/tests and are excluded from backend release checks.
 
 1. Choose **Evening backup**. Keep 240 Wh, 100 W, three hours, and default four appliance rows. Explain Wh versus W and the mandatory router.
 2. Click **Optimize backup allocation**. Expect exact selection fan/lights/router, utility 24, energy 180 Wh, power 60 W. The laptop is optional; no utility hidden bonuses are added for essential flags.
@@ -37,8 +39,10 @@ Use the printed localhost URL. The system Python can launch the current classica
 
 ## Backup demonstration
 
-If network/package restrictions persist, run the working classical dashboard, show tested algebra and exact results, and explicitly state that Qiskit execution is pending. `results/benchmark_results.json` currently contains honest classical-only records, not a substitute quantum experiment. Once real quantum benchmarks succeed, retain their JSON for an offline recorded-results walkthrough, labeled as a prior simulator run with its timestamp/seed. Do not invent screenshots or numbers.
+If network/package restrictions persist, show the saved classical service/benchmark JSON and tested algebra, clearly labeling it as prior recorded output rather than a live API/quantum run. Streamlit is not a required fallback. Its historical prototype may be used only as an explicit optional demonstration after installing requirements-demo.txt. Once real quantum benchmarks succeed, retain their JSON for an offline walkthrough labeled with timestamp and seed. Do not invent screenshots or measurements.
 
-## Environment recovery
+## Verified local execution and publication
 
-The current managed environment denies Git index writes and PyPI DNS resolution, and no GitHub CLI/remote is configured. In a terminal with normal access, `scripts/finish_setup.ps1` installs, validates, generates actual benchmarks, commits and uses an authorized remote or authenticated GitHub CLI. Re-read REPORT.md/PITCH.md/TASKS.md after it finishes and update pending claims from the new measured output. Never paste credentials into chat.
+The project .venv now has all backend dependencies and no Streamlit. All 72 required tests and 12 actual Uvicorn HTTP checks passed. Actual QAOA benchmarks use p=2, 2,048 shots and seed 42; both feasible examples reached a zero best-sample utility gap, while the mandatory-infeasible case has no feasible selection. See the raw JSON and REPORT.md for the measured feasibility probabilities and optimizer budget limitations.
+
+The verification probe stops its temporary server; run the Uvicorn command above to keep http://127.0.0.1:8000/docs available during the demo. The React frontend is not implemented yet. Publishing new results and verifying remote CI remain separate tasks; use scripts/publish_now.ps1 in ordinary PowerShell if agent Git permissions remain blocked. Never paste credentials into chat.

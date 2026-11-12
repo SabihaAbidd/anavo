@@ -42,6 +42,8 @@ def main():
                                 if body.get("service")=="ANAVO API" and body.get("status")=="ok":
                                     record["checks"]=run_http_checks(f"http://127.0.0.1:{port}")
                                     record["healthy"]=all(c["passed"] for c in record["checks"])
+                                    if record["healthy"]:
+                                        record.pop("last_error",None)
                                     break
                         except (OSError,ValueError) as exc:
                             record["last_error"]=str(exc)

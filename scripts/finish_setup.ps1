@@ -17,16 +17,16 @@ if ($LASTEXITCODE -ne 0) {
     python -m pip --python $AnavoPython install pip
     Assert-CommandSucceeded 'pip bootstrap'
 }
-& $AnavoPython -m pip install -r requirements.txt
+& $AnavoPython -m pip install -r requirements-lock.txt
 Assert-CommandSucceeded 'Dependency installation'
-& $AnavoPython -m unittest discover -s tests -v
+& $AnavoPython -m scripts.validate
 Assert-CommandSucceeded 'Automated tests'
 & $AnavoPython -m scripts.api_startup_check
 Assert-CommandSucceeded 'FastAPI localhost startup'
 & $AnavoPython -m scripts.benchmark --require-quantum
 Assert-CommandSucceeded 'Real quantum benchmarks'
 # The first commit is created after tests and actual benchmarks succeed.
-git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt app.py backend src tests scripts docs results
+git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend src tests scripts docs results
 Assert-CommandSucceeded 'Git staging'
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 1) {

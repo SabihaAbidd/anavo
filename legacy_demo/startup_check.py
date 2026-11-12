@@ -1,4 +1,4 @@
-"""Launch Streamlit temporarily and record its real localhost health response."""
+"""Optional legacy Streamlit probe; excluded from backend setup and release checks."""
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -11,7 +11,7 @@ import urllib.request
 def main():
     Path("results").mkdir(exist_ok=True)
     record=dict(checked_utc=datetime.now(timezone.utc).isoformat(),healthy=False,
-                command="python -m scripts.startup_check")
+                command="python -m legacy_demo.startup_check")
     with Path("results/startup.log").open("w",encoding="utf-8") as log:
         process=subprocess.Popen([sys.executable,"-m","streamlit","run","app.py",
             "--server.headless=true","--server.address=127.0.0.1","--server.port=8517",

@@ -36,12 +36,12 @@ if ($AnavoRemoteHeads.Count -gt 0) {
     Assert-AnavoGit 'History compatibility check'
 }
 
-git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt app.py backend src tests scripts docs results
+git add -- .gitignore .github .streamlit AGENTS.md PLAN.md TASKS.md README.md requirements.txt requirements-demo.txt requirements-lock.txt app.py legacy_demo backend src tests scripts docs results
 Assert-AnavoGit 'Staging project files'
 $AnavoStagedPaths = @(git diff --cached --name-only)
 Assert-AnavoGit 'Staged-file inspection'
 foreach ($AnavoStagedPath in $AnavoStagedPaths) {
-    if ($AnavoStagedPath -notmatch '^(\.gitignore|AGENTS\.md|PLAN\.md|TASKS\.md|README\.md|requirements\.txt|app\.py)$|^(\.github|\.streamlit|backend|src|tests|scripts|docs|results)/') {
+    if ($AnavoStagedPath -notmatch '^(\.gitignore|AGENTS\.md|PLAN\.md|TASKS\.md|README\.md|requirements(?:-demo|-lock)?\.txt|app\.py)$|^(\.github|\.streamlit|legacy_demo|backend|src|tests|scripts|docs|results)/') {
         throw "Unexpected staged path: $AnavoStagedPath. Review it manually before committing."
     }
     git check-ignore --no-index --quiet -- $AnavoStagedPath

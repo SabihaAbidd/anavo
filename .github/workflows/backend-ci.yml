@@ -30,8 +30,14 @@ jobs:
         with:
           python-version: '3.13'
           cache: pip
+          cache-dependency-path: requirements-lock.txt
       - name: Install actual API and quantum dependencies
-        run: python -m pip install -r requirements.txt
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r requirements-lock.txt
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+      - name: Verify backend installation has no Streamlit
+        run: python -c "import importlib.util; assert importlib.util.find_spec('streamlit') is None; import fastapi, qiskit, qiskit_aer, numpy, scipy; print('Backend dependencies imported without Streamlit')"
       - name: Record resolved dependencies
         run: python -m pip freeze > results/ci-environment.txt
       - name: Run real Uvicorn HTTP checks including measured QAOA

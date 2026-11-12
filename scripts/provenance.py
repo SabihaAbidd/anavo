@@ -5,7 +5,7 @@ from pathlib import Path
 
 def source_fingerprint(root=None):
     root=Path(root) if root is not None else Path(__file__).resolve().parent.parent
-    files=[root/"requirements.txt"]
+    files=[root/"requirements.txt",root/"requirements-lock.txt"]
     for folder in ("src","backend","scripts","tests"):
         files.extend((root/folder).rglob("*.py"))
     digest=hashlib.sha256()

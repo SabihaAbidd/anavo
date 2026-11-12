@@ -1,6 +1,8 @@
 # ANAVO execution plan
 
 ## 1. Problem and objectives
+
+Active architecture: **React + TypeScript + Vite -> FastAPI/Python -> Qiskit or exact classical solver**. React implementation awaits the user's design reference. Streamlit is archived optional demo code, excluded from backend dependencies, default test discovery, CI and release checks. Its source, configuration and historical tests are preserved for opt-in reference.
 During a Pakistan household outage, choose a subset of requested appliance operations that maximizes stated utility within usable battery energy (Wh) and inverter power (W). Deliver an explainable decision-support prototype, a real simulated QAOA experiment, and an independent exact baseline. Theme: Energy & Smart Infrastructure. Users: households, students, and resilience researchers. This is not an appliance controller.
 
 ## 2. Solution and formulation
@@ -30,7 +32,9 @@ Preserve the validated Streamlit UI unchanged. Define stable, documented JSON sc
 Proceed immediately after writing this plan. Commit each validated milestone; update TASKS.md with evidence.
 
 ## 7. Testing and evaluation
-Test units, invalid/nonfinite input, energy/power boundaries, zero energy, essential vs mandatory semantics, deterministic ties, infeasibility, QUBO minima, Ising energies, bit order, real measured quantum results, quantum limits, and Streamlit AppTest/startup. Benchmark feasible, energy-constrained, and impossible mandatory cases using identical solver inputs. Record seeds, versions, shots, qubits, depth, optimizer evaluations/iterations, parameters, measured feasibility, gap, counts, and wall time. Distinguish selection feasibility from full slack-register feasibility. No fabricated results or quantum-speedup claims.
+Required backend tests cover units, invalid/nonfinite input, energy/power boundaries, zero energy, essential vs mandatory semantics, deterministic ties, infeasibility, QUBO minima, Ising energies, bit order, real measured quantum results, quantum limits and FastAPI contracts/runtime. Historical Streamlit tests live in legacy_demo/tests and are never discovered by the required tests/ suite. A backend isolation regression blocks Streamlit imports while running a real classical service request and discovering required tests. CI installs backend dependencies into a fresh venv and asserts Streamlit is absent before actual API/quantum checks.
+
+Benchmark feasible, energy-constrained, and impossible mandatory cases using identical solver inputs. Record seeds, versions, shots, qubits, depth, optimizer evaluations/iterations, parameters, measured feasibility, gap, counts and wall time. Distinguish selection feasibility from full slack-register feasibility. No fabricated results or quantum-speedup claims. The optional demo installs only through requirements-demo.txt and has no required release status.
 
 ## 8. Research and documentation
 Consult primary Qiskit/Aer docs, original QAOA research, energy optimization research, and NEPRA. Record source URLs, dates where available, relevance, and limits. Deliver README, architecture Mermaid diagram, mathematical derivation and worked example, research notes, measured technical report, three-minute pitch, demo guide, and submission checklist. Document what/why/how/alternatives/tradeoffs/validation for major decisions.
@@ -53,8 +57,14 @@ Done: app starts, editable inputs validate, independent exact solution and actua
 6. Retry quantum dependency installation, run actual circuits/tests/benchmarks where possible, record unavailable states honestly otherwise.
 7. Commit/push each validated milestone if metadata permissions/authentication allow. Supply safe local recovery commands when blocked. React remains deferred.
 
-## 13. Autonomous continuation after latest attached brief
+## 13. Historical autonomous continuation after latest attached brief
 
 Read Pasted text(3).txt in full (494 lines). Preserve the published main history and the existing unpublished workflow changes. Current runtime still lacks FastAPI/Qiskit/Aer; the project venv lacks the numerical/API packages, and the approved network allowlist does not include PyPI. A fresh supported pip attempt failed; Git metadata staging is still denied. Do not repeat unchanged installation attempts or bypass these restrictions.
 
 Execute unblocked correctness work next: (1) reject numerically unsafe QUBO encodings after reproducing tiny-utility loss, (2) validate auxiliary assignments through integer residuals rather than cancellation-sensitive energy tolerance, (3) validate solver options before missing imports, (4) implement a real HTTP probe for all five API routes and negative/CORS cases, (5) strengthen release evidence validation and add regression tests, (6) add CI that can perform genuine dependency installation and runtime validation when published, (7) refresh documentation/status records and attempt authorized publication. The CI definition itself is not a successful CI run. React and Streamlit feature work remain deferred.
+
+## 14. Current verified backend milestone
+
+The project .venv now imports FastAPI/Qiskit/Aer/NumPy/SciPy successfully, pip check passes, and Streamlit is absent. All 72 required backend tests pass with no skips. Actual Uvicorn completed all 12 HTTP cases, and three actual QAOA benchmarks were measured and repeated reproducibly. The strict local release gate passes. requirements-lock.txt pins the 27 tested dependencies and is included in runtime provenance; CI uses that lock. Earlier dependency and HTTP blockers are historical, resolved by the user's successful installation and subsequent real execution.
+
+Complete the remaining publication/remote CI verification without changing permissions or history. Preserve the backend's stable API contracts and wait for the user's React design reference before frontend work.

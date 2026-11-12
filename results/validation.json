@@ -1,86 +1,25 @@
 {
-  "generated_utc": "2026-11-12T14:23:07.077812+00:00",
-  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
+  "generated_utc": "2026-11-12T15:11:31.893685+00:00",
+  "source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
   "command": "python -m scripts.validate",
-  "tests_run": 74,
-  "passed": 59,
-  "skipped": [
-    {
-      "test": "test_algorithm_info (test_api.APITests.test_algorithm_info)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_busy_response_releases_slot (test_api.APITests.test_busy_response_releases_slot)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_classical_optimize (test_api.APITests.test_classical_optimize)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_compare_unavailable_is_partial_success (test_api.APITests.test_compare_unavailable_is_partial_success)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_health (test_api.APITests.test_health)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_infeasible_is_valid_domain_response (test_api.APITests.test_infeasible_is_valid_domain_response)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_openapi_contract (test_api.APITests.test_openapi_contract)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_quantum_oversized_error (test_api.APITests.test_quantum_oversized_error)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_quantum_unavailable_error (test_api.APITests.test_quantum_unavailable_error)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_restricted_cors (test_api.APITests.test_restricted_cors)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_scenarios (test_api.APITests.test_scenarios)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_validation_errors (test_api.APITests.test_validation_errors)",
-      "reason": "FastAPI is not installed; actual HTTP endpoint verification remains pending"
-    },
-    {
-      "test": "test_real_quantum_compare (test_api.RealQuantumAPITests.test_real_quantum_compare)",
-      "reason": "FastAPI and Qiskit/Aer required for actual measured quantum API validation"
-    },
-    {
-      "test": "test_actual_circuit_counts_and_feasibility (test_core.QuantumTests.test_actual_circuit_counts_and_feasibility)",
-      "reason": "Qiskit and Aer not installed; actual quantum execution remains unverified"
-    },
-    {
-      "test": "test_circuit_phase_matches_ising (test_core.QuantumTests.test_circuit_phase_matches_ising)",
-      "reason": "Qiskit and Aer not installed; actual quantum execution remains unverified"
-    }
-  ],
+  "tests_run": 72,
+  "test_scope": "backend and optimization; optional legacy demo excluded",
+  "passed": 72,
+  "skipped": [],
   "failures": [],
   "errors": [],
   "environment": {
     "python": "3.13.5",
-    "qiskit": null,
-    "qiskit-aer": null,
-    "numpy": "2.4.4",
-    "scipy": "1.17.1",
-    "streamlit": "1.58.0",
-    "fastapi": null,
-    "pydantic": "2.12.5",
-    "uvicorn": "0.49.0",
+    "qiskit": "2.6.2",
+    "qiskit-aer": "0.18.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "fastapi": "0.162.5",
+    "pydantic": "2.14.3",
+    "uvicorn": "0.54.0",
     "httpx": "0.28.1"
   },
-  "complete_validation": false,
-  "complete_quantum_validation": false,
-  "complete_api_validation": false
+  "complete_validation": true,
+  "complete_quantum_validation": true,
+  "complete_api_validation": true
 }

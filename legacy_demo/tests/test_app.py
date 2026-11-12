@@ -1,3 +1,4 @@
+"""Optional historical UI tests; install requirements-demo.txt to run explicitly."""
 import unittest
 from streamlit.testing.v1 import AppTest
 

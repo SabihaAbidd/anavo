@@ -9,7 +9,7 @@ from .optimization import QuantumLimitError
 
 def environment_versions():
     result = {"python": platform.python_version()}
-    for package in ("qiskit", "qiskit-aer", "numpy", "scipy", "streamlit", "fastapi", "pydantic", "uvicorn", "httpx"):
+    for package in ("qiskit", "qiskit-aer", "numpy", "scipy", "fastapi", "pydantic", "uvicorn", "httpx"):
         try:
             result[package] = version(package)
         except PackageNotFoundError:

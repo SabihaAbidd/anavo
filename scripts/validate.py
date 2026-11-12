@@ -9,11 +9,13 @@ from .provenance import source_fingerprint
 
 
 def run_validation():
-    suite=unittest.defaultTestLoader.discover("tests")
+    # Only the backend/optimization suite; legacy_demo/tests is explicitly opt-in.
+    suite=unittest.defaultTestLoader.discover("tests",top_level_dir=".")
     result=unittest.TextTestRunner(verbosity=2).run(suite)
     record=dict(generated_utc=datetime.now(timezone.utc).isoformat(),
                 source_fingerprint=source_fingerprint(),
                 command="python -m scripts.validate", tests_run=result.testsRun,
+                test_scope="backend and optimization; optional legacy demo excluded",
                 passed=result.testsRun-len(result.skipped)-len(result.failures)-len(result.errors),
                 skipped=[dict(test=str(test),reason=reason) for test,reason in result.skipped],
                 failures=[dict(test=str(test),traceback=trace) for test,trace in result.failures],

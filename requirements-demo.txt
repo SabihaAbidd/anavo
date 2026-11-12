@@ -1,0 +1,3 @@
+# Optional historical Streamlit prototype only. Not used by backend CI or release checks.
+-r requirements.txt
+streamlit>=1.45,<2

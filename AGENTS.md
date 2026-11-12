@@ -14,4 +14,4 @@ The user authorizes automatic Git commits and pushes after each meaningful, vali
 
 ## Project scope
 
-Backend first: Python, FastAPI, Pydantic, Qiskit, Aer, NumPy and SciPy. Reuse the existing mathematical/optimization engine and preserve the Streamlit demonstration. Do not develop the React frontend until the user supplies the separate design brief. Keep hard mandatory constraints explicit and never fabricate quantum measurements or claim quantum speedup.
+Final architecture: React + TypeScript + Vite -> Python/FastAPI/Pydantic -> Qiskit/Aer or the classical solver, with NumPy and SciPy. Reuse the validated optimization engine. Streamlit is optional legacy code only: preserve app.py and historical checks, keep its dependency in requirements-demo.txt, and exclude legacy_demo/tests from backend CI/release. Do not develop React until the user supplies the design reference. Keep mandatory constraints explicit and never fabricate quantum measurements or claim quantum speedup.

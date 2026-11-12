@@ -1,5 +1,5 @@
 {
-  "execution": "Direct service invocation; not an HTTP endpoint result",
+  "execution": "Direct backend classical service invocation; separate real HTTP evidence is in api_startup_check.json",
   "response": {
     "schema_version": "1.0",
     "scenario": {
@@ -110,7 +110,7 @@
         "essential_total": 3,
         "violations": []
       },
-      "runtime_s": 0.005237499950453639,
+      "runtime_s": 0.0013077000621706247,
       "enumerated": 16,
       "feasible_selections": 6,
       "quantum_metadata": null,
@@ -120,14 +120,13 @@
     "fallback_used": false,
     "environment": {
       "python": "3.13.5",
-      "qiskit": null,
-      "qiskit-aer": null,
-      "numpy": "2.4.4",
-      "scipy": "1.17.1",
-      "streamlit": "1.58.0",
-      "fastapi": null,
-      "pydantic": "2.12.5",
-      "uvicorn": "0.49.0",
+      "qiskit": "2.6.2",
+      "qiskit-aer": "0.18.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "fastapi": "0.162.5",
+      "pydantic": "2.14.3",
+      "uvicorn": "0.54.0",
       "httpx": "0.28.1"
     }
   }

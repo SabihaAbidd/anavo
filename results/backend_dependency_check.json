@@ -1,0 +1,32 @@
+{
+  "checked_utc": "2026-11-12T15:16:40.765705+00:00",
+  "source_fingerprint": "2141396f69993d1822f68b41945a74d1130947691436efadeb4f25c77bd2f7ad",
+  "requirements": "requirements.txt",
+  "locked_requirements": "requirements-lock.txt",
+  "isolation": "Project .venv; backend dependencies installed by user in ordinary PowerShell and then verified by agent",
+  "install_status": "verified",
+  "clean_install_verified": true,
+  "backend_environment_verified": true,
+  "pip_check_exit_code": 0,
+  "streamlit_in_backend_requirements": false,
+  "streamlit_in_project_environment": false,
+  "backend_imports_streamlit": false,
+  "streamlit_blocked_service_and_test_discovery": "passed",
+  "legacy_tests_in_backend_scope": false,
+  "environment": {
+    "python": "3.13.5",
+    "qiskit": "2.6.2",
+    "qiskit-aer": "0.18.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "fastapi": "0.162.5",
+    "pydantic": "2.14.3",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1"
+  },
+  "previous_managed_install_attempt": {
+    "status": "blocked",
+    "exit_code": 1
+  },
+  "ci_fresh_backend_install_check_configured": true
+}
