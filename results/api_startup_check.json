@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-11-12T15:59:45.862234+00:00",
+  "checked_utc": "2026-11-12T17:12:01.410127+00:00",
   "healthy": true,
-  "source_fingerprint": "dc30230345b778ee472f5dd829579b082a46e43d0b78f021a00d141862289ff1",
+  "source_fingerprint": "30055d3f3e06154fdd7b1678225d85bb262cd5a1c919420ac25af58e2798b6b5",
   "checks": [
     {
       "name": "health",
@@ -222,11 +222,13 @@
           "shots": 8192,
           "evaluations_per_restart": 200,
           "restarts": 3,
-          "concurrent_jobs_per_process": 1
+          "concurrent_jobs_per_process": 1,
+          "fleet_homes": 500,
+          "schedule_slots": 96
         },
         "assumptions": [
           "Usable AC-side battery energy; fixed requested durations within outage.",
-          "Conservative simultaneous inverter power; no time-slot scheduling or surge model.",
+          "/api/optimize and /api/compare reserve inverter power simultaneously; /api/schedule sequences loads in time slots (exact MILP). No surge model.",
           "Essential is a label; utility is a preference; mandatory is a hard constraint.",
           "Deferred means unselected for this request, not a future scheduled time.",
           "No quantum measurements are reported unless an actual circuit executes."
@@ -350,7 +352,7 @@
             "essential_total": 3,
             "violations": []
           },
-          "runtime_s": 0.0016363998875021935,
+          "runtime_s": 0.0006494000554084778,
           "enumerated": 16,
           "feasible_selections": 6,
           "quantum_metadata": null,
@@ -449,7 +451,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 6.703052700031549,
+          "runtime_s": 1.7217825998086482,
           "enumerated": null,
           "feasible_selections": null,
           "quantum_metadata": {
@@ -667,6 +669,83 @@
                 "encoding_feasible": false,
                 "utility": 5.0,
                 "qubo_energy": 43.0
+              }
+            ],
+            "qubit_roles": [
+              "Light",
+              "Optional",
+              "energy_slack_0",
+              "power_slack_0"
+            ],
+            "circuit_operations": {
+              "rzz": 5,
+              "u2": 4,
+              "rx": 4,
+              "measure": 4,
+              "barrier": 1
+            },
+            "selection_distribution": [
+              {
+                "appliance_bitstring": "01",
+                "count": 115,
+                "probability": 0.44921875,
+                "feasible": false,
+                "utility": 2.0
+              },
+              {
+                "appliance_bitstring": "10",
+                "count": 72,
+                "probability": 0.28125,
+                "feasible": true,
+                "utility": 3.0
+              },
+              {
+                "appliance_bitstring": "11",
+                "count": 40,
+                "probability": 0.15625,
+                "feasible": false,
+                "utility": 5.0
+              },
+              {
+                "appliance_bitstring": "00",
+                "count": 29,
+                "probability": 0.11328125,
+                "feasible": false,
+                "utility": 0.0
+              }
+            ],
+            "landscape": [
+              {
+                "appliance_bitstring": "00",
+                "utility": 0.0,
+                "energy_wh": 0.0,
+                "power_w": 0.0,
+                "feasible": false,
+                "probability": 0.11328125
+              },
+              {
+                "appliance_bitstring": "10",
+                "utility": 3.0,
+                "energy_wh": 1.0,
+                "power_w": 1.0,
+                "feasible": true,
+                "probability": 0.28125
+              },
+              {
+                "appliance_bitstring": "01",
+                "utility": 2.0,
+                "energy_wh": 1.0,
+                "power_w": 1.0,
+                "feasible": false,
+                "probability": 0.44921875
+              },
+              {
+                "appliance_bitstring": "11",
+                "utility": 5.0,
+                "energy_wh": 2.0,
+                "power_w": 2.0,
+                "feasible": false,
+                "probability": 0.15625
               }
             ]
           },
@@ -765,7 +844,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 0.0003474999684840441,
+          "runtime_s": 0.00013620010577142239,
           "enumerated": 4,
           "feasible_selections": 1,
           "quantum_metadata": null,
@@ -818,7 +897,7 @@
             "essential_total": 1,
             "violations": []
           },
-          "runtime_s": 1.1276078999508172,
+          "runtime_s": 0.19382479996420443,
           "enumerated": null,
           "feasible_selections": null,
           "quantum_metadata": {
@@ -1037,6 +1116,83 @@
                 "utility": 5.0,
                 "qubo_energy": 43.0
               }
+            ],
+            "qubit_roles": [
+              "Light",
+              "Optional",
+              "energy_slack_0",
+              "power_slack_0"
+            ],
+            "circuit_operations": {
+              "rzz": 5,
+              "u2": 4,
+              "rx": 4,
+              "measure": 4,
+              "barrier": 1
+            },
+            "selection_distribution": [
+              {
+                "appliance_bitstring": "01",
+                "count": 115,
+                "probability": 0.44921875,
+                "feasible": false,
+                "utility": 2.0
+              },
+              {
+                "appliance_bitstring": "10",
+                "count": 72,
+                "probability": 0.28125,
+                "feasible": true,
+                "utility": 3.0
+              },
+              {
+                "appliance_bitstring": "11",
+                "count": 40,
+                "probability": 0.15625,
+                "feasible": false,
+                "utility": 5.0
+              },
+              {
+                "appliance_bitstring": "00",
+                "count": 29,
+                "probability": 0.11328125,
+                "feasible": false,
+                "utility": 0.0
+              }
+            ],
+            "landscape": [
+              {
+                "appliance_bitstring": "00",
+                "utility": 0.0,
+                "energy_wh": 0.0,
+                "power_w": 0.0,
+                "feasible": false,
+                "probability": 0.11328125
+              },
+              {
+                "appliance_bitstring": "10",
+                "utility": 3.0,
+                "energy_wh": 1.0,
+                "power_w": 1.0,
+                "feasible": true,
+                "probability": 0.28125
+              },
+              {
+                "appliance_bitstring": "01",
+                "utility": 2.0,
+                "energy_wh": 1.0,
+                "power_w": 1.0,
+                "feasible": false,
+                "probability": 0.44921875
+              },
+              {
+                "appliance_bitstring": "11",
+                "utility": 5.0,
+                "energy_wh": 2.0,
+                "power_w": 2.0,
+                "feasible": false,
+                "probability": 0.15625
+              }
             ]
           },
           "error_code": null,
@@ -1045,6 +1201,7 @@
         "comparison_status": "complete",
         "objective_gap": 0.0,
         "relative_gap": 0.0,
+        "optimal_selection_probability": 0.28125,
         "environment": {
           "python": "3.13.5",
           "qiskit": "2.6.2",
@@ -1114,7 +1271,7 @@
           "status": "infeasible",
           "feasibility": "infeasible",
           "allocation": null,
-          "runtime_s": 0.004703700076788664,
+          "runtime_s": 0.0005403999239206314,
           "enumerated": 16,
           "feasible_selections": 0,
           "quantum_metadata": null,
@@ -1355,7 +1512,7 @@
             "essential_total": 3,
             "violations": []
           },
-          "runtime_s": 0.0030168001540005207,
+          "runtime_s": 0.0010319000575691462,
           "enumerated": 16,
           "feasible_selections": 1,
           "quantum_metadata": null,
@@ -1394,5 +1551,5 @@
     }
   ],
   "command": "python -m scripts.api_startup_check",
-  "endpoint": "http://127.0.0.1:56710/health"
+  "endpoint": "http://127.0.0.1:57346/health"
 }

@@ -75,7 +75,11 @@ def compare(request: CompareRequest) -> CompareResponse:
     scenario = request.scenario.to_domain()
     classical = classical_result(scenario)
     quantum = quantum_result(scenario, request.quantum_options)
-    gap = relative = None
+    gap = relative = optimum_probability = None
+    if classical.allocation is not None and quantum.quantum_metadata is not None:
+        # Share of all shots that measured the exact optimum's appliance decision.
+        optimum_probability = sum(item.probability for item in quantum.quantum_metadata.selection_distribution
+                                  if item.appliance_bitstring == classical.allocation.bitstring)
     if classical.allocation is not None and quantum.allocation is not None:
         gap = classical.allocation.objective_value - quantum.allocation.objective_value
         relative = gap/classical.allocation.objective_value if classical.allocation.objective_value else 0.0
@@ -85,6 +89,39 @@ def compare(request: CompareRequest) -> CompareResponse:
                   "failed":"quantum_failed"}.get(quantum.status, "no_feasible_pair")
     return CompareResponse(scenario=request.scenario, classical=classical, quantum=quantum,
         comparison_status=status, objective_gap=gap, relative_gap=relative,
+        optimal_selection_probability=optimum_probability,
         environment=environment_versions(),
         bit_order="Allocation bitstrings use input order x0..xn-1; measured strings use Qiskit q[n-1]..q[0].",
         interpretation="Ideal simulated quantum execution only when metadata/counts are present. No quantum advantage is claimed.")
+
+
+def schedule(request):
+    from src.scheduler import solve_schedule
+    from .schemas import ScheduleResponse
+    scenario = request.scenario.to_domain()
+    raw = solve_schedule(scenario, start_hour=request.start_hour, solar_kwp=request.solar_kwp,
+                         peak_sun_hours=request.peak_sun_hours)
+    simultaneous = solve_exact(scenario)["best"]
+    simultaneous_utility = simultaneous["utility"] if simultaneous else None
+    gain = None
+    if raw["feasible"] and simultaneous_utility is not None:
+        gain = raw["utility"] - simultaneous_utility
+    return ScheduleResponse(**raw, simultaneous_utility=simultaneous_utility, gain_vs_simultaneous=gain)
+
+
+def fleet(request):
+    from src.fleet import solve_fleet
+    from src.models import Appliance
+    from .schemas import FleetResponse
+    homes = [dict(name=h.name, weight=h.weight,
+                  appliances=[Appliance(**a.model_dump()) for a in h.appliances]) for h in request.homes]
+    raw = solve_fleet(homes, request.battery_wh, request.inverter_w, request.outage_h,
+                      fairness_floor=request.fairness_floor)
+    return FleetResponse(name=request.name, **raw)
+
+
+def pakistan_dataset():
+    import json
+    from pathlib import Path
+    path = Path(__file__).resolve().parent.parent / "data" / "pakistan_energy.json"
+    return json.loads(path.read_text(encoding="utf-8"))

@@ -21,6 +21,12 @@ Swagger: http://127.0.0.1:8000/docs · ReDoc: http://127.0.0.1:8000/redoc · Ope
 | GET | `/api/scenarios` | `ScenariosResponse.scenarios`: four full `ScenarioInput` objects suitable for editing |
 | POST | `/api/optimize` | `OptimizeRequest` -> `OptimizeResponse`, one explicitly selected algorithm |
 | POST | `/api/compare` | `CompareRequest` -> `CompareResponse`, exact and quantum outcomes for identical inputs |
+| POST | `/api/schedule` | `ScheduleRequest` (scenario, start_hour, solar_kwp, peak_sun_hours) -> `ScheduleResponse`: per-appliance start/end, per-slot load, solar, battery level, gain vs simultaneous reservation |
+| POST | `/api/fleet/optimize` | `FleetRequest` (homes[], shared battery_wh/inverter_w, outage_h, fairness_floor) -> `FleetResponse`: per-home allocation, Jain fairness index, equal-split baseline |
+| POST | `/api/jobs` | `JobRequest {kind: compare/fleet/schedule, payload}` -> 202 `JobStatus` (queued); payload validated against the matching request contract |
+| GET | `/api/jobs/{job_id}` | `JobStatus` with result once `succeeded`; 404 for unknown ids |
+| GET | `/api/jobs` | `JobList`: recent jobs, queue length, worker count |
+| GET | `/api/data/pakistan` | `PakistanDataset`: cited outage profiles, solar resource, appliance library, household archetypes |
 | GET | `/api/algorithm-info` | `AlgorithmInfo`: units, assumptions, algorithm description and resource limits |
 
 ## Inputs

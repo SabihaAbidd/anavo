@@ -82,3 +82,13 @@ Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26
 - scripts.validate: 72 passed, 0 skipped/failures/errors.
 - npm run build passed; npm run test:integration: 2 passed, 0 failed.
 - Browser: opening mounted on load, Enter skip worked, header logo measured 30x30 px on desktop. Phone-layout check was not finished in this session because the hidden preview pane stopped responding; check it visually before recording.
+
+## Feature expansion milestone (2026-11-12)
+- Quantum insights: `/api/compare` now returns measured selection distribution (slack marginalised), full solution landscape, qubit roles, transpiled gate counts and probability of measuring the exact optimum. Existing QAOA results unchanged.
+- Hour-by-hour scheduler (`src/scheduler.py`, `/api/schedule`): exact MILP with contiguous blocks, per-slot inverter limit, battery state of charge, optional solar (ESMAP 5.67 kWh/m2/day x 0.75). Independently re-verified before returning.
+- Housing society B2B (`src/fleet.py`, `/api/fleet/optimize`): shared-capacity MILP for up to 500 homes, per-home mandatory loads, fairness floor, Jain index, equal-split baseline. 500 homes / 3,076 decisions solved in about 3 s.
+- Async job queue (`backend/jobs.py`, `/api/jobs`): one worker sharing the optimization slot.
+- Pakistan dataset (`data/pakistan_energy.json`, `/api/data/pakistan`): every value tagged with a cited source or marked estimate.
+- Frontend: quantum insights panel, timeline (Gantt + load/battery chart), society grid with single-home QAOA verification, Pakistan data library, architecture section.
+- Checks run this milestone: scripts.validate 91 passed / 0 skipped / 0 failed; npm run build passed; npm run test:integration 3 passed; scripts.benchmark --require-quantum regenerated (30, 15, no feasible sample); scripts.api_startup_check passed; scripts.verify_release passed.
+- Browser (desktop, hidden preview pane): all sections render; society job, single-home QAOA verify, compare insights and schedule flows completed with expected values. Phone layout of new sections not visually verified.

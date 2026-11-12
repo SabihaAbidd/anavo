@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "title": "ANAVO Pakistan energy context dataset",
+  "compiled": "2026-11-12",
+  "disclaimer": "Compiled from public reporting and regulator documents. These are published figures and typed estimates, not measurements collected by the ANAVO team. Values marked basis=estimate are typical nameplate assumptions and remain editable in the app.",
+  "sources": {
+    "nepra_ke_feeders": {
+      "title": "NEPRA orders K-Electric to end load-shedding (Express Tribune)",
+      "url": "https://tribune.com.pk/story/2627009/nepra-orders-k-electric-to-end-load-shedding",
+      "used_for": "Average daily outage on high-loss (10 h 39 min) and very-high-loss (12 h 14 min) K-Electric feeders"
+    },
+    "nepra_qesco_notice": {
+      "title": "NEPRA show-cause notice to QESCO, loss-based load-shedding bands (2024)",
+      "url": "https://www.nepra.org.pk/M&E/Decisions/2024/LAD-09%20ORDER%20SHOW%20CAUSE%20NOTICE%20QESCO%2003-04-2024%20%204835.PDF",
+      "used_for": "Scheduled load-shedding from 0 hours (low-loss feeders) up to 16 hours (feeders above 80% losses)"
+    },
+    "thenews_feeders": {
+      "title": "More than 2,000 feeders face over 10 hours of daily loadshedding, NA told (The News)",
+      "url": "https://www.thenews.pk/print/1398879-more-than-2-000-feeders-face-over-10-hours-of-daily-loadshedding-na-told",
+      "used_for": "Scale of feeders with 10+ hours of daily outage"
+    },
+    "neeca_fans": {
+      "title": "Pakistani reporting on NEECA ceiling-fan efficiency standards (ProPakistani; ARY News)",
+      "url": "https://propakistani.pk/2023/06/14/production-and-demand-of-energy-efficient-fans-spirals/",
+      "secondary_url": "https://arynews.tv/do-inverter-fans-really-consume-only-30-watts-unveiling-the-truth/",
+      "used_for": "Conventional fans about 80-130 W; NEECA 3-star fans about 50-65 W; marketed inverter fans about 30 W (claims vary)"
+    },
+    "esmap_solar": {
+      "title": "Tahir & Asim, Renewable and Sustainable Energy Reviews 81 (2018) 2839-2861, citing World Bank ESMAP mapping",
+      "url": "https://econpapers.repec.org/RePEc:eee:rensus:v:81:y:2018:i:p2:p:2839-2861",
+      "secondary_url": "https://www.ppib.gov.pk/wp-content/uploads/2023/07/SOLAR-RESOURCE-MAPPING.pdf",
+      "used_for": "Annual mean daily global horizontal irradiation of about 5.67 kWh/m2 (ESMAP estimate)"
+    }
+  },
+  "outage_profiles": [
+    {"id": "low_loss", "label": "Low-loss feeder", "daily_outage_h": 0, "basis": "nepra_qesco_notice", "note": "Lowest loss band: no scheduled load-shedding; unscheduled faults still occur."},
+    {"id": "high_loss_ke", "label": "High-loss feeder (Karachi average)", "daily_outage_h": 10.65, "basis": "nepra_ke_feeders", "note": "10 h 39 min average reported by NEPRA."},
+    {"id": "very_high_loss_ke", "label": "Very-high-loss feeder (Karachi average)", "daily_outage_h": 12.23, "basis": "nepra_ke_feeders", "note": "12 h 14 min average reported by NEPRA."},
+    {"id": "max_band", "label": "Highest loss band (>80% losses)", "daily_outage_h": 16, "basis": "nepra_qesco_notice", "note": "Upper scheduled band; reports describe some areas exceeding it."}
+  ],
+  "solar": {"ghi_kwh_m2_day": 5.67, "basis": "esmap_solar", "performance_ratio_assumption": 0.75,
+            "note": "Daily yield per kWp is approximated as GHI x performance ratio (about 4.25 kWh/kWp/day). Seasonal and city variation is not modeled."},
+  "appliances": [
+    {"name": "Ceiling fan (conventional)", "power_w": 80, "hours": 4, "priority": 9, "basis": "neeca_fans"},
+    {"name": "Ceiling fan (NEECA efficient)", "power_w": 55, "hours": 4, "priority": 9, "basis": "neeca_fans"},
+    {"name": "Inverter fan", "power_w": 35, "hours": 4, "priority": 9, "basis": "neeca_fans"},
+    {"name": "LED lights", "power_w": 20, "hours": 4, "priority": 8, "basis": "estimate"},
+    {"name": "Wi-Fi router", "power_w": 12, "hours": 4, "priority": 8, "basis": "estimate", "mandatory": true},
+    {"name": "Phone charging", "power_w": 10, "hours": 2, "priority": 7, "basis": "estimate"},
+    {"name": "Laptop", "power_w": 60, "hours": 2, "priority": 6, "basis": "estimate"},
+    {"name": "LED TV", "power_w": 60, "hours": 2, "priority": 4, "basis": "estimate"},
+    {"name": "Refrigerator", "power_w": 150, "hours": 2, "priority": 7, "basis": "estimate"},
+    {"name": "Water pump (1 hp)", "power_w": 750, "hours": 1, "priority": 8, "basis": "estimate"},
+    {"name": "Washing machine", "power_w": 400, "hours": 1, "priority": 5, "basis": "estimate"},
+    {"name": "Clothes iron", "power_w": 1000, "hours": 0.5, "priority": 4, "basis": "estimate"},
+    {"name": "Inverter AC (1 ton)", "power_w": 1000, "hours": 3, "priority": 5, "basis": "estimate"},
+    {"name": "Desktop computer", "power_w": 150, "hours": 2, "priority": 6, "basis": "estimate"},
+    {"name": "Oxygen concentrator", "power_w": 300, "hours": 4, "priority": 10, "basis": "estimate", "mandatory": true}
+  ],
+  "household_archetypes": [
+    {"id": "apartment", "label": "Small apartment", "weight": 1.0,
+     "appliances": ["Ceiling fan (NEECA efficient)", "LED lights", "Wi-Fi router", "Phone charging", "LED TV"]},
+    {"id": "family", "label": "Family house", "weight": 1.0,
+     "appliances": ["Ceiling fan (conventional)", "LED lights", "Wi-Fi router", "Refrigerator", "Water pump (1 hp)", "Laptop", "LED TV"]},
+    {"id": "medical", "label": "Home with medical need", "weight": 2.0,
+     "appliances": ["Oxygen concentrator", "Ceiling fan (NEECA efficient)", "LED lights", "Phone charging", "Refrigerator"]},
+    {"id": "large", "label": "Large house", "weight": 1.0,
+     "appliances": ["Inverter AC (1 ton)", "Ceiling fan (conventional)", "LED lights", "Wi-Fi router", "Refrigerator", "Water pump (1 hp)", "Clothes iron", "Desktop computer"]}
+  ]
+}

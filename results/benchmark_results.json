@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-11-12T16:00:24.263048+00:00",
-  "source_fingerprint": "dc30230345b778ee472f5dd829579b082a46e43d0b78f021a00d141862289ff1",
+  "generated_utc": "2026-11-12T17:12:00.913062+00:00",
+  "source_fingerprint": "30055d3f3e06154fdd7b1678225d85bb262cd5a1c919420ac25af58e2798b6b5",
   "complete_quantum_execution": true,
   "results": [
     {
@@ -73,7 +73,7 @@
         },
         "feasible_selections": 8,
         "enumerated": 16,
-        "runtime_s": 0.0006042998284101486
+        "runtime_s": 0.0005089000333100557
       },
       "quantum": {
         "method": "QAOA / Qiskit Aer noiseless simulator",
@@ -102,7 +102,7 @@
           "feasible": true,
           "violations": []
         },
-        "runtime_s": 9.017772500170395,
+        "runtime_s": 2.0481283999979496,
         "qubits": 4,
         "appliance_qubits": 4,
         "slack_qubits": 0,
@@ -376,6 +376,198 @@
             "utility": 30,
             "qubo_energy": -30.0
           }
+        ],
+        "qubit_roles": [
+          "Fan",
+          "LED lights",
+          "Wi-Fi router",
+          "Laptop"
+        ],
+        "circuit_operations": {
+          "u3": 4,
+          "measure": 4,
+          "barrier": 1
+        },
+        "selection_distribution": [
+          {
+            "appliance_bitstring": "1111",
+            "count": 1952,
+            "feasible": true,
+            "utility": 30,
+            "probability": 0.953125
+          },
+          {
+            "appliance_bitstring": "1110",
+            "count": 55,
+            "feasible": true,
+            "utility": 24,
+            "probability": 0.02685546875
+          },
+          {
+            "appliance_bitstring": "0111",
+            "count": 28,
+            "feasible": true,
+            "utility": 21,
+            "probability": 0.013671875
+          },
+          {
+            "appliance_bitstring": "1011",
+            "count": 10,
+            "feasible": true,
+            "utility": 23,
+            "probability": 0.0048828125
+          },
+          {
+            "appliance_bitstring": "0011",
+            "count": 1,
+            "feasible": true,
+            "utility": 14,
+            "probability": 0.00048828125
+          },
+          {
+            "appliance_bitstring": "0110",
+            "count": 1,
+            "feasible": true,
+            "utility": 15,
+            "probability": 0.00048828125
+          },
+          {
+            "appliance_bitstring": "1010",
+            "count": 1,
+            "feasible": true,
+            "utility": 17,
+            "probability": 0.00048828125
+          }
+        ],
+        "landscape": [
+          {
+            "appliance_bitstring": "0000",
+            "utility": 0,
+            "energy_wh": 0,
+            "power_w": 0,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "1000",
+            "utility": 9,
+            "energy_wh": 120,
+            "power_w": 40,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "0100",
+            "utility": 7,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "1100",
+            "utility": 16,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "0010",
+            "utility": 8,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": true,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "1010",
+            "utility": 17,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": true,
+            "probability": 0.00048828125
+          },
+          {
+            "appliance_bitstring": "0110",
+            "utility": 15,
+            "energy_wh": 60,
+            "power_w": 20,
+            "feasible": true,
+            "probability": 0.00048828125
+          },
+          {
+            "appliance_bitstring": "1110",
+            "utility": 24,
+            "energy_wh": 180,
+            "power_w": 60,
+            "feasible": true,
+            "probability": 0.02685546875
+          },
+          {
+            "appliance_bitstring": "0001",
+            "utility": 6,
+            "energy_wh": 120,
+            "power_w": 60,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "1001",
+            "utility": 15,
+            "energy_wh": 240,
+            "power_w": 100,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "0101",
+            "utility": 13,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "1101",
+            "utility": 22,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": false,
+            "probability": 0.0
+          },
+          {
+            "appliance_bitstring": "0011",
+            "utility": 14,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": true,
+            "probability": 0.00048828125
+          },
+          {
+            "appliance_bitstring": "1011",
+            "utility": 23,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": true,
+            "probability": 0.0048828125
+          },
+          {
+            "appliance_bitstring": "0111",
+            "utility": 21,
+            "energy_wh": 180,
+            "power_w": 80,
+            "feasible": true,
+            "probability": 0.013671875
+          },
+          {
+            "appliance_bitstring": "1111",
+            "utility": 30,
+            "energy_wh": 300,
+            "power_w": 120,
+            "feasible": true,
+            "probability": 0.953125
+          }
         ]
       },
       "objective_gap": 0,
@@ -465,7 +657,7 @@
         },
         "feasible_selections": 2,
         "enumerated": 16,
-        "runtime_s": 0.005721700144931674
+        "runtime_s": 0.00048159994184970856
       },
       "quantum": {
         "method": "QAOA / Qiskit Aer noiseless simulator",
@@ -495,7 +687,7 @@
           "feasible": true,
           "violations": []
         },
-        "runtime_s": 7.853966299910098,
+        "runtime_s": 0.9185345999430865,
         "qubits": 9,
         "appliance_qubits": 4,
         "slack_qubits": 5,
@@ -4499,6 +4691,269 @@
             "utility": 22,
             "qubo_energy": 6271.0
           }
+        ],
+        "qubit_roles": [
+          "Fan",
+          "LED lights",
+          "Wi-Fi router",
+          "Laptop",
+          "energy_slack_0",
+          "energy_slack_1",
+          "power_slack_0",
+          "power_slack_1",
+          "power_slack_2"
+        ],
+        "circuit_operations": {
+          "rzz": 60,
+          "u2": 9,
+          "u3": 9,
+          "rx": 9,
+          "measure": 9,
+          "barrier": 1
+        },
+        "selection_distribution": [
+          {
+            "appliance_bitstring": "0010",
+            "count": 254,
+            "feasible": true,
+            "utility": 8,
+            "probability": 0.1240234375
+          },
+          {
+            "appliance_bitstring": "0110",
+            "count": 244,
+            "feasible": true,
+            "utility": 15,
+            "probability": 0.119140625
+          },
+          {
+            "appliance_bitstring": "0100",
+            "count": 235,
+            "feasible": false,
+            "utility": 7,
+            "probability": 0.11474609375
+          },
+          {
+            "appliance_bitstring": "0000",
+            "count": 233,
+            "feasible": false,
+            "utility": 0,
+            "probability": 0.11376953125
+          },
+          {
+            "appliance_bitstring": "0001",
+            "count": 194,
+            "feasible": false,
+            "utility": 6,
+            "probability": 0.0947265625
+          },
+          {
+            "appliance_bitstring": "1000",
+            "count": 181,
+            "feasible": false,
+            "utility": 9,
+            "probability": 0.08837890625
+          },
+          {
+            "appliance_bitstring": "1010",
+            "count": 142,
+            "feasible": false,
+            "utility": 17,
+            "probability": 0.0693359375
+          },
+          {
+            "appliance_bitstring": "1100",
+            "count": 134,
+            "feasible": false,
+            "utility": 16,
+            "probability": 0.0654296875
+          },
+          {
+            "appliance_bitstring": "0101",
+            "count": 124,
+            "feasible": false,
+            "utility": 13,
+            "probability": 0.060546875
+          },
+          {
+            "appliance_bitstring": "0011",
+            "count": 123,
+            "feasible": false,
+            "utility": 14,
+            "probability": 0.06005859375
+          },
+          {
+            "appliance_bitstring": "1110",
+            "count": 72,
+            "feasible": false,
+            "utility": 24,
+            "probability": 0.03515625
+          },
+          {
+            "appliance_bitstring": "0111",
+            "count": 65,
+            "feasible": false,
+            "utility": 21,
+            "probability": 0.03173828125
+          },
+          {
+            "appliance_bitstring": "1001",
+            "count": 18,
+            "feasible": false,
+            "utility": 15,
+            "probability": 0.0087890625
+          },
+          {
+            "appliance_bitstring": "1011",
+            "count": 12,
+            "feasible": false,
+            "utility": 23,
+            "probability": 0.005859375
+          },
+          {
+            "appliance_bitstring": "1111",
+            "count": 9,
+            "feasible": false,
+            "utility": 30,
+            "probability": 0.00439453125
+          },
+          {
+            "appliance_bitstring": "1101",
+            "count": 8,
+            "feasible": false,
+            "utility": 22,
+            "probability": 0.00390625
+          }
+        ],
+        "landscape": [
+          {
+            "appliance_bitstring": "0000",
+            "utility": 0,
+            "energy_wh": 0,
+            "power_w": 0,
+            "feasible": false,
+            "probability": 0.11376953125
+          },
+          {
+            "appliance_bitstring": "1000",
+            "utility": 9,
+            "energy_wh": 120,
+            "power_w": 40,
+            "feasible": false,
+            "probability": 0.08837890625
+          },
+          {
+            "appliance_bitstring": "0100",
+            "utility": 7,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": false,
+            "probability": 0.11474609375
+          },
+          {
+            "appliance_bitstring": "1100",
+            "utility": 16,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": false,
+            "probability": 0.0654296875
+          },
+          {
+            "appliance_bitstring": "0010",
+            "utility": 8,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": true,
+            "probability": 0.1240234375
+          },
+          {
+            "appliance_bitstring": "1010",
+            "utility": 17,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": false,
+            "probability": 0.0693359375
+          },
+          {
+            "appliance_bitstring": "0110",
+            "utility": 15,
+            "energy_wh": 60,
+            "power_w": 20,
+            "feasible": true,
+            "probability": 0.119140625
+          },
+          {
+            "appliance_bitstring": "1110",
+            "utility": 24,
+            "energy_wh": 180,
+            "power_w": 60,
+            "feasible": false,
+            "probability": 0.03515625
+          },
+          {
+            "appliance_bitstring": "0001",
+            "utility": 6,
+            "energy_wh": 120,
+            "power_w": 60,
+            "feasible": false,
+            "probability": 0.0947265625
+          },
+          {
+            "appliance_bitstring": "1001",
+            "utility": 15,
+            "energy_wh": 240,
+            "power_w": 100,
+            "feasible": false,
+            "probability": 0.0087890625
+          },
+          {
+            "appliance_bitstring": "0101",
+            "utility": 13,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": false,
+            "probability": 0.060546875
+          },
+          {
+            "appliance_bitstring": "1101",
+            "utility": 22,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": false,
+            "probability": 0.00390625
+          },
+          {
+            "appliance_bitstring": "0011",
+            "utility": 14,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": false,
+            "probability": 0.06005859375
+          },
+          {
+            "appliance_bitstring": "1011",
+            "utility": 23,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": false,
+            "probability": 0.005859375
+          },
+          {
+            "appliance_bitstring": "0111",
+            "utility": 21,
+            "energy_wh": 180,
+            "power_w": 80,
+            "feasible": false,
+            "probability": 0.03173828125
+          },
+          {
+            "appliance_bitstring": "1111",
+            "utility": 30,
+            "energy_wh": 300,
+            "power_w": 120,
+            "feasible": false,
+            "probability": 0.00439453125
+          }
         ]
       },
       "objective_gap": 0,
@@ -4564,13 +5019,13 @@
         "best": null,
         "feasible_selections": 0,
         "enumerated": 16,
-        "runtime_s": 0.0030050999484956264
+        "runtime_s": 0.0006423001177608967
       },
       "quantum": {
         "method": "QAOA / Qiskit Aer noiseless simulator",
         "status": "no feasible sample",
         "best": null,
-        "runtime_s": 5.981316499877721,
+        "runtime_s": 0.8674624999985099,
         "qubits": 8,
         "appliance_qubits": 4,
         "slack_qubits": 4,
@@ -6883,6 +7338,268 @@
             "encoding_feasible": false,
             "utility": 30,
             "qubo_energy": 7534.0
+          }
+        ],
+        "qubit_roles": [
+          "Fan",
+          "LED lights",
+          "Wi-Fi router",
+          "Laptop",
+          "power_slack_0",
+          "power_slack_1",
+          "power_slack_2",
+          "power_slack_3"
+        ],
+        "circuit_operations": {
+          "rzz": 56,
+          "u2": 8,
+          "u3": 8,
+          "rx": 8,
+          "measure": 8,
+          "barrier": 1
+        },
+        "selection_distribution": [
+          {
+            "appliance_bitstring": "1001",
+            "count": 323,
+            "feasible": false,
+            "utility": 15,
+            "probability": 0.15771484375
+          },
+          {
+            "appliance_bitstring": "1000",
+            "count": 206,
+            "feasible": false,
+            "utility": 9,
+            "probability": 0.1005859375
+          },
+          {
+            "appliance_bitstring": "0100",
+            "count": 174,
+            "feasible": false,
+            "utility": 7,
+            "probability": 0.0849609375
+          },
+          {
+            "appliance_bitstring": "0000",
+            "count": 171,
+            "feasible": false,
+            "utility": 0,
+            "probability": 0.08349609375
+          },
+          {
+            "appliance_bitstring": "0010",
+            "count": 171,
+            "feasible": false,
+            "utility": 8,
+            "probability": 0.08349609375
+          },
+          {
+            "appliance_bitstring": "0110",
+            "count": 159,
+            "feasible": false,
+            "utility": 15,
+            "probability": 0.07763671875
+          },
+          {
+            "appliance_bitstring": "0001",
+            "count": 154,
+            "feasible": false,
+            "utility": 6,
+            "probability": 0.0751953125
+          },
+          {
+            "appliance_bitstring": "1101",
+            "count": 130,
+            "feasible": false,
+            "utility": 22,
+            "probability": 0.0634765625
+          },
+          {
+            "appliance_bitstring": "1011",
+            "count": 128,
+            "feasible": false,
+            "utility": 23,
+            "probability": 0.0625
+          },
+          {
+            "appliance_bitstring": "1010",
+            "count": 82,
+            "feasible": false,
+            "utility": 17,
+            "probability": 0.0400390625
+          },
+          {
+            "appliance_bitstring": "0011",
+            "count": 80,
+            "feasible": false,
+            "utility": 14,
+            "probability": 0.0390625
+          },
+          {
+            "appliance_bitstring": "0101",
+            "count": 79,
+            "feasible": false,
+            "utility": 13,
+            "probability": 0.03857421875
+          },
+          {
+            "appliance_bitstring": "1100",
+            "count": 70,
+            "feasible": false,
+            "utility": 16,
+            "probability": 0.0341796875
+          },
+          {
+            "appliance_bitstring": "1111",
+            "count": 49,
+            "feasible": false,
+            "utility": 30,
+            "probability": 0.02392578125
+          },
+          {
+            "appliance_bitstring": "0111",
+            "count": 45,
+            "feasible": false,
+            "utility": 21,
+            "probability": 0.02197265625
+          },
+          {
+            "appliance_bitstring": "1110",
+            "count": 27,
+            "feasible": false,
+            "utility": 24,
+            "probability": 0.01318359375
+          }
+        ],
+        "landscape": [
+          {
+            "appliance_bitstring": "0000",
+            "utility": 0,
+            "energy_wh": 0,
+            "power_w": 0,
+            "feasible": false,
+            "probability": 0.08349609375
+          },
+          {
+            "appliance_bitstring": "1000",
+            "utility": 9,
+            "energy_wh": 120,
+            "power_w": 40,
+            "feasible": false,
+            "probability": 0.1005859375
+          },
+          {
+            "appliance_bitstring": "0100",
+            "utility": 7,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": false,
+            "probability": 0.0849609375
+          },
+          {
+            "appliance_bitstring": "1100",
+            "utility": 16,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": false,
+            "probability": 0.0341796875
+          },
+          {
+            "appliance_bitstring": "0010",
+            "utility": 8,
+            "energy_wh": 30,
+            "power_w": 10,
+            "feasible": false,
+            "probability": 0.08349609375
+          },
+          {
+            "appliance_bitstring": "1010",
+            "utility": 17,
+            "energy_wh": 150,
+            "power_w": 50,
+            "feasible": false,
+            "probability": 0.0400390625
+          },
+          {
+            "appliance_bitstring": "0110",
+            "utility": 15,
+            "energy_wh": 60,
+            "power_w": 20,
+            "feasible": false,
+            "probability": 0.07763671875
+          },
+          {
+            "appliance_bitstring": "1110",
+            "utility": 24,
+            "energy_wh": 180,
+            "power_w": 60,
+            "feasible": false,
+            "probability": 0.01318359375
+          },
+          {
+            "appliance_bitstring": "0001",
+            "utility": 6,
+            "energy_wh": 120,
+            "power_w": 60,
+            "feasible": false,
+            "probability": 0.0751953125
+          },
+          {
+            "appliance_bitstring": "1001",
+            "utility": 15,
+            "energy_wh": 240,
+            "power_w": 100,
+            "feasible": false,
+            "probability": 0.15771484375
+          },
+          {
+            "appliance_bitstring": "0101",
+            "utility": 13,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": false,
+            "probability": 0.03857421875
+          },
+          {
+            "appliance_bitstring": "1101",
+            "utility": 22,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": false,
+            "probability": 0.0634765625
+          },
+          {
+            "appliance_bitstring": "0011",
+            "utility": 14,
+            "energy_wh": 150,
+            "power_w": 70,
+            "feasible": false,
+            "probability": 0.0390625
+          },
+          {
+            "appliance_bitstring": "1011",
+            "utility": 23,
+            "energy_wh": 270,
+            "power_w": 110,
+            "feasible": false,
+            "probability": 0.0625
+          },
+          {
+            "appliance_bitstring": "0111",
+            "utility": 21,
+            "energy_wh": 180,
+            "power_w": 80,
+            "feasible": false,
+            "probability": 0.02197265625
+          },
+          {
+            "appliance_bitstring": "1111",
+            "utility": 30,
+            "energy_wh": 300,
+            "power_w": 120,
+            "feasible": false,
+            "probability": 0.02392578125
           }
         ]
       },

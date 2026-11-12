@@ -129,6 +129,30 @@ class QuantumMetadata(Contract):
     feasible_encoding_probability: Annotated[float, Field(ge=0, le=1)]
     counts: dict[str, int]
     distribution: list[Measurement]
+    qubit_roles: list[str]
+    circuit_operations: dict[str, int]
+    selection_distribution: list["SelectionFrequency"]
+    landscape: list["LandscapePoint"]
+
+
+class SelectionFrequency(Contract):
+    appliance_bitstring: str
+    count: int
+    probability: Annotated[float, Field(ge=0, le=1)]
+    feasible: bool
+    utility: Nonnegative
+
+
+class LandscapePoint(Contract):
+    appliance_bitstring: str
+    utility: Nonnegative
+    energy_wh: Nonnegative
+    power_w: Nonnegative
+    feasible: bool
+    probability: Annotated[float, Field(ge=0, le=1)]
+
+
+QuantumMetadata.model_rebuild()
 
 
 class SolverResult(Contract):
@@ -161,6 +185,7 @@ class CompareResponse(Contract):
     comparison_status: Literal["complete", "quantum_unavailable", "quantum_oversized", "quantum_failed", "no_feasible_pair"]
     objective_gap: float | None
     relative_gap: float | None
+    optimal_selection_probability: Annotated[float, Field(ge=0, le=1)] | None = None
     environment: dict[str, str | None]
     bit_order: str
     interpretation: str
@@ -198,3 +223,158 @@ class ErrorDetail(Contract):
 
 class ErrorResponse(Contract):
     error: ErrorDetail
+
+
+# ---- Hour-by-hour scheduling -------------------------------------------------------------
+
+class ScheduleRequest(Contract):
+    scenario: ScenarioInput
+    start_hour: Annotated[float, Field(ge=0, lt=24)] = 18.0
+    solar_kwp: Annotated[float, Field(ge=0, le=1000)] = 0.0
+    peak_sun_hours: Annotated[float, Field(ge=0, le=12)] = 5.67
+
+
+class ScheduledAppliance(Contract):
+    name: str
+    power_w: Nonnegative
+    duration_h: Nonnegative
+    utility: Nonnegative
+    mandatory: bool
+    selected: bool
+    start_slot: int | None
+    start: str | None
+    end: str | None
+    energy_wh: Nonnegative
+
+
+class TimelineSlot(Contract):
+    slot: int
+    start: str
+    end: str
+    load_w: Nonnegative
+    solar_wh: Nonnegative
+    battery_wh: Nonnegative
+    curtailed_wh: Nonnegative
+    inverter_headroom_w: float
+    running: list[str]
+
+
+class ScheduleResponse(Contract):
+    schema_version: Literal["1.0"] = "1.0"
+    method: str
+    status: Literal["optimal", "time_limit", "infeasible", "failed"]
+    feasible: bool
+    utility: Nonnegative | None
+    simultaneous_utility: Nonnegative | None
+    gain_vs_simultaneous: float | None
+    slot_h: float
+    slots: int
+    start_hour: float
+    solar_kwp: float
+    peak_sun_hours: float
+    solar_performance_ratio: float
+    energy_used_wh: Nonnegative | None = None
+    solar_generated_wh: Nonnegative | None = None
+    solar_curtailed_wh: Nonnegative | None = None
+    final_battery_wh: Nonnegative | None = None
+    peak_load_w: Nonnegative | None = None
+    appliances: list[ScheduledAppliance]
+    timeline: list[TimelineSlot]
+    runtime_s: Nonnegative
+    message: str | None = None
+
+
+# ---- Housing society / microgrid (B2B) ---------------------------------------------------
+
+class FleetHome(Contract):
+    name: Name
+    weight: Annotated[float, Field(ge=0, le=10)] = 1.0
+    appliances: Annotated[list[ApplianceInput], Field(min_length=1, max_length=16)]
+
+
+class FleetRequest(Contract):
+    name: Name = "Housing society"
+    homes: Annotated[list[FleetHome], Field(min_length=1, max_length=500)]
+    battery_wh: Annotated[float, Field(ge=0, le=1_000_000_000)]
+    inverter_w: Annotated[float, Field(ge=0, le=10_000_000)]
+    outage_h: Annotated[float, Field(gt=0, le=168)]
+    fairness_floor: Annotated[float, Field(ge=0, le=1)] = 0.0
+
+
+class HomeResult(Contract):
+    name: str
+    weight: float
+    selection: list[int]
+    selected: list[str]
+    deferred: list[str]
+    utility: Nonnegative
+    max_utility: Nonnegative
+    service_ratio: Annotated[float, Field(ge=0, le=1)]
+    energy_wh: Nonnegative
+    power_w: Nonnegative
+    mandatory_met: bool
+    baseline_utility: Nonnegative
+
+
+class FleetBaseline(Contract):
+    method: str
+    utility: Nonnegative
+    home_utilities: list[float]
+    homes_with_mandatory_met: int
+    fairness_index: Annotated[float, Field(ge=0, le=1)]
+
+
+class FleetResponse(Contract):
+    schema_version: Literal["1.0"] = "1.0"
+    name: str
+    method: str
+    status: Literal["optimal", "time_limit", "infeasible", "failed"]
+    feasible: bool
+    homes: int
+    decisions: int
+    battery_wh: float
+    inverter_w: float
+    outage_h: float
+    fairness_floor: float
+    utility: Nonnegative | None = None
+    weighted_utility: float | None = None
+    energy_used_wh: Nonnegative | None = None
+    power_used_w: Nonnegative | None = None
+    homes_fully_mandatory: int | None = None
+    fairness_index: Annotated[float, Field(ge=0, le=1)] | None = None
+    gain_vs_equal_split: float | None = None
+    mip_gap: float | None = None
+    baseline: FleetBaseline
+    home_results: list[HomeResult]
+    runtime_s: Nonnegative
+    message: str | None = None
+
+
+# ---- Asynchronous jobs -------------------------------------------------------------------
+
+class JobRequest(Contract):
+    kind: Literal["compare", "fleet", "schedule"]
+    payload: dict[str, JsonValue]
+
+
+class JobStatus(Contract):
+    job_id: str
+    kind: str
+    status: Literal["queued", "running", "succeeded", "failed"]
+    submitted_utc: str
+    started_utc: str | None = None
+    finished_utc: str | None = None
+    queue_position: int | None = None
+    result: JsonValue = None
+    error: str | None = None
+
+
+class JobList(Contract):
+    jobs: list[JobStatus]
+    workers: int
+    queued: int
+    running: int
+
+
+class PakistanDataset(Contract):
+    data: dict[str, JsonValue]

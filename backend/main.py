@@ -1,5 +1,6 @@
 """Run: python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000."""
 import importlib.util
+import json
 import logging
 from threading import BoundedSemaphore
 from fastapi import FastAPI, HTTPException, Request
@@ -11,8 +12,12 @@ from src.scenarios import presets
 from . import __version__
 from . import service
 from .settings import cors_origins
+from pydantic import ValidationError
+from .jobs import JobStore
 from .schemas import (AlgorithmInfo, CompareRequest, CompareResponse, ErrorResponse,
-    HealthResponse, OptimizeRequest, OptimizeResponse, ScenarioInput, ScenariosResponse)
+    FleetRequest, FleetResponse, HealthResponse, JobList, JobRequest, JobStatus,
+    OptimizeRequest, OptimizeResponse, PakistanDataset, ScenarioInput, ScenariosResponse,
+    ScheduleRequest, ScheduleResponse)
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +62,15 @@ def create_app():
         finally:
             jobs.release()
 
+    def guarded(function, payload):
+        try:
+            return execute(function, payload)
+        except ValueError as exc:
+            raise HTTPException(422, detail=dict(code="model_error", message=str(exc)))
+
+    queue = JobStore(jobs, workers=1)
+    app.state.jobs = queue
+
     errors = {status: {"model": ErrorResponse} for status in (413, 422, 429, 500, 503)}
 
     @app.get("/health", response_model=HealthResponse, tags=["System"])
@@ -82,6 +96,43 @@ def create_app():
         # Partial comparison returns 200 with explicit quantum status and no fabricated gap.
         return execute(service.compare, payload)
 
+    @app.post("/api/schedule", response_model=ScheduleResponse, responses=errors, tags=["Optimization"])
+    def schedule(payload: ScheduleRequest):
+        return guarded(service.schedule, payload)
+
+    @app.post("/api/fleet/optimize", response_model=FleetResponse, responses=errors, tags=["Housing society (B2B)"])
+    def fleet(payload: FleetRequest):
+        return guarded(service.fleet, payload)
+
+    job_models = {"compare": (CompareRequest, service.compare), "fleet": (FleetRequest, service.fleet),
+                  "schedule": (ScheduleRequest, service.schedule)}
+
+    @app.post("/api/jobs", response_model=JobStatus, status_code=202, responses=errors, tags=["Jobs"])
+    def submit_job(payload: JobRequest):
+        model, function = job_models[payload.kind]
+        try:
+            request = model.model_validate_json(json.dumps(payload.payload))
+        except ValidationError as exc:
+            details = [dict(path=["payload", *e["loc"]], message=e["msg"], type=e["type"]) for e in exc.errors()]
+            raise HTTPException(422, detail=dict(code="validation_error",
+                message="Job payload does not satisfy the API contract.", details=details))
+        return queue.submit(payload.kind, function, request)
+
+    @app.get("/api/jobs", response_model=JobList, tags=["Jobs"])
+    def list_jobs():
+        return queue.summary()
+
+    @app.get("/api/jobs/{job_id}", response_model=JobStatus, responses={404: {"model": ErrorResponse}}, tags=["Jobs"])
+    def get_job(job_id: str):
+        job = queue.get(job_id)
+        if job is None:
+            raise HTTPException(404, detail=dict(code="job_not_found", message="Unknown or expired job id."))
+        return job
+
+    @app.get("/api/data/pakistan", response_model=PakistanDataset, tags=["Configuration"])
+    def pakistan_data():
+        return PakistanDataset(data=service.pakistan_dataset())
+
     @app.get("/api/algorithm-info", response_model=AlgorithmInfo, tags=["Configuration"])
     def algorithm_info():
         return AlgorithmInfo(objective="Maximize sum of selected appliance utilities under hard energy, power and mandatory constraints.",
@@ -92,9 +143,9 @@ def create_app():
                 penalty="1 + total utility", training="Exact simulator expectations; final circuit shot measurement",
                 hardware=False, speedup_claim=False),
             limits=dict(appliances=16, qubits=14, depth=4, shots=8192, evaluations_per_restart=200,
-                        restarts=3, concurrent_jobs_per_process=1),
+                        restarts=3, concurrent_jobs_per_process=1, fleet_homes=500, schedule_slots=96),
             assumptions=["Usable AC-side battery energy; fixed requested durations within outage.",
-                "Conservative simultaneous inverter power; no time-slot scheduling or surge model.",
+                "/api/optimize and /api/compare reserve inverter power simultaneously; /api/schedule sequences loads in time slots (exact MILP). No surge model.",
                 "Essential is a label; utility is a preference; mandatory is a hard constraint.",
                 "Deferred means unselected for this request, not a future scheduled time.",
                 "No quantum measurements are reported unless an actual circuit executes."],

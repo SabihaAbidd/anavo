@@ -90,6 +90,26 @@ def solve_quantum(scenario, depth=2, shots=2048, maxiter=80, seed=42, restarts=2
                                  qubo_energy=qubo.energy(bits)))
         if candidate["feasible"] and (best is None or (-candidate["utility"], candidate["selection"]) < (-best["utility"], best["selection"])):
             best = candidate
+    # Marginalize measured shots over slack qubits: how often each appliance decision was sampled.
+    grouped = {}
+    for item in distribution:
+        entry = grouped.setdefault(item["appliance_bitstring"], dict(
+            appliance_bitstring=item["appliance_bitstring"], count=0, feasible=item["feasible"],
+            utility=item["utility"]))
+        entry["count"] += item["count"]
+    selection_distribution = sorted(({**e, "probability": e["count"]/shots} for e in grouped.values()),
+                                    key=lambda e: (-e["count"], e["appliance_bitstring"]))
+    # Exact physical landscape of every appliance decision (small instances only).
+    landscape = []
+    if qubo.n_appliances <= 8:
+        for index in range(2**qubo.n_appliances):
+            bits = [(index >> i) & 1 for i in range(qubo.n_appliances)]
+            point = evaluate(scenario, bits)
+            landscape.append(dict(appliance_bitstring=point["bitstring"], utility=point["utility"],
+                                  energy_wh=point["energy_wh"], power_w=point["power_w"],
+                                  feasible=point["feasible"],
+                                  probability=grouped.get(point["bitstring"], {}).get("count", 0)/shots))
+    operations = {str(k): int(v) for k, v in compiled_measurement.count_ops().items()}
     return dict(method="QAOA / Qiskit Aer noiseless simulator", status="sampled" if best else "no feasible sample",
                 best=best, runtime_s=perf_counter()-start, qubits=qubo.n_qubits,
                 appliance_qubits=qubo.n_appliances, slack_qubits=qubo.n_qubits-qubo.n_appliances,
@@ -101,4 +121,6 @@ def solve_quantum(scenario, depth=2, shots=2048, maxiter=80, seed=42, restarts=2
                 expected_qubo_energy=float(best_run.fun*scale+offset), objective_history=history,
                 feasible_selection_probability=selection_feasible/shots,
                 feasible_encoding_probability=encoding_feasible/shots,
-                counts={k:int(v) for k,v in counts.items()}, distribution=distribution)
+                counts={k:int(v) for k,v in counts.items()}, distribution=distribution,
+                qubit_roles=list(qubo.variable_names), circuit_operations=operations,
+                selection_distribution=selection_distribution, landscape=landscape)
