@@ -3,38 +3,30 @@ import json
 from pathlib import Path
 import subprocess
 import sys
-import unittest
+from datetime import datetime, timezone
+from .validate import run_validation
+from .provenance import source_fingerprint
+from .evidence import load_record,check_http_evidence,check_benchmark_evidence
 
 
 def main():
-    suite=unittest.defaultTestLoader.discover("tests")
-    outcome=unittest.TextTestRunner(verbosity=2).run(suite)
+    record,outcome=run_validation()
     problems=[]
-    if not outcome.wasSuccessful() or outcome.skipped:
+    if not outcome.wasSuccessful() or outcome.skipped or outcome.testsRun==0:
         problems.append("All tests must pass with zero skips, including real Qiskit/Aer tests")
-    startup=Path("results/api_startup_check.json")
-    if not startup.exists() or not json.loads(startup.read_text(encoding="utf-8")).get("healthy"):
-        problems.append("A successful FastAPI localhost startup check is required: python -m scripts.api_startup_check")
-    path=Path("results/benchmark_results.json")
-    if not path.exists():
-        problems.append("Run python -m scripts.benchmark --require-quantum")
-    else:
-        data=json.loads(path.read_text(encoding="utf-8"))
-        if not data.get("complete_quantum_execution"):
-            problems.append("Benchmark quantum execution is incomplete")
-        results=data.get("results",[])
-        if len(results)<3:
-            problems.append("Three benchmark scenarios are required")
-        for r in results:
-            q=r.get("quantum",{})
-            if not q.get("counts") or sum(q["counts"].values()) != q.get("shots"):
-                problems.append(f"Missing/invalid measured shots for {r['scenario']['name']}")
-        if not any(r.get("objective_gap") is not None for r in results):
-            problems.append("No measured feasible quantum/classical comparison exists")
+    fingerprint=source_fingerprint()
+    for path,check in (("results/api_startup_check.json",check_http_evidence),
+                       ("results/benchmark_results.json",check_benchmark_evidence)):
+        data,error=load_record(path)
+        if error: problems.append(error)
+        else: problems.extend(check(data,fingerprint))
     try:
         subprocess.run(["git","rev-parse","--verify","HEAD"],check=True,capture_output=True)
     except (subprocess.CalledProcessError,FileNotFoundError):
         problems.append("No Git commit exists")
+    Path("results/release_check.json").write_text(json.dumps(dict(
+        checked_utc=datetime.now(timezone.utc).isoformat(),source_fingerprint=fingerprint,
+        ready=not problems,exit_code=1 if problems else 0,reasons=problems),indent=2),encoding="utf-8")
     if problems:
         print("RELEASE BLOCKED:")
         for problem in problems:

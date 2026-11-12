@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from src.scenarios import presets
 from src.evaluation import compare
+from .provenance import source_fingerprint
 
 
 def main():
@@ -22,6 +23,7 @@ def main():
         print(f"{name}: classical={best['utility'] if best else 'infeasible'}, quantum={result['quantum']['status']}")
     full=all(r["quantum"]["status"] != "unavailable" for r in results)
     document=dict(generated_utc=datetime.now(timezone.utc).isoformat(),
+                  source_fingerprint=source_fingerprint(),
                   complete_quantum_execution=full,results=results)
     path=Path(args.output)
     path.parent.mkdir(parents=True,exist_ok=True)

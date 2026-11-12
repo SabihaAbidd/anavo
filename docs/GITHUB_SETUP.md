@@ -4,11 +4,13 @@ Required destination: public repository **anavo**, description **Quantum-Assiste
 
 ## Current observed state
 
-The GitHub integration is installed and authentication was verified as **SabihaAbidd**. After an initial 404, a later lookup verified **https://github.com/SabihaAbidd/anavo**, repository ID 1455287545, public, default branch main. Branch search returned no branches: it is empty. The available integration has no repository-creation action; repository existence was observed after the user authorization/setup work, not created through this agent's tools.
+The GitHub integration is installed and authenticated as **SabihaAbidd**. Public **https://github.com/SabihaAbidd/anavo**, repository ID 1455287545, now contains the user-published project. Local origin/main and the remote were verified at d9c24703603b8f833b140cdd76338cd42d697b4e. This replaces earlier empty-repository observations. The project must not be recreated.
 
 The first attempted `.gitignore` commit returned **403 Resource not accessible by integration**. User-level admin/push flags in repository metadata do not establish that the integration token can write contents. No remote commit/file write succeeded. Listing manageable GitHub App installations returned no entries, so no configurable installation was available through the integration. No account permissions were changed.
 
-Local main has no commits; origin is absent. Git staging was attempted and denied when creating `.git/index.lock`. The lock does not exist, and no Git process was running. The execution profile explicitly permits reading `.git` while denying required metadata writes. There is no stale lock to delete. Changing ACLs, force operations or alternative metadata locations are not authorized recovery methods.
+The later agent attempt to publish the numerical/validation/CI milestone through GitHub's Git-tree API also returned 403. The user's initial terminal publication remains verified; this separate new milestone is still unpublished. Run scripts/publish_now.ps1 from an ordinary terminal to publish it, then inspect the repository's Actions tab for an actual backend validation run. A locally parsed workflow file is not a completed run.
+
+Local main and origin now exist. The user's ordinary PowerShell successfully committed/pushed the initial work; the managed agent session still cannot create `.git/index.lock` when staging. Its execution profile permits reading `.git` while denying required metadata writes. There is no stale lock to delete. Do not change ACLs, force-push, relocate Git metadata or bypass restrictions. User-run publication does not automatically grant this session write access.
 
 ## Repository access recovery when using the integration
 

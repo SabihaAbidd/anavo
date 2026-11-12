@@ -43,6 +43,7 @@ class Qubo:
     penalty: float
     constraints: list
     variable_names: list
+    mandatory_indices: tuple = ()
 
     @property
     def n_qubits(self):
@@ -61,6 +62,19 @@ class Qubo:
         offset = self.constant + self.linear.sum()/2 + pairs.sum()
         return float(offset), fields, pairs
 
+    def encoding_feasible(self, bits):
+        """Check zero hard-constraint residuals without subtracting large float energies."""
+        if len(bits) != self.n_qubits or any(bit not in (0, 1) for bit in bits):
+            raise ValueError("Encoding state must have one binary bit per variable")
+        if any(not bits[i] for i in self.mandatory_indices):
+            return False
+        for row in self.constraints:
+            used = sum(weight*int(bits[i]) for i, weight in enumerate(row["weights"]))
+            slack = sum(weight*int(bits[row["slack_start"]+i]) for i, weight in enumerate(row["slack"]))
+            if used+slack != row["bound"]:
+                return False
+        return True
+
     def basis_energies(self):
         indexes = np.arange(2**self.n_qubits, dtype=np.uint64)
         bits = ((indexes[:, None] >> np.arange(self.n_qubits, dtype=np.uint64)) & 1).astype(float)
@@ -68,6 +82,8 @@ class Qubo:
 
 
 def build_qubo(scenario, max_qubits=14):
+    if type(max_qubits) is not int or not 1 <= max_qubits <= 14:
+        raise ValueError("max_qubits must be an integer between 1 and 14")
     n = len(scenario.appliances)
     rows = []
     energy = [Fraction(str(a.power_w))*Fraction(str(a.duration_h)) for a in scenario.appliances]
@@ -107,7 +123,19 @@ def build_qubo(scenario, max_qubits=14):
             linear[i] -= penalty  # A(1-x_i)^2 = A(1-x_i)
     if not np.isfinite(constant) or not np.all(np.isfinite(linear)) or not np.all(np.isfinite(quadratic)):
         raise QuantumLimitError("Utility or resource coefficients exceed safe numerical range")
-    return Qubo(linear, quadratic, constant, n, penalty, rows, names)
+    # Decimal utilities define an exact lattice of possible objective differences.
+    # If its spacing is lost in double-precision coefficient expansion, reject the
+    # quantum encoding; do not silently change priorities or claim a valid QUBO.
+    utilities = [Fraction(str(a.utility)) for a in scenario.appliances]
+    denominator = lcm(*(u.denominator for u in utilities))
+    divisor = reduce(gcd, (int(u*denominator) for u in utilities), 0)
+    spacing = min(Fraction(1), Fraction(divisor, denominator)) if divisor else Fraction(1)
+    magnitude = abs(constant) + np.abs(linear).sum() + np.abs(quadratic).sum()
+    roundoff_bound = (2*total**2+8*total+16)*np.finfo(float).eps*magnitude
+    if not np.isfinite(roundoff_bound) or roundoff_bound >= float(spacing)/8:
+        raise QuantumLimitError("Utility precision is too fine relative to QUBO penalty coefficients for reliable floating-point encoding; use simpler priority scores")
+    return Qubo(linear, quadratic, constant, n, penalty, rows, names,
+                tuple(i for i, a in enumerate(scenario.appliances) if a.mandatory))
 
 
 def decode_counts_key(key, n_qubits):

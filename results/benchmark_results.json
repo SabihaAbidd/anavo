@@ -1,5 +1,6 @@
 {
-  "generated_utc": "2026-11-12T12:46:31.416650+00:00",
+  "generated_utc": "2026-11-12T14:22:52.022838+00:00",
+  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
   "complete_quantum_execution": false,
   "results": [
     {
@@ -72,7 +73,7 @@
         },
         "feasible_selections": 8,
         "enumerated": 16,
-        "runtime_s": 0.0010650998447090387
+        "runtime_s": 0.0010635999497026205
       },
       "quantum": {
         "status": "unavailable",
@@ -167,7 +168,7 @@
         },
         "feasible_selections": 2,
         "enumerated": 16,
-        "runtime_s": 0.0009738001972436905
+        "runtime_s": 0.0009138002060353756
       },
       "quantum": {
         "status": "unavailable",
@@ -238,7 +239,7 @@
         "best": null,
         "feasible_selections": 0,
         "enumerated": 16,
-        "runtime_s": 0.000920100137591362
+        "runtime_s": 0.001088300021365285
       },
       "quantum": {
         "status": "unavailable",

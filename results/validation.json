@@ -1,8 +1,9 @@
 {
-  "generated_utc": "2026-11-12T12:46:37.017356+00:00",
+  "generated_utc": "2026-11-12T14:23:07.077812+00:00",
+  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
   "command": "python -m scripts.validate",
-  "tests_run": 55,
-  "passed": 40,
+  "tests_run": 74,
+  "passed": 59,
   "skipped": [
     {
       "test": "test_algorithm_info (test_api.APITests.test_algorithm_info)",

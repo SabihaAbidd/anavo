@@ -6,24 +6,29 @@ from .models import evaluate
 from .optimization import build_qubo, decode_counts_key
 
 
+def hamiltonian_scale(fields,pairs):
+    largest=max(float(np.max(np.abs(fields))),float(np.max(np.abs(pairs))))
+    return largest if largest>0 else 1.0
+
+
 def build_qaoa_circuit(qubo, depth=2):
+    if type(depth) is not int or not 1 <= depth <= 4:
+        raise ValueError("QAOA depth must be between 1 and 4")
     from qiskit import QuantumCircuit
     from qiskit.circuit import ParameterVector
-    if not isinstance(depth, int) or not 1 <= depth <= 4:
-        raise ValueError("QAOA depth must be between 1 and 4")
     offset, fields, pairs = qubo.ising()
-    scale = max(float(np.max(np.abs(fields))), float(np.max(np.abs(pairs))), 1.0)
+    scale = hamiltonian_scale(fields,pairs)
     params = ParameterVector("theta", 2*depth)
     circuit = QuantumCircuit(qubo.n_qubits)
     circuit.h(range(qubo.n_qubits))
     for layer in range(depth):
         gamma, beta = params[2*layer], params[2*layer+1]
         for i, value in enumerate(fields):
-            if abs(value) > 1e-12:
+            if value != 0:
                 circuit.rz(2*gamma*float(value)/scale, i)
         for i in range(qubo.n_qubits):
             for j in range(i+1, qubo.n_qubits):
-                if abs(pairs[i, j]) > 1e-12:
+                if pairs[i, j] != 0:
                     circuit.rzz(2*gamma*float(pairs[i, j])/scale, i, j)
         circuit.rx(2*beta, range(qubo.n_qubits))
     return circuit, params, scale, offset
@@ -32,8 +37,9 @@ def build_qaoa_circuit(qubo, depth=2):
 def solve_quantum(scenario, depth=2, shots=2048, maxiter=80, seed=42, restarts=2, max_qubits=14):
     start = perf_counter()
     for name, value, lower, upper in (("shots", shots, 1, 100000),
-         ("maxiter", maxiter, 10, 1000), ("restarts", restarts, 1, 5)):
-        if not isinstance(value, int) or not lower <= value <= upper:
+         ("maxiter", maxiter, 10, 1000), ("restarts", restarts, 1, 5),
+         ("depth", depth, 1, 4), ("seed", seed, 0, 2**31-1)):
+        if type(value) is not int or not lower <= value <= upper:
             raise ValueError(f"{name} must be an integer between {lower} and {upper}")
     qubo = build_qubo(scenario, max_qubits=max_qubits)
     from qiskit import transpile
@@ -75,7 +81,7 @@ def solve_quantum(scenario, depth=2, shots=2048, maxiter=80, seed=42, restarts=2
     for key, count in sorted(counts.items()):
         bits = decode_counts_key(key, qubo.n_qubits)
         candidate = evaluate(scenario, bits[:qubo.n_appliances])
-        full_feasible = candidate["feasible"] and abs(qubo.energy(bits)+candidate["utility"]) < 1e-6
+        full_feasible = candidate["feasible"] and qubo.encoding_feasible(bits)
         selection_feasible += count*int(candidate["feasible"])
         encoding_feasible += count*int(full_feasible)
         distribution.append(dict(measured_bitstring=key, appliance_bitstring=candidate["bitstring"],

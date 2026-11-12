@@ -1,14 +1,16 @@
 {
-  "exit_code": 1,
+  "checked_utc": "2026-11-12T14:23:07.236991+00:00",
+  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
   "ready": false,
+  "exit_code": 1,
   "reasons": [
-    " - All tests must pass with zero skips, including real Qiskit/Aer tests",
-    " - A successful FastAPI localhost startup check is required: python -m scripts.api_startup_check",
-    " - Benchmark quantum execution is incomplete",
-    " - Missing/invalid measured shots for Ample backup",
-    " - Missing/invalid measured shots for Limited battery",
-    " - Missing/invalid measured shots for Mandatory infeasible",
-    " - No measured feasible quantum/classical comparison exists",
-    " - No Git commit exists"
+    "All tests must pass with zero skips, including real Qiskit/Aer tests",
+    "Real FastAPI HTTP checks are not complete",
+    "HTTP evidence does not cover every required endpoint/negative/CORS case",
+    "Benchmark quantum execution is incomplete",
+    "Invalid benchmark evidence: actual measured quantum outcome is unavailable",
+    "Invalid benchmark evidence: actual measured quantum outcome is unavailable",
+    "Invalid benchmark evidence: actual measured quantum outcome is unavailable",
+    "No measured feasible quantum/classical comparison exists"
   ]
 }

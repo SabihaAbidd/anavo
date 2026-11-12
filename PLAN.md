@@ -52,3 +52,9 @@ Done: app starts, editable inputs validate, independent exact solution and actua
 5. Test contracts/services immediately even if FastAPI cannot install; execute HTTP endpoint tests only with actual FastAPI, never a mock framework.
 6. Retry quantum dependency installation, run actual circuits/tests/benchmarks where possible, record unavailable states honestly otherwise.
 7. Commit/push each validated milestone if metadata permissions/authentication allow. Supply safe local recovery commands when blocked. React remains deferred.
+
+## 13. Autonomous continuation after latest attached brief
+
+Read Pasted text(3).txt in full (494 lines). Preserve the published main history and the existing unpublished workflow changes. Current runtime still lacks FastAPI/Qiskit/Aer; the project venv lacks the numerical/API packages, and the approved network allowlist does not include PyPI. A fresh supported pip attempt failed; Git metadata staging is still denied. Do not repeat unchanged installation attempts or bypass these restrictions.
+
+Execute unblocked correctness work next: (1) reject numerically unsafe QUBO encodings after reproducing tiny-utility loss, (2) validate auxiliary assignments through integer residuals rather than cancellation-sensitive energy tolerance, (3) validate solver options before missing imports, (4) implement a real HTTP probe for all five API routes and negative/CORS cases, (5) strengthen release evidence validation and add regression tests, (6) add CI that can perform genuine dependency installation and runtime validation when published, (7) refresh documentation/status records and attempt authorized publication. The CI definition itself is not a successful CI run. React and Streamlit feature work remain deferred.

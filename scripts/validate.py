@@ -5,12 +5,14 @@ from pathlib import Path
 import sys
 import unittest
 from src.evaluation import environment_versions
+from .provenance import source_fingerprint
 
 
-def main():
+def run_validation():
     suite=unittest.defaultTestLoader.discover("tests")
     result=unittest.TextTestRunner(verbosity=2).run(suite)
     record=dict(generated_utc=datetime.now(timezone.utc).isoformat(),
+                source_fingerprint=source_fingerprint(),
                 command="python -m scripts.validate", tests_run=result.testsRun,
                 passed=result.testsRun-len(result.skipped)-len(result.failures)-len(result.errors),
                 skipped=[dict(test=str(test),reason=reason) for test,reason in result.skipped],
@@ -26,6 +28,11 @@ def main():
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(record,indent=2),encoding="utf-8")
     print(f"Validation record: {record['passed']} passed; {len(result.skipped)} skipped; {len(result.failures)} failures; {len(result.errors)} errors")
+    return record,result
+
+
+def main():
+    record,result=run_validation()
     return 0 if result.wasSuccessful() else 1
 
 

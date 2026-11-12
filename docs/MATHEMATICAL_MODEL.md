@@ -37,6 +37,8 @@ For one row c dot z-C, expansion uses z_i^2=z_i:
 
 The implementation stores each quadratic pair once, not a symmetric matrix counted twice. Explicit qubit and coefficient guards reject impractical encodings rather than rounding inputs.
 
+Double-precision storage introduces another limit. A reproduced instance with utilities 1e-20 and 2e-20 and unit penalties lost its objective coefficients, creating false ties between 00, 01 and 10 although the exact optimum was 01. The converter now derives the exact utility lattice from rational decimal utilities and compares its spacing with a conservative coefficient-roundoff bound. An unsafe encoding raises QuantumLimitError instead of silently changing preferences. Normal decimal and integer presets retain their verified optima; the exact classical solver remains available for rejected quantum encodings. This is a conservative numerical guard, not arbitrary objective rounding.
+
 ## Ising transformation
 
 For F(z)=c+sum l_i*z_i+sum_(i<j) q_ij*z_i*z_j, substitute z_i=(1-Z_i)/2.
@@ -47,11 +49,13 @@ where J_ij=q_ij/4, h_i=-l_i/2-sum_(j!=i) q_min(i,j),max(i,j)/4, and c'=c+sum l_i
 
 ## QAOA circuit and classical loop
 
-Initialize H on every qubit. For each layer apply RZ_i(2*gamma*h_i/S), RZZ_ij(2*gamma*J_ij/S), then RX_i(2*beta), where S=max(1,max|h|,max|J|). This implements exp(-i*gamma*(H_C-c'I)/S), then exp(-i*beta*sum X). The constant creates only a global phase and is omitted from gates. Positive rescaling changes angles, not ground states.
+Initialize H on every qubit. For each layer apply RZ_i(2*gamma*h_i/S), RZZ_ij(2*gamma*J_ij/S), then RX_i(2*beta), where S=max(max|h|,max|J|), using S=1 only for an identically zero Hamiltonian. This implements exp(-i*gamma*(H_C-c'I)/S), then exp(-i*beta*sum X). The constant creates only a global phase and is omitted from gates. Positive rescaling changes angles, not ground states. Nonzero terms are retained rather than discarded by an absolute 1e-12 cutoff; scaling a small unconstrained cost keeps it meaningful in the circuit.
 
 SciPy COBYLA minimizes the exact noiseless Aer expectation of (F-c')/S using seeded initial angles, with two restarts. A separate measured Aer circuit supplies reported shot counts. This is simulator-based hybrid optimization; circuit expectations are not noisy hardware estimates. NFEV is recorded; a separate iteration count is null because the chosen SciPy result does not expose it.
 
 Qiskit count strings display highest qubit first. Reverse them to decode logical variables, then take appliance bits. Compare the best physically feasible measured selection with the independent exact optimum. Auxiliary-register feasibility is also reported separately; physically feasible decisions can appear alongside incorrect slack. There is no repair, no optimum injection, and no renormalization of feasible-shot probability.
+
+Full-encoding feasibility uses integer row residuals and mandatory bits directly. It does not subtract utility from a large floating-point QUBO energy and compare against a tolerance. Physical feasibility still comes from the independent appliance model. This separates hard-constraint truth from numerical cost reporting.
 
 ## Worked evening example
 

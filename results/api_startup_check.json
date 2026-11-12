@@ -1,7 +1,8 @@
 {
-  "checked_utc": "2026-11-12T12:46:28.342802+00:00",
+  "checked_utc": "2026-11-12T14:22:48.586374+00:00",
   "healthy": false,
+  "source_fingerprint": "c4103d6e007a54f464e205a5b50553b903e5f2cfa7aaf0a54ce874ef7ce23ce0",
+  "checks": [],
   "command": "python -m scripts.api_startup_check",
-  "endpoint": "http://127.0.0.1:8017/health",
-  "reason": "FastAPI is not installed; HTTP startup cannot execute"
+  "reason": "Missing runtime dependencies: fastapi"
 }

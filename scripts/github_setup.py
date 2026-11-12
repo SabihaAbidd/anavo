@@ -64,7 +64,7 @@ def main():
             raise RuntimeError("Remote main is not an ancestor of local HEAD; no push/merge/force operation was performed")
     if existing_origin.returncode:
         command("git", "remote", "add", "origin", target_url)
-    intended = [".gitignore", ".streamlit", "PLAN.md", "TASKS.md", "README.md", "requirements.txt",
+    intended = [".gitignore", ".github", ".streamlit", "AGENTS.md", "PLAN.md", "TASKS.md", "README.md", "requirements.txt",
                 "app.py", "backend", "src", "tests", "scripts", "docs", "results"]
     command("git", "add", "--", *intended)
     staged = command("git", "diff", "--cached", "--quiet", check=False)

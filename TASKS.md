@@ -1,5 +1,26 @@
 # ANAVO live task tracker
 
+## Current continuation status (authoritative)
+
+| Done | Task | Status / acceptance evidence |
+|---|---|---|
+| [x] | Read the latest autonomous execution brief | Pasted text(3).txt: all 494 lines read |
+| [x] | Inspect working tree, runtimes and published history | origin/main configured; local HEAD d9c24703603b8f833b140cdd76338cd42d697b4e; earlier workflow edits preserved |
+| [ ] | Resolve real runtime dependency execution | Fresh pip install failed; FastAPI/Qiskit/Aer absent in system Python and project venv |
+| [ ] | Agent-initiated Git publication | git add still denied .git/index.lock creation; user-run initial publication remains valid |
+| [x] | Fix tiny-utility numerical loss in QUBO | Reproduced false ties; unsafe priority precision now rejected; small nonzero unconstrained Hamiltonians normalized without absolute term dropping |
+| [x] | Exact auxiliary feasibility and pre-import option validation | Seven regression tests pass, including integer slack/mandatory checks; standard preset optima preserved |
+| [x] | Implement full HTTP probe and stronger release checks | All five routes plus quantum/negative/mandatory/resource/CORS cases implemented; twelve evidence regression tests pass; no actual HTTP execution claimed |
+| [x] | Define continuous integration workflow | Official checkout/setup-python/upload-artifact v7, Python 3.13, read-only token; YAML parsed locally; execution still pending publication |
+| [ ] | Execute CI and actual HTTP/quantum validation | Requires successful publication and dependency-enabled runtime; no fabricated results |
+| [x] | Final available validation and evidence refresh | 74 tests: 59 passed, 15 dependency skips, zero failures/errors; strict release gate exit 1 for genuine runtime gaps |
+
+Latest source, benchmark and HTTP records include matching runtime-source fingerprints. Benchmark/classical results remain 30, 15 and infeasible; quantum remains unavailable. Current remote main was compared against d9c24703603b8f833b140cdd76338cd42d697b4e and is identical. Existing published work is preserved; later fixes are not yet published. The previous no-commit/empty-repository statements below are historical only.
+
+Publication of this validated milestone was attempted through the GitHub Git-tree API using the verified base tree and 30 reviewed project files. It returned 403 Resource not accessible by integration; no tree/commit/ref update succeeded. Local staging was separately attempted and denied. No force push, ACL changes or execution-restriction bypass was attempted. Recovery: run scripts/publish_now.ps1 in ordinary PowerShell to publish current source/CI, then inspect the Actions run. For local full validation, install requirements in the project venv and run scripts.api_startup_check, scripts.benchmark --require-quantum, then scripts.verify_release. All code-dependent evidence currently matches the tested source fingerprint.
+
+## Historical checkpoints (older environment observations below)
+
 | Done | Task | Priority | Milestone / status | Dependencies | Validation |
 |---|---|---|---|---|---|
 | [x] | Read entire attached brief; inspect workspace | P0 | M1 complete | None | 1,065 lines read; empty workspace; Python 3.13.5; Git 2.50 |
@@ -23,6 +44,9 @@
 
 ## Evidence and blockers
 ### Immediate backend and GitHub continuation
+- [x] User-run publication succeeded: d9c24703603b8f833b140cdd76338cd42d697b4e on origin/main. Local HEAD/origin and the GitHub commit were independently checked. This success does not resolve dependency validation or grant this agent Git metadata writes.
+- [x] Persist automatic validated-milestone commit/push authorization in AGENTS.md; include it in project publishing scripts. No repeated approval needed for routine commits/pushes.
+- [ ] Agent-initiated automatic publication remains blocked: post-publication git add still cannot create .git/index.lock. Do not describe automatic commits as operational until an agent write/push succeeds.
 - [x] Urgent publication retry: integration file commit still denied 403; local staging still denied index.lock creation. Added syntax-checked scripts/publish_now.ps1 using existing Git/Git Credential Manager only, so ordinary PowerShell can publish and verify current work without dependency or gh installation. No commit/push success claimed until it executes successfully.
 - [x] Recheck authentication, branch, remotes, lock/process state and Git staging. Main is unborn; no remote, no gh executable, no active index.lock/Git process. Staging is denied by session Git-metadata permissions.
 - [x] GitHub integration installed; authenticated profile verified as SabihaAbidd. Initial repository lookup returned 404; later lookup verified public SabihaAbidd/anavo (ID 1455287545), default main, empty branch list. The integration has no repository-create action; existence observed rather than attributed to an agent creation action.

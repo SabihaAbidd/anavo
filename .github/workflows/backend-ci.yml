@@ -1,0 +1,59 @@
+name: ANAVO backend validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: anavo-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ANAVO_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install actual API and quantum dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Record resolved dependencies
+        run: python -m pip freeze > results/ci-environment.txt
+      - name: Run real Uvicorn HTTP checks including measured QAOA
+        id: http
+        continue-on-error: true
+        run: python -m scripts.api_startup_check
+      - name: Run actual quantum benchmarks
+        id: quantum
+        continue-on-error: true
+        run: python -m scripts.benchmark --require-quantum
+      - name: Run unit and integration tests plus strict evidence verification
+        run: python -m scripts.verify_release
+      - name: Reject failed or skipped runtime commands
+        if: always() && (steps.http.outcome != 'success' || steps.quantum.outcome != 'success')
+        run: exit 1
+      - name: Save actual validation evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: anavo-validation-${{ github.sha }}
+          path: |
+            results/*.json
+            results/*.txt
+            results/*.log
+          retention-days: 7
