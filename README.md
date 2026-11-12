@@ -6,6 +6,82 @@ Quantum-Assisted Energy Resilience Optimization for Pakistan | Energy & Smart In
 
 ANAVO helps a household choose which appliances to run during a power outage. It maximizes user-stated utility under usable battery-energy and simultaneous inverter-power limits, with explicit mandatory-load requirements. **Final architecture: React + TypeScript + Vite -> FastAPI/Python -> Qiskit or the classical solver.** The separate React frontend in frontend/ implements the supplied pixel/cyberpunk design reference. Streamlit is optional archived demo code only and is not installed or tested by the backend release workflow.
 
+## Quick start: build and run ANAVO
+
+### Prerequisites
+- **Python 3.13** (tested with 3.13.5)
+- **Node.js 20+** and npm
+- Git
+
+### 1. Get the code
+```bash
+git clone https://github.com/SabihaAbidd/anavo.git
+cd anavo
+```
+
+### 2. Backend (FastAPI + Qiskit)
+Windows PowerShell:
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+.\.venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+```
+macOS / Linux:
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+```
+`requirements-lock.txt` pins the exact tested versions; `requirements.txt` gives compatible ranges. Streamlit is **not** needed.
+
+Check it: http://127.0.0.1:8000/health and the interactive API docs at http://127.0.0.1:8000/docs.
+
+### 3. Frontend (React + Vite), in a second terminal
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+Open **http://127.0.0.1:5173/**. Vite proxies `/api` and `/health` to the backend on port 8000, so start the backend first.
+
+### 4. Production build of the frontend
+```bash
+cd frontend
+npm run build      # type-checks with tsc, outputs frontend/dist
+npm run preview    # serves the built site locally
+```
+
+### 5. Run the checks
+From the project root (Windows paths shown; use `.venv/bin/python` on macOS/Linux):
+```powershell
+.\.venv\Scripts\python.exe -m scripts.validate                     # 91 backend, solver and quantum tests
+.\.venv\Scripts\python.exe -m scripts.benchmark --require-quantum  # real QAOA benchmarks on Aer
+.\.venv\Scripts\python.exe -m scripts.api_startup_check            # real HTTP checks on a temporary server
+.\.venv\Scripts\python.exe -m scripts.verify_release               # strict release gate
+```
+With both servers running, from `frontend/`:
+```bash
+npm run test:integration   # 3 live proxy tests, including a quantum job
+```
+
+### Using the app
+1. **Energy Lab:** pick a preset (Evening backup, Ample, Limited, Mandatory infeasible) or edit appliances, then **Optimize**. Switch to **Classical + Quantum** to run QAOA and see the **Quantum Insights** panel (about 20 s).
+2. **Timeline:** **Load Pakistani house example**, choose a start time and optional rooftop solar, then **Plan hour by hour**.
+3. **Society grid (B2B):** set home counts, shared battery/inverter, outage profile and fairness floor, then **Optimize society**. Click a home and **Verify with QAOA**.
+4. **Pakistan data:** browse cited outage and solar figures; **+** adds an appliance to your Energy Lab manifest.
+
+### Troubleshooting
+| Symptom | Fix |
+|---|---|
+| "BACKEND OFFLINE" in the app | Start uvicorn on port 8000, then reload the page |
+| `Another optimization is running` (HTTP 429) | Wait for the current QAOA job to finish and retry |
+| Quantum result says **oversized** | The problem needs more than 14 qubits; use fewer appliances or simpler capacities |
+| Port 5173 or 8000 already in use | Stop the other process or change the port (the frontend proxy expects 8000) |
+
+A recording-ready walkthrough is in [docs/VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md).
+
 ## Features (B2C households + B2B housing societies)
 
 | Feature | What it does | Engine | Endpoint |
