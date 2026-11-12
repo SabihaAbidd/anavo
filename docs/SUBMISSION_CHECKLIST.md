@@ -19,9 +19,9 @@
 
 ## Outstanding publication and frontend
 
-- [ ] Commit/push the latest validated source, dependency lock and measured evidence; verify the new remote SHA/files.
+- [x] Latest source and evidence published; remote main verified on 2026-11-12 (see TASKS.md).
 - [ ] Inspect the CI run for that published commit; do not claim an unexecuted CI workflow passed.
-- [ ] Obtain the user's design reference before implementing React. No React frontend has been built.
+- [x] React frontend built from the user's design reference (frontend/); build and 2 live integration tests pass.
 - [ ] Rehearse the submitted demo and ensure the submission links the intended published commit.
 
-Status: **LOCAL BACKEND CHECKS PASSED; LATEST PUBLICATION AND FRONTEND ARE SEPARATE.** No quantum advantage or production-control claim is made.
+Status: **BACKEND, FRONTEND AND PUBLICATION VERIFIED LOCALLY; HOSTED CI RUN NOT YET CONFIRMED.** No quantum advantage or production-control claim is made.

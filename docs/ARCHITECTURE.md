@@ -2,7 +2,7 @@
 
 ```mermaid
 flowchart TD
-    Future["React frontend / Vite + GSAP"] --> API["FastAPI routes"]
+    Frontend["React frontend / Vite + GSAP"] --> API["FastAPI routes"]
     API --> Schemas["Strict Pydantic contracts"]
     Schemas --> Service["Framework-independent service"]
     Service --> Model["Validated physical scenario"]
