@@ -71,3 +71,6 @@ Complete the remaining publication/remote CI verification without changing permi
 
 ## Frontend milestone — 2026-11-12
 Implement the supplied black/lime/purple cyberpunk direction in a separate React/TypeScript/Vite client. Use an original GSAP pixel-grid intro (reference source unavailable), reduced-motion support, editable scenario/load controls, real API results and explicit error states. Verify TypeScript/production build, actual proxy requests, browser classical/quantum results and responsive layouts. Keep all optimization mathematics in Python. Publish without changing history; report permission blockers accurately.
+
+## Recorded opening refinement
+The user authorized replacing the original intro with the supplied video reference. Rebuild the observed opening using live canvas binary fields and GSAP, retain ANAVO lime/purple/black colors, add explicit pixel typography, preserve skip/replay/reduced motion, and keep the validated optimizer independent. See docs/OPENING_ANIMATION.md for scope and reconstructed stages.

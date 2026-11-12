@@ -119,4 +119,4 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. The Vite proxy connects /api and /health to FastAPI. Select Classical + Quantum for actual measured comparison. The intro plays once per tab session and can be replayed from the footer. Reduced-motion settings are respected. Production verification: `npm run build`; live proxy smoke tests with both servers running: `npm run test:integration`. Deployment and frontend details are in frontend/README.md.
+Open http://127.0.0.1:5173. The Vite proxy connects /api and /health to FastAPI. Select Classical + Quantum for actual measured comparison. The intro plays on every page load and refresh and can be replayed from the footer. Reduced-motion settings are respected. Production verification: `npm run build`; live proxy smoke tests with both servers running: `npm run test:integration`. Deployment and frontend details are in frontend/README.md.

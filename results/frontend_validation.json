@@ -1,18 +1,21 @@
 {
-  "checked_utc": "2026-11-12T15:59:45.439264+00:00",
-  "production_build": "passed: TypeScript and Vite",
+  "checked_utc": "2026-11-12T16:16:36.868713+00:00",
+  "production_build": "passed: TypeScript and Vite; no reference MP4 in dist",
   "live_proxy_integration_tests": {
     "passed": 2,
     "failed": 0,
-    "skipped": 0
+    "skipped": 0,
+    "note": "First attempt failed because backend was stopped; restarted Uvicorn and reran both tests successfully, including actual quantum execution"
   },
   "browser_verified": [
-    "GSAP intro rendered then revealed app",
-    "API connected",
-    "classical evening: utility 24 / 180 Wh / 60 W",
-    "measured quantum evening: utility 24 / 12 qubits / 2048 shots / seed 42 / circuit depth 33 / zero best-sample gap",
-    "390px responsive hero and form layout"
+    "Recorded binary title and subsequent explanatory scenes inspected",
+    "Animated binary field and pixel ANAVO/power title rendered",
+    "Pause/play and directional symbol switching while paused verified",
+    "Automatic reveal restored energy lab",
+    "390px phone intro and pixel hero verified",
+    "Escape skip, replay, background inert and scroll restoration verified"
   ],
-  "reference_animation": "Original GSAP interpretation; reference website unavailable to fetch",
-  "publication": "blocked: managed session cannot create .git/index.lock"
+  "reference_animation": "Supplied 45.77-second MP4 visually inspected; live canvas/GSAP reconstruction of opening composition, condensed to about 7.4 seconds",
+  "publication": "Local changes pending: agent git add denied .git/index.lock; published baseline remains 158378ea6bc64092df07db5e7b60f3aa3056cb8a",
+  "milestone": "Recorded-reference binary/pixel opening"
 }

@@ -54,3 +54,22 @@ The user previously published d9c24703603b8f833b140cdd76338cd42d697b4e and later
 - Two live frontend proxy integration tests passed: entry/health, scenarios, exact optimum, actual measured quantum optimum, mandatory infeasibility and 422 validation.
 - Phone viewport (390px) and intro replay verified in the browser. Production build rerun after final visual changes passed.
 - Publishing helper includes frontend/ and excludes node_modules, build output and unrelated untracked recordings. The agent staging attempt still failed with .git/index.lock permission denied. Latest independently verified remote baseline is 6f471887303118e3206c8e648de2bfbcce48f58b.
+
+## Recorded-reference opening milestone
+
+- Visually inspected the supplied 45.77-second MP4, including binary title and later explanatory scenes.
+- Replaced the earlier generic intro with a separate SequenceIntro component: live binary territories, large pixel type, binary text substitutions, purple inversion, symbol controls, pause/play, pointer interaction and stepped reveal.
+- Added pixel typography to the main hero, brand and closing. Preserved the energy lab and API contracts.
+- Temporary video viewer and copied footage removed; the original recording stays untracked and is not shipped.
+- Build and browser validation outcomes are recorded in results/frontend_validation.json.
+
+- Recorded opening checks passed: pause/play, symbol switching while paused, automatic reveal, Escape skip, replay and 390px phone layout. Main hero uses verified Pixelify Sans.
+- Live proxy tests: 2 passed after restarting the stopped local backend; real quantum execution included. TypeScript/Vite production build passed. Backend scientific source was unchanged.
+- Intro session marker versioned so existing visitors see the new sequence once after refreshing.
+- Agent git add still denied .git/index.lock. Changes remain local; published baseline is 158378ea6bc64092df07db5e7b60f3aa3056cb8a.
+
+## Opening refresh correction
+Removed the sessionStorage gate: the recorded-style intro now mounts on every page load/refresh, including /#lab. Footer replay remains available and reduced-motion preference still skips animation. This supersedes the earlier once-per-session behavior.
+
+## Header logo placement correction
+Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26px mobile), separated the wordmark, and aligned the registration mark. Production TypeScript/Vite build passed; desktop preview visually verified without logo overlap. Fresh page load also visibly showed the opening before revealing the app. Backend checks were not rerun for this presentation-only change.
