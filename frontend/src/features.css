@@ -141,3 +141,7 @@
 .arch-reading small{font-size:10px;color:#b7bdac;line-height:1.6}
 @media (max-width:900px){.arch-reading{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.arch-reading{grid-template-columns:1fr}}
+
+/* Schedule inputs */
+.time-select{margin-top:12px;font-family:'Barlow Condensed',Impact,sans-serif;font-size:30px;padding:6px 10px;background:#10120f;color:#edf2e4;border:1px solid #505740}
+.field-hint{display:block;margin-top:8px;font-size:8px;letter-spacing:.4px;color:var(--muted);line-height:1.5}

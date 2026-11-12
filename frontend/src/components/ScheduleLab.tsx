@@ -3,6 +3,10 @@ import {ArrowRight,LoaderCircle,Sun,Clock} from 'lucide-react';
 import {request} from '../api';
 import type {Scenario,Schedule} from '../api';
 
+const MAX_SOLAR=50;
+const HOURS=Array.from({length:48},(_,i)=>i/2);
+const clockLabel=(h:number)=>`${String(Math.floor(h)).padStart(2,'0')}:${h%1?'30':'00'}`;
+
 /** Hour-by-hour plan from the exact MILP scheduler, rendered as a Gantt chart plus battery/load curves. */
 export default function ScheduleLab({scenario,onLoadHouse}:{scenario:Scenario;onLoadHouse:()=>void}){
  const [startHour,setStartHour]=useState(18);const [solar,setSolar]=useState(0);
@@ -16,8 +20,8 @@ export default function ScheduleLab({scenario,onLoadHouse}:{scenario:Scenario;on
   <div className="feature-heading"><div><div className="section-label">[ 03 / TIME MACHINE ]</div><h2>EVERY HOUR.<br/><span>PLANNED.</span></h2></div>
    <p>The control room above reserves inverter power for all appliances at once. Real homes don't work that way. This exact <b>MILP scheduler</b> decides <i>when</i> each appliance runs — so the pump and the washing machine can take turns instead of one being cut. It tracks battery charge every slot and can add rooftop solar.</p></div>
   <div className="control-panel"><div className="panel-bar"><span><Clock size={15}/> SCHEDULE SETTINGS — USES THE MANIFEST FROM THE CONTROL ROOM</span><button onClick={onLoadHouse}>LOAD PAKISTANI HOUSE EXAMPLE</button></div>
-   <div className="config-top three"><label>OUTAGE STARTS AT<div className="number-field"><input type="number" min="0" max="23.5" step="0.5" value={startHour} onChange={e=>{setStartHour(Number(e.target.value));setPlan(null);}}/><span>H</span></div></label>
-    <label><span><Sun size={12}/> ROOFTOP SOLAR</span><div className="number-field"><input type="number" min="0" max="50" step="0.5" value={solar} onChange={e=>{setSolar(Number(e.target.value));setPlan(null);}}/><span>kWp</span></div></label>
+   <div className="config-top three"><label>OUTAGE STARTS AT<select className="time-select" aria-label="Outage start time" value={startHour} onChange={e=>{setStartHour(Number(e.target.value));setPlan(null);}}>{HOURS.map(h=><option key={h} value={h}>{clockLabel(h)}{h>=6&&h<18?' · daylight':''}</option>)}</select><small className="field-hint">Solar only produces between 06:00 and 18:00.</small></label>
+    <label><span><Sun size={12}/> ROOFTOP SOLAR</span><div className="number-field"><input type="number" aria-label="Rooftop solar size" min="0" max={MAX_SOLAR} step="0.5" value={solar} onChange={e=>{const v=Number(e.target.value);setSolar(Number.isFinite(v)?Math.min(MAX_SOLAR,Math.max(0,v)):0);setPlan(null);}}/><span>kWp</span></div><small className="field-hint">0 = no solar · typical homes 1–10 kWp · max {MAX_SOLAR}</small></label>
     <div className="run-cell"><button className="primary-button run" disabled={busy} onClick={run}>{busy?<><LoaderCircle size={18} className="spin"/> SOLVING MILP…</>:<>PLAN HOUR BY HOUR <ArrowRight size={19}/></>}</button></div></div>
    <div className="panel-note">{scenario.name.toUpperCase()} / {scenario.appliances.length} LOADS / {scenario.battery_wh} Wh / {scenario.inverter_w} W / {scenario.outage_h} H WINDOW · SOLAR USES ESMAP 5.67 kWh/m²/DAY × 0.75 PERFORMANCE RATIO</div>
    {error&&<div className="error" role="alert">REQUEST NOT COMPLETED / {error}</div>}</div>
@@ -28,7 +32,7 @@ export default function ScheduleLab({scenario,onLoadHouse}:{scenario:Scenario;on
     <div><strong>{plan.simultaneous_utility??'—'}</strong><label>utility if everything ran at once</label></div>
     <div className={plan.gain_vs_simultaneous?'gain':''}><strong>{plan.gain_vs_simultaneous!=null&&plan.gain_vs_simultaneous>0?'+':''}{plan.gain_vs_simultaneous??'—'}</strong><label>gain from smart timing</label></div>
     <div><strong>{plan.peak_load_w?.toFixed(0)} W</strong><label>peak load (limit {scenario.inverter_w} W)</label></div>
-    <div><strong>{plan.final_battery_wh?.toFixed(0)} Wh</strong><label>left in battery{plan.solar_generated_wh?` · ${plan.solar_generated_wh.toFixed(0)} Wh solar`:''}</label></div>
+    <div><strong>{plan.final_battery_wh?.toFixed(0)} Wh</strong><label>left in battery{plan.solar_generated_wh?` · ${plan.solar_generated_wh>=1000?`${(plan.solar_generated_wh/1000).toFixed(1)} kWh`:`${plan.solar_generated_wh.toFixed(0)} Wh`} solar`:''}</label></div>
    </div>
    <article className="insight-card wide"><header><span>GANTT / WHICH APPLIANCE RUNS WHEN</span><small>{plan.slots} SLOTS × {plan.slot_h} H · {plan.status.toUpperCase()} · {plan.runtime_s.toFixed(3)} s</small></header>
     <svg viewBox={`0 0 ${W} ${plan.appliances.length*26+34}`} className="chart gantt" role="img" aria-label="Appliance schedule">

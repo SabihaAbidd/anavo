@@ -21,7 +21,12 @@ export const quantumOptions={depth:2,shots:2048,maxiter:80,restarts:2,seed:42,ma
 export async function request<T>(path:string,body?:unknown):Promise<T>{
  const response=await fetch(path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:undefined,body:body?JSON.stringify(body):undefined});
  const data=await response.json();
- if(!response.ok)throw new Error(data.error?.message||`API request failed (${response.status}).`);
+ if(!response.ok){
+  // Name the offending field(s) instead of only "does not satisfy the API contract".
+  const details:{path?:(string|number)[];message?:string}[]=Array.isArray(data.error?.details)?data.error.details:[];
+  const fields=details.slice(0,3).map(d=>{const path=(d.path||[]).filter(p=>p!=='body'&&p!=='payload').join(' › ').replaceAll('_',' ');return path?`${path}: ${d.message}`:d.message;}).filter(Boolean);
+  throw new Error([data.error?.message||`API request failed (${response.status}).`,...fields].join(' — '));
+ }
  return data as T;
 }
 /** Submit to the async job queue, then poll until the worker finishes. */
