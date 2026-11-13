@@ -104,3 +104,7 @@ Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26
 ## Beginner project summary (2026-11-13)
 - Added `docs/PROJECT_SUMMARY.md`: plain-language explanation of the problem, features, classical solver, quantum basics, the full QUBO -> slack -> Ising -> QAOA -> COBYLA -> measurement -> verification pipeline, saved benchmark numbers, architecture, evidence, limitations, Q&A and glossary.
 - Documentation only; figures were taken from `results/benchmark_results.json`, README and TASKS.md. No code changed and no checks rerun.
+
+## Hackathon pitch mapped to rubric (2026-11-13)
+- Added `docs/HACKATHON_PITCH.md`: rubric (A-E, 100 pts) mapping with evidence, deliverables checklist, timed 3-minute script, slide outline, judge Q&A and presenter do/don't list.
+- Fresh check this session: Evening scenario QAOA (p=2, 2,048 shots, seed 42) gave 12 qubits, best 1110 utility 24, feasible-shot share 0.459, exact-optimum share 0.090, circuit depth 33, ~6.7 s. Documentation only otherwise; no tests rerun.
