@@ -100,3 +100,7 @@ Replaced the rotated text glyph with a bounded SVG pixel mark (30px desktop / 26
 ## Deployment configuration (2026-11-13)
 - Added `Dockerfile` + `.dockerignore` (backend only: Python 3.13-slim, requirements-lock.txt, one Uvicorn worker on `$PORT`, non-root user), `render.yaml` (Render free web service `anavo-api`, health check `/health`) and `frontend/vercel.json` (Vite build, `/api/*` and `/health` rewritten to `https://anavo-api.onrender.com`). Steps in docs/DEPLOYMENT.md.
 - Checks: `npm run build` passed; the container's Uvicorn command served `/health`, `/api/scenarios` and a measured `/api/compare` from the local venv. Docker image not built locally (daemon not running). Nothing is deployed yet: Render and Vercel setup is pending on the owner's accounts.
+
+## Beginner project summary (2026-11-13)
+- Added `docs/PROJECT_SUMMARY.md`: plain-language explanation of the problem, features, classical solver, quantum basics, the full QUBO -> slack -> Ising -> QAOA -> COBYLA -> measurement -> verification pipeline, saved benchmark numbers, architecture, evidence, limitations, Q&A and glossary.
+- Documentation only; figures were taken from `results/benchmark_results.json`, README and TASKS.md. No code changed and no checks rerun.
